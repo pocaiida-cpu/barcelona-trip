@@ -871,38 +871,34 @@ function copyUrl() {
 }
 window.copyUrl = copyUrl;
 
-// ── EVENT WIRING (replaces all inline onclick) ───────────────
-document.addEventListener('DOMContentLoaded', () => {
-  // Tabs
-  const tabMap = { 'tab-btn-schedule':'schedule', 'tab-btn-wishlist':'wishlist', 'tab-btn-notes':'notes', 'tab-btn-payment':'payment' };
-  Object.entries(tabMap).forEach(([id, name]) => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('click', () => switchTab(name, el));
-  });
+// ── EVENT WIRING ─────────────────────────────────────────────
+// type="module" is deferred, so DOM is ready when this runs — bind directly
+const tabMap = { 'tab-btn-schedule':'schedule', 'tab-btn-wishlist':'wishlist', 'tab-btn-notes':'notes', 'tab-btn-payment':'payment' };
+Object.entries(tabMap).forEach(([id, name]) => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', () => switchTab(name, el));
+});
 
-  // Section buttons
-  const simpleMap = {
-    'btn-open-add-schedule': () => openAddSchedule(),
-    'btn-open-add-wish':     () => openAddWish(),
-    'btn-post-note':         () => postNote(),
-    'btn-open-add-expense':  () => openAddExpense(),
-    'btn-open-add-expense-2':() => openAddExpense(),
-    'btn-copy-url':          () => copyUrl(),
-    // Modal actions
-    'btn-cancel-schedule':   () => closeModal('modal-schedule'),
-    'btn-submit-schedule':   () => submitSchedule(),
-    'btn-cancel-wish':       () => closeModal('modal-wish'),
-    'btn-submit-wish':       () => submitWish(),
-    'btn-cancel-note':       () => closeModal('modal-note'),
-    'btn-submit-note':       () => submitEditNote(),
-    'btn-cancel-expense':    () => closeModal('modal-expense'),
-    'btn-submit-expense':    () => submitExpense(),
-    'btn-cancel-confirm':    () => closeModal('modal-confirm'),
-  };
-  Object.entries(simpleMap).forEach(([id, fn]) => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('click', fn);
-  });
+const btnMap = {
+  'btn-open-add-schedule': () => openAddSchedule(),
+  'btn-open-add-wish':     () => openAddWish(),
+  'btn-post-note':         () => postNote(),
+  'btn-open-add-expense':  () => openAddExpense(),
+  'btn-open-add-expense-2':() => openAddExpense(),
+  'btn-copy-url':          () => copyUrl(),
+  'btn-cancel-schedule':   () => closeModal('modal-schedule'),
+  'btn-submit-schedule':   () => submitSchedule(),
+  'btn-cancel-wish':       () => closeModal('modal-wish'),
+  'btn-submit-wish':       () => submitWish(),
+  'btn-cancel-note':       () => closeModal('modal-note'),
+  'btn-submit-note':       () => submitEditNote(),
+  'btn-cancel-expense':    () => closeModal('modal-expense'),
+  'btn-submit-expense':    () => submitExpense(),
+  'btn-cancel-confirm':    () => closeModal('modal-confirm'),
+};
+Object.entries(btnMap).forEach(([id, fn]) => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', fn);
 });
 
 </script>
