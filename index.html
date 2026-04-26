@@ -86,6 +86,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
 .tag-art { background: var(--green-light); color: var(--green); }
 .tag-done { background: var(--green-light); color: var(--green); }
 
+.sched-author-avatar { width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; color: white; flex-shrink: 0; margin-top: 4px; }
+.sched-author-name { font-size: 10px; color: var(--gray-text); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+
 /* SCHEDULE ACTION BUTTONS */
 .sched-actions { display: flex; gap: 4px; opacity: 0; transition: opacity 0.15s; flex-shrink: 0; align-items: flex-start; padding-top: 2px; }
 .action-btn { width: 26px; height: 26px; border-radius: 6px; border: none; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
@@ -400,6 +403,18 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       </div>
     </div>
     <div class="form-row">
+      <label class="form-label">Added by</label>
+      <select class="form-select" id="sched-author">
+        <option value="">— Select —</option>
+        <option value="Sayaka">Sayaka</option>
+        <option value="Kasumi">Kasumi</option>
+        <option value="Mari">Mari</option>
+        <option value="Jennifer">Jennifer</option>
+        <option value="Yuka">Yuka</option>
+        <option value="Mayumi">Mayumi</option>
+      </select>
+    </div>
+    <div class="form-row">
       <label class="form-label">Notes</label>
       <textarea class="form-textarea" id="sched-memo" placeholder="Details, tips, reminders..."></textarea>
     </div>
@@ -575,6 +590,12 @@ function renderSchedule() {
 
     let rows = '';
     dayItems.sort((a,b) => (a.time||'').localeCompare(b.time||'')).forEach(item => {
+      const authorHtml = item.author
+        ? `<div class="sched-author-name">
+             <div class="sched-author-avatar" style="background:${MEMBER_COLORS[item.author]||'#999'};">${item.author.substring(0,2)}</div>
+             ${escHtml(item.author)}
+           </div>`
+        : '';
       rows += `
         <div class="sched-row" id="sched-row-${item.id}">
           <span class="sched-time">${item.time || '—'}</span>
@@ -582,6 +603,7 @@ function renderSchedule() {
           <div class="sched-body">
             <div class="sched-name">${escHtml(item.name)}</div>
             ${item.detail ? `<div class="sched-detail">${escHtml(item.detail)}</div>` : ''}
+            ${authorHtml}
           </div>
           <div class="sched-actions">
             <button class="action-btn edit-btn" onclick="openEditSchedule(${item.id})" title="編集">✏️</button>
@@ -619,6 +641,7 @@ function openAddSchedule(dayIndex) {
   document.getElementById('sched-name').value = '';
   document.getElementById('sched-time').value = '';
   document.getElementById('sched-memo').value = '';
+  document.getElementById('sched-author').value = '';
   document.getElementById('sched-submit-btn').textContent = 'Add';
   buildDayOptions(dayIndex !== undefined ? dayIndex : 0);
   openModal('modal-schedule');
@@ -632,6 +655,7 @@ function openEditSchedule(id) {
   document.getElementById('sched-name').value = item.name;
   document.getElementById('sched-time').value = item.time || '';
   document.getElementById('sched-memo').value = item.detail || '';
+  document.getElementById('sched-author').value = item.author || '';
   document.getElementById('sched-submit-btn').textContent = 'Save';
   buildDayOptions(item.dayIndex);
   openModal('modal-schedule');
@@ -643,14 +667,15 @@ function submitSchedule() {
   const dayIndex = parseInt(document.getElementById('sched-day').value);
   const time = document.getElementById('sched-time').value.trim();
   const detail = document.getElementById('sched-memo').value.trim();
+  const author = document.getElementById('sched-author').value;
   const editId = document.getElementById('sched-edit-id').value;
   const colors = ['#C8633A','#3A7D5C','#5B8FC9','#D4A843','#8B6BA0','#C84040'];
 
   if (editId) {
     const item = schedules.find(s => s.id === parseInt(editId));
-    if (item) { item.name = name; item.dayIndex = dayIndex; item.time = time; item.detail = detail; }
+    if (item) { item.name = name; item.dayIndex = dayIndex; item.time = time; item.detail = detail; item.author = author; }
   } else {
-    schedules.push({ id: nextSchedId++, dayIndex, time, name, detail, color: colors[schedules.length % colors.length] });
+    schedules.push({ id: nextSchedId++, dayIndex, time, name, detail, author, color: colors[schedules.length % colors.length] });
   }
   closeModal('modal-schedule');
   renderSchedule();
