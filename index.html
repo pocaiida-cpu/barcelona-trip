@@ -782,15 +782,16 @@ function buildSplitChips(sel) {
   MEMBERS.forEach(m => {
     const chip = document.createElement('div');
     chip.className = 'split-chip'+(sel.includes(m)?' selected':'');
+    chip.dataset.member = m;
     chip.innerHTML = `<span class="chip-av" style="background:${MC[m]}">${m.substring(0,2)}</span>${m}`;
-    chip.onclick = () => chip.classList.toggle('selected');
+    chip.addEventListener('click', () => chip.classList.toggle('selected'));
     wrap.appendChild(chip);
   });
 }
 
 function getSplitSelected() {
   return [...document.querySelectorAll('#split-by-chips .split-chip.selected')]
-    .map(c=>MEMBERS.find(m=>c.textContent.trim().startsWith(m))||'').filter(Boolean);
+    .map(c => c.dataset.member).filter(Boolean);
 }
 
 function openAddExpense() {
