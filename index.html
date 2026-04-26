@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barcelona Trip 2025 🌞</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sand: #F5F0E8;
+  --terracotta: #C8633A;
+  --terracotta-light: #E8956D;
+  --terracotta-pale: #FAF0EB;
+  --navy: #1A2744;
+  --navy-mid: #2D3F6B;
+  --sky: #5B8FC9;
+  --sky-light: #A8C8E8;
+  --gold: #D4A843;
+  --white: #FFFFFF;
+  --gray-light: #F0EDE8;
+  --gray-mid: #C8C4BC;
+  --gray-text: #6B6560;
+  --green: #3A7D5C;
+  --green-light: #E8F5EE;
+  --red: #C84040;
+  --red-light: #FFF0F0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sand);
+  color: var(--navy);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.app-header {
+  background: var(--navy);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(26,39,68,0.3);
+}
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+.logo span { color: var(--terracotta-light); }
+.trip-info {
+  font-size: 12px;
+  color: var(--sky-light);
+  text-align: right;
+}
+.members-strip {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 6px;
+  justify-content: flex-end;
+}
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  border: 2px solid var(--navy);
+  cursor: default;
+  position: relative;
+}
+.avatar-label {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: var(--sky-light);
+  white-space: nowrap;
+}
+.members-strip-wrap { position: relative; padding-bottom: 4px; }
+
+/* NAV TABS */
+.nav-tabs {
+  background: var(--white);
+  border-bottom: 2px solid var(--gray-light);
+  position: sticky;
+  top: 65px;
+  z-index: 99;
+}
+.nav-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 14px 24px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  color: var(--gray-text);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tab-btn:hover { color: var(--terracotta); background: var(--terracotta-pale); }
+.tab-btn.active {
+  color: var(--terracotta);
+  border-bottom-color: var(--terracotta);
+  font-weight: 500;
+}
+.tab-icon { font-size: 15px; }
+
+/* MAIN */
+.main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* SECTION HEADER */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: var(--navy);
+}
+.btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+.btn-primary {
+  background: var(--terracotta);
+  color: white;
+}
+.btn-primary:hover { background: var(--navy); }
+.btn-outline {
+  background: white;
+  color: var(--navy);
+  border: 1.5px solid var(--navy);
+}
+.btn-outline:hover { background: var(--navy); color: white; }
+
+/* SCHEDULE TAB */
+.day-card {
+  background: white;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(26,39,68,0.06);
+}
+.day-header {
+  background: var(--navy);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.day-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: white;
+}
+.day-date { font-size: 12px; color: var(--sky-light); }
+.schedule-list { padding: 4px 0; }
+.sched-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--gray-light);
+  transition: background 0.15s;
+  cursor: pointer;
+}
+.sched-row:last-child { border-bottom: none; }
+.sched-row:hover { background: var(--terracotta-pale); }
+.sched-time {
+  font-size: 12px;
+  color: var(--gray-text);
+  min-width: 44px;
+  padding-top: 3px;
+  font-weight: 300;
+}
+.sched-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.sched-body { flex: 1; }
+.sched-name { font-size: 14px; font-weight: 500; color: var(--navy); }
+.sched-detail { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
+.sched-tags { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+.tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.tag-must { background: var(--terracotta-pale); color: var(--terracotta); }
+.tag-food { background: #FFF8E8; color: var(--gold); }
+.tag-art { background: var(--green-light); color: var(--green); }
+.tag-done { background: var(--green-light); color: var(--green); }
+.add-row {
+  padding: 10px 20px;
+  font-size: 13px;
+  color: var(--gray-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-top: 1px dashed var(--gray-mid);
+}
+.add-row:hover { color: var(--terracotta); }
+
+/* WISHLIST TAB */
+.wish-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+.wish-card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 10px rgba(26,39,68,0.06);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+.wish-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,39,68,0.12); }
+.wish-emoji { font-size: 28px; margin-bottom: 10px; }
+.wish-name { font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 4px; }
+.wish-category { font-size: 11px; color: var(--gray-text); margin-bottom: 12px; }
+.vote-area { display: flex; align-items: center; gap: 8px; }
+.vote-btn {
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--terracotta);
+  background: transparent;
+  color: var(--terracotta);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.vote-btn.active { background: var(--terracotta); color: white; }
+.vote-btn:hover { background: var(--terracotta); color: white; }
+.vote-count { font-size: 12px; color: var(--gray-text); }
+.priority-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.p-high { background: var(--terracotta); color: white; }
+.p-mid { background: var(--gold); color: white; }
+.add-card {
+  background: transparent;
+  border: 2px dashed var(--gray-mid);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  gap: 8px;
+}
+.add-card:hover { border-color: var(--terracotta); }
+.add-card-icon { font-size: 24px; color: var(--gray-mid); }
+.add-card-label { font-size: 13px; color: var(--gray-text); }
+
+/* NOTES TAB */
+.notes-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.note-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(26,39,68,0.06);
+}
+.note-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.note-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+}
+.note-author { font-size: 13px; font-weight: 500; color: var(--navy); }
+.note-time { font-size: 11px; color: var(--gray-text); margin-left: auto; }
+.note-text { font-size: 14px; color: #3A3530; line-height: 1.7; font-weight: 300; }
+.note-compose {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(26,39,68,0.06);
+  position: sticky;
+  bottom: 20px;
+}
+.compose-label { font-size: 12px; color: var(--gray-text); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.compose-input {
+  width: 100%;
+  border: 1.5px solid var(--gray-light);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  resize: none;
+  color: var(--navy);
+  transition: border-color 0.15s;
+  outline: none;
+}
+.compose-input:focus { border-color: var(--terracotta); }
+.compose-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.your-name-input {
+  font-size: 13px;
+  border: 1px solid var(--gray-light);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--navy);
+  outline: none;
+  width: 140px;
+}
+.your-name-input:focus { border-color: var(--terracotta); }
+
+/* BUDGET TAB */
+.budget-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.budget-metric {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 10px rgba(26,39,68,0.06);
+}
+.budget-metric-label { font-size: 11px; color: var(--gray-text); margin-bottom: 6px; }
+.budget-metric-value { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--navy); }
+.budget-metric-sub { font-size: 11px; color: var(--gray-text); margin-top: 4px; }
+.expense-table {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(26,39,68,0.06);
+}
+.expense-thead {
+  background: var(--navy);
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 12px 20px;
+  gap: 12px;
+}
+.expense-th { font-size: 11px; color: var(--sky-light); font-weight: 500; }
+.expense-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 14px 20px;
+  gap: 12px;
+  border-bottom: 1px solid var(--gray-light);
+  align-items: center;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+.expense-row:last-child { border-bottom: none; }
+.expense-row:hover { background: var(--terracotta-pale); }
+.expense-icon-name { display: flex; align-items: center; gap: 10px; }
+.exp-icon { font-size: 18px; }
+.exp-name { font-size: 13px; font-weight: 500; color: var(--navy); }
+.exp-who { font-size: 11px; color: var(--gray-text); }
+.exp-amount { font-size: 14px; font-weight: 500; color: var(--navy); }
+.exp-per { font-size: 11px; color: var(--gray-text); }
+.exp-status { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; text-align: center; }
+.status-ok { background: var(--green-light); color: var(--green); }
+.status-pending { background: #FFF8E8; color: var(--gold); }
+.add-expense-row {
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--gray-text);
+  cursor: pointer;
+  border-top: 1px dashed var(--gray-mid);
+}
+.add-expense-row:hover { color: var(--terracotta); background: var(--terracotta-pale); }
+
+/* SHARE BAR */
+.share-bar {
+  background: var(--navy);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+}
+.share-label { font-size: 12px; color: var(--sky-light); white-space: nowrap; }
+.share-link-box {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  color: var(--sky-light);
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.copy-btn {
+  background: var(--terracotta);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+}
+.copy-btn:hover { background: var(--terracotta-light); }
+.main { padding-bottom: 70px; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26,39,68,0.5);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.hidden { display: none; }
+.modal {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 20px 60px rgba(26,39,68,0.3);
+}
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--navy);
+  margin-bottom: 20px;
+}
+.form-row { margin-bottom: 14px; }
+.form-label { font-size: 12px; color: var(--gray-text); margin-bottom: 6px; display: block; }
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  border: 1.5px solid var(--gray-light);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--navy);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--terracotta); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+/* EMPTY STATE */
+.empty { text-align: center; padding: 48px 20px; color: var(--gray-text); }
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .budget-top { grid-template-columns: 1fr 1fr; }
+  .expense-thead, .expense-row { grid-template-columns: 1fr 1fr; }
+  .expense-th:nth-child(3), .expense-th:nth-child(4),
+  .exp-per, .exp-status { display: none; }
+  .wish-grid { grid-template-columns: 1fr 1fr; }
+  .header-inner { gap: 12px; }
+  .logo { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="logo">Barce<span>lona</span> 🌞</div>
+    <div class="trip-info">
+      <div>Jun 30 – Aug 1 · 33 days</div><div style="font-size:11px;color:var(--sky-light);margin-top:2px;">📍 Carrer de Girona 108, Barcelona 08009</div>
+      <div class="members-strip-wrap">
+        <div class="members-strip" id="members-strip">
+          <div class="avatar" style="background:#C8633A;color:white;" title="You">Y</div>
+          <div class="avatar" style="background:#3A7D5C;color:white;" title="Miki">M</div>
+          <div class="avatar" style="background:#5B8FC9;color:white;" title="Yuka">Y</div>
+          <div class="avatar" style="background:#D4A843;color:white;" title="Risa">R</div>
+          <div class="avatar" style="background:#8B6BA0;color:white;" title="Saya">S</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-tabs">
+  <div class="nav-inner">
+    <button class="tab-btn active" onclick="switchTab('schedule',this)">
+      <span class="tab-icon">📅</span>Schedule
+    </button>
+    <button class="tab-btn" onclick="switchTab('wishlist',this)">
+      <span class="tab-icon">📍</span>Wish List
+    </button>
+    <button class="tab-btn" onclick="switchTab('notes',this)">
+      <span class="tab-icon">💬</span>Notes
+    </button>
+    <button class="tab-btn" onclick="switchTab('budget',this)">
+      <span class="tab-icon">💰</span>Budget
+    </button>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- SCHEDULE TAB -->
+  <div class="tab-content active" id="tab-schedule">
+    <div class="section-header">
+      <h2 class="section-title">Schedule</h2>
+      <button class="btn btn-primary" onclick="openAddSchedule()">+ Add</button>
+    </div>
+    <div id="schedule-list">
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-label">Day 1</span>
+          <span class="day-date">Tue, Jun 30</span>
+        </div>
+        <div class="schedule-list">
+          <div class="sched-row">
+            <span class="sched-time">AM</span>
+            <div class="sched-dot" style="background:var(--navy);"></div>
+            <div class="sched-body">
+              <div class="sched-name">Depart Kansai International Airport (KIX)</div>
+              <div class="sched-detail">KIX → BCN (with connection)</div>
+              <div class="sched-tags"><span class="tag tag-must">Check!</span></div>
+            </div>
+          </div>
+          <div class="sched-row">
+            <span class="sched-time">PM</span>
+            <div class="sched-dot" style="background:var(--green);"></div>
+            <div class="sched-body">
+              <div class="sched-name">Check in — Airbnb</div>
+              <div class="sched-detail">Carrer de Girona 108, Barcelona 08009</div>
+              <div class="sched-tags"><span class="tag tag-art">Home base</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="add-row" onclick="openAddSchedule('day1')">+ Add to schedule</div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-label">Day 2</span>
+          <span class="day-date">Wed, Jul 1</span>
+        </div>
+        <div class="schedule-list">
+          <div class="sched-row">
+            <span class="sched-time">09:00</span>
+            <div class="sched-dot" style="background:var(--terracotta);"></div>
+            <div class="sched-body">
+              <div class="sched-name">Sagrada Família</div>
+              <div class="sched-detail">Tickets required · approx. 2 hrs</div>
+              <div class="sched-tags"><span class="tag tag-must">Must-see!</span><span class="tag tag-art">Architecture</span></div>
+            </div>
+          </div>
+          <div class="sched-row">
+            <span class="sched-time">13:00</span>
+            <div class="sched-dot" style="background:var(--gold);"></div>
+            <div class="sched-body">
+              <div class="sched-name">Lunch @ La Barceloneta</div>
+              <div class="sched-detail">Seafood restaurant · Beachside</div>
+              <div class="sched-tags"><span class="tag tag-food">Food</span></div>
+            </div>
+          </div>
+          <div class="sched-row">
+            <span class="sched-time">15:30</span>
+            <div class="sched-dot" style="background:var(--green);"></div>
+            <div class="sched-body">
+              <div class="sched-name">Park Güell</div>
+              <div class="sched-detail">Timed entry required · approx. 1.5 hrs</div>
+              <div class="sched-tags"><span class="tag tag-art">Gaudí</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="add-row" onclick="openAddSchedule('day2')">+ Add to schedule</div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-label">Day 3</span>
+          <span class="day-date">Thu, Jul 2</span>
+        </div>
+        <div class="schedule-list">
+          <div class="sched-row">
+            <span class="sched-time">10:30</span>
+            <div class="sched-dot" style="background:var(--terracotta);"></div>
+            <div class="sched-body">
+              <div class="sched-name">Casa Batlló</div>
+              <div class="sched-detail">Gaudí architecture · Book ahead</div>
+              <div class="sched-tags"><span class="tag tag-art">Architecture</span></div>
+            </div>
+          </div>
+          <div class="sched-row">
+            <span class="sched-time">14:00</span>
+            <div class="sched-dot" style="background:var(--sky);"></div>
+            <div class="sched-body">
+              <div class="sched-name">Passeig de Gràcia stroll & shopping</div>
+              <div class="sched-detail">Casa Milà exterior en route</div>
+            </div>
+          </div>
+        </div>
+        <div class="add-row" onclick="openAddSchedule('day3')">+ Add to schedule</div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-label">Day 4–32</span>
+          <span class="day-date">Jul 3–31</span>
+        </div>
+        <div class="schedule-list">
+          <div class="sched-row" style="opacity:0.5;">
+            <span class="sched-time">TBD</span>
+            <div class="sched-dot" style="background:var(--gray-mid);"></div>
+            <div class="sched-body">
+              <div class="sched-name" style="color:var(--gray-text);">No schedule yet</div>
+              <div class="sched-detail">Let's plan together!</div>
+            </div>
+          </div>
+        </div>
+        <div class="add-row" onclick="openAddSchedule('day4')">+ Add to schedule</div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-label">Day 7</span>
+          <span class="day-date">Sat, Aug 1</span>
+        </div>
+        <div class="schedule-list">
+          <div class="sched-row">
+            <span class="sched-time">PM</span>
+            <div class="sched-dot" style="background:var(--navy);"></div>
+            <div class="sched-body">
+              <div class="sched-name">Check out &amp; Depart Barcelona Airport (BCN)</div>
+              <div class="sched-detail">BCN → KIX</div>
+            </div>
+          </div>
+        </div>
+        <div class="add-row" onclick="openAddSchedule('day7')">+ Add to schedule</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WISHLIST TAB -->
+  <div class="tab-content" id="tab-wishlist">
+    <div class="section-header">
+      <h2 class="section-title">Wish List</h2>
+      <button class="btn btn-primary" onclick="openAddWish()">+ Add</button>
+    </div>
+    <div class="wish-grid" id="wish-grid">
+      <div class="wish-card">
+        <span class="priority-badge p-high">Popular!</span>
+        <div class="wish-emoji">🏛️</div>
+        <div class="wish-name">Sagrada Família</div>
+        <div class="wish-category">Architecture · Gaudí</div>
+        <div class="vote-area">
+          <button class="vote-btn active" onclick="toggleVote(this,5)">♡ Want to go</button>
+          <span class="vote-count">5 votes</span>
+        </div>
+      </div>
+      <div class="wish-card">
+        <span class="priority-badge p-high">Popular!</span>
+        <div class="wish-emoji">🥘</div>
+        <div class="wish-name">La Boqueria Market</div>
+        <div class="wish-category">Food · Market</div>
+        <div class="vote-area">
+          <button class="vote-btn active" onclick="toggleVote(this,4)">♡ Want to go</button>
+          <span class="vote-count">4 votes</span>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-emoji">🏖️</div>
+        <div class="wish-name">Barceloneta Beach</div>
+        <div class="wish-category">Beach · Sea</div>
+        <div class="vote-area">
+          <button class="vote-btn" onclick="toggleVote(this,3)">♡ Want to go</button>
+          <span class="vote-count">3 votes</span>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-emoji">🎨</div>
+        <div class="wish-name">Picasso Museum</div>
+        <div class="wish-category">Art · Culture</div>
+        <div class="vote-area">
+          <button class="vote-btn" onclick="toggleVote(this,2)">♡ Want to go</button>
+          <span class="vote-count">2 votes</span>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-emoji">🌿</div>
+        <div class="wish-name">Montjuïc Hill</div>
+        <div class="wish-category">Nature · Views</div>
+        <div class="vote-area">
+          <button class="vote-btn" onclick="toggleVote(this,3)">♡ Want to go</button>
+          <span class="vote-count">3 votes</span>
+        </div>
+      </div>
+      <div class="wish-card">
+        <div class="wish-emoji">🍷</div>
+        <div class="wish-name">Plaça de Catalunya</div>
+        <div class="wish-category">Sightseeing · Plaza</div>
+        <div class="vote-area">
+          <button class="vote-btn" onclick="toggleVote(this,2)">♡ Want to go</button>
+          <span class="vote-count">2 votes</span>
+        </div>
+      </div>
+      <div class="add-card" onclick="openAddWish()">
+        <div class="add-card-icon">+</div>
+        <div class="add-card-label">Add a place</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES TAB -->
+  <div class="tab-content" id="tab-notes">
+    <div class="section-header">
+      <h2 class="section-title">Notes &amp; Comments</h2>
+    </div>
+    <div class="notes-layout" id="notes-list">
+      <div class="note-card">
+        <div class="note-meta">
+          <div class="note-avatar" style="background:#FAF0EB;color:#C8633A;">Y</div>
+          <span class="note-author">You</span>
+          <span class="note-time">7/1 14:23</span>
+        </div>
+        <div class="note-text">We should book Sagrada Família ASAP! Apparently it gets really crowded in summer — let's grab tickets before July. You can book on the official website 🏛️</div>
+      </div>
+      <div class="note-card">
+        <div class="note-meta">
+          <div class="note-avatar" style="background:#E8F5EE;color:#3A7D5C;">M</div>
+          <span class="note-author">Miki (sister)</span>
+          <span class="note-time">7/2 09:11</span>
+        </div>
+        <div class="note-text">Where should we stay? The Passeig de Gràcia area seems really convenient for sightseeing — what does everyone think? 😊</div>
+      </div>
+      <div class="note-card">
+        <div class="note-meta">
+          <div class="note-avatar" style="background:#EAF3F8;color:#5B8FC9;">Y</div>
+          <span class="note-author">Yuka</span>
+          <span class="note-time">7/2 10:45</span>
+        </div>
+        <div class="note-text">We should pack heat gear for the little one! Barcelona in July can get above 35°C ☀️ Hats and sunscreen are a must!</div>
+      </div>
+      <div class="note-card">
+        <div class="note-meta">
+          <div class="note-avatar" style="background:#FFF8E8;color:#D4A843;">R</div>
+          <span class="note-author">Risa</span>
+          <span class="note-time">7/3 16:30</span>
+        </div>
+        <div class="note-text">I'll research good tapas spots! Apparently the Gothic Quarter has tons of great places 🍢</div>
+      </div>
+    </div>
+    <div class="note-compose" style="margin-top:16px;">
+      <div class="compose-label">💬 Add a comment</div>
+      <textarea class="compose-input" id="compose-text" rows="3" placeholder="Notes, suggestions, questions for the group..."></textarea>
+      <div class="compose-footer">
+        <input class="your-name-input" id="compose-name" type="text" placeholder="Your name" value="">
+        <button class="btn btn-primary" onclick="postNote()">Post</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUDGET TAB -->
+  <div class="tab-content" id="tab-budget">
+    <div class="section-header">
+      <h2 class="section-title">Budget</h2>
+      <button class="btn btn-primary" onclick="openAddExpense()">+ Add</button>
+    </div>
+    <div class="budget-top">
+      <div class="budget-metric">
+        <div class="budget-metric-label">Group total</div>
+        <div class="budget-metric-value" id="total-amount">€375</div>
+        <div class="budget-metric-sub">Shared expenses</div>
+      </div>
+      <div class="budget-metric">
+        <div class="budget-metric-label">Per person</div>
+        <div class="budget-metric-value" id="per-person">€75</div>
+        <div class="budget-metric-sub">Split 5 ways</div>
+      </div>
+      <div class="budget-metric">
+        <div class="budget-metric-label">Budget guide</div>
+        <div class="budget-metric-value">€800</div>
+        <div class="budget-metric-sub">Local costs / person</div>
+      </div>
+    </div>
+    <div class="expense-table">
+      <div class="expense-thead">
+        <div class="expense-th">Description</div>
+        <div class="expense-th">Paid by</div>
+        <div class="expense-th">Amount</div>
+        <div class="expense-th">Status</div>
+      </div>
+      <div id="expense-rows">
+        <div class="expense-row">
+          <div class="expense-icon-name">
+            <span class="exp-icon">🏛️</span>
+            <div>
+              <div class="exp-name">Sagrada Família tickets</div>
+              <div class="exp-who">for 5</div>
+            </div>
+          </div>
+          <div>
+            <div class="exp-name">You</div>
+          </div>
+          <div>
+            <div class="exp-amount">€165</div>
+            <div class="exp-per">€33/person</div>
+          </div>
+          <div><span class="exp-status status-pending">Pending</span></div>
+        </div>
+        <div class="expense-row">
+          <div class="expense-icon-name">
+            <span class="exp-icon">🍽️</span>
+            <div>
+              <div class="exp-name">Dinner (Day 2)</div>
+              <div class="exp-who">for 5</div>
+            </div>
+          </div>
+          <div>
+            <div class="exp-name">Miki</div>
+          </div>
+          <div>
+            <div class="exp-amount">€210</div>
+            <div class="exp-per">€42/person</div>
+          </div>
+          <div><span class="exp-status status-ok">Settled</span></div>
+        </div>
+      </div>
+      <div class="add-expense-row" onclick="openAddExpense()">+ Add expense</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- SHARE BAR -->
+<div class="share-bar">
+  <span class="share-label">Share link:</span>
+  <div class="share-link-box" id="share-url">Copy this page URL and send it to everyone!</div>
+  <button class="copy-btn" onclick="copyUrl()">Copy URL</button>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay hidden" id="modal-schedule">
+  <div class="modal">
+    <h3 class="modal-title">Add to schedule</h3>
+    <div class="form-row">
+      <label class="form-label">Place / Activity</label>
+      <input class="form-input" id="sched-name" type="text" placeholder="e.g. Sagrada Família">
+    </div>
+    <div class="form-row form-row-2">
+      <div>
+        <label class="form-label">Day</label>
+        <select class="form-select" id="sched-day">
+          <option>Day 1 (Jun 30)</option>
+          <option>Day 2 (Jul 1)</option>
+          <option>Day 3 (Jul 2)</option>
+          <option>Day 4 (Jul 3)</option>
+          <option>Day 5 (Jul 4)</option>
+          <option>Day 6+</option>
+          <option>Day 33 (Aug 1)</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Time</label>
+        <input class="form-input" id="sched-time" type="text" placeholder="e.g. 10:00">
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Notes</label>
+      <textarea class="form-textarea" id="sched-memo" placeholder="Details, tips, reminders..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-schedule')">Cancel</button>
+      <button class="btn btn-primary" onclick="addSchedule()">Add</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="modal-wish">
+  <div class="modal">
+    <h3 class="modal-title">Add a place</h3>
+    <div class="form-row">
+      <label class="form-label">Place name</label>
+      <input class="form-input" id="wish-name" type="text" placeholder="e.g. Picasso Museum">
+    </div>
+    <div class="form-row form-row-2">
+      <div>
+        <label class="form-label">Category</label>
+        <select class="form-select" id="wish-cat">
+          <option>Architecture</option>
+          <option>Food & Dining</option>
+          <option>Art & Culture</option>
+          <option>Beach & Nature</option>
+          <option>Shopping</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Emoji</label>
+        <input class="form-input" id="wish-emoji" type="text" placeholder="🏛️" maxlength="2">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-wish')">Cancel</button>
+      <button class="btn btn-primary" onclick="addWish()">Add</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="modal-expense">
+  <div class="modal">
+    <h3 class="modal-title">Add expense</h3>
+    <div class="form-row">
+      <label class="form-label">Description</label>
+      <input class="form-input" id="exp-name" type="text" placeholder="e.g. Museum tickets">
+    </div>
+    <div class="form-row form-row-2">
+      <div>
+        <label class="form-label">Amount (€)</label>
+        <input class="form-input" id="exp-amount" type="number" placeholder="0">
+      </div>
+      <div>
+        <label class="form-label">Paid by</label>
+        <input class="form-input" id="exp-who" type="text" placeholder="Name">
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Emoji</label>
+      <input class="form-input" id="exp-emoji" type="text" placeholder="🍽️" maxlength="2">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-expense')">Cancel</button>
+      <button class="btn btn-primary" onclick="addExpense()">Add</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- Tab switching ---
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// --- Vote toggle ---
+function toggleVote(btn, base) {
+  const isActive = btn.classList.contains('active');
+  const countEl = btn.parentElement.querySelector('.vote-count');
+  let count = parseInt(countEl.textContent);
+  if (isActive) {
+    btn.classList.remove('active');
+    countEl.textContent = (count - 1) + '人';
+  } else {
+    btn.classList.add('active');
+    countEl.textContent = (count + 1) + '人';
+  }
+}
+
+// --- Modal ---
+function openAddSchedule(day) {
+  document.getElementById('modal-schedule').classList.remove('hidden');
+  document.getElementById('sched-name').focus();
+}
+function openAddWish() {
+  document.getElementById('modal-wish').classList.remove('hidden');
+  document.getElementById('wish-name').focus();
+}
+function openAddExpense() {
+  document.getElementById('modal-expense').classList.remove('hidden');
+  document.getElementById('exp-name').focus();
+}
+function closeModal(id) {
+  document.getElementById(id).classList.add('hidden');
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', function(e) {
+    if (e.target === m) m.classList.add('hidden');
+  });
+});
+
+// --- Add schedule ---
+function addSchedule() {
+  const name = document.getElementById('sched-name').value.trim();
+  const time = document.getElementById('sched-time').value.trim() || '未定';
+  const memo = document.getElementById('sched-memo').value.trim();
+  if (!name) { alert('場所・内容を入力してください'); return; }
+  const lastCard = document.querySelectorAll('.day-card');
+  const target = lastCard[lastCard.length - 1].querySelector('.schedule-list');
+  const row = document.createElement('div');
+  row.className = 'sched-row';
+  row.innerHTML = `
+    <span class="sched-time">${time}</span>
+    <div class="sched-dot" style="background:var(--sky);"></div>
+    <div class="sched-body">
+      <div class="sched-name">${name}</div>
+      ${memo ? `<div class="sched-detail">${memo}</div>` : ''}
+    </div>`;
+  target.appendChild(row);
+  closeModal('modal-schedule');
+  document.getElementById('sched-name').value = '';
+  document.getElementById('sched-time').value = '';
+  document.getElementById('sched-memo').value = '';
+}
+
+// --- Add wish ---
+function addWish() {
+  const name = document.getElementById('wish-name').value.trim();
+  const cat = document.getElementById('wish-cat').value;
+  const emoji = document.getElementById('wish-emoji').value || '📍';
+  if (!name) { alert('場所名を入力してください'); return; }
+  const grid = document.getElementById('wish-grid');
+  const addCard = grid.querySelector('.add-card');
+  const card = document.createElement('div');
+  card.className = 'wish-card';
+  card.innerHTML = `
+    <div class="wish-emoji">${emoji}</div>
+    <div class="wish-name">${name}</div>
+    <div class="wish-category">${cat}</div>
+    <div class="vote-area">
+      <button class="vote-btn active" onclick="toggleVote(this,1)">♡ Want to go</button>
+      <span class="vote-count">1 votes</span>
+    </div>`;
+  grid.insertBefore(card, addCard);
+  closeModal('modal-wish');
+  document.getElementById('wish-name').value = '';
+  document.getElementById('wish-emoji').value = '';
+}
+
+// --- Add expense ---
+let totalAmount = 375;
+function addExpense() {
+  const name = document.getElementById('exp-name').value.trim();
+  const amount = parseFloat(document.getElementById('exp-amount').value) || 0;
+  const who = document.getElementById('exp-who').value.trim() || '不明';
+  const emoji = document.getElementById('exp-emoji').value || '💳';
+  if (!name) { alert('内容を入力してください'); return; }
+  const rows = document.getElementById('expense-rows');
+  const perPerson = Math.round(amount / 5);
+  const row = document.createElement('div');
+  row.className = 'expense-row';
+  row.innerHTML = `
+    <div class="expense-icon-name">
+      <span class="exp-icon">${emoji}</span>
+      <div>
+        <div class="exp-name">${name}</div>
+        <div class="exp-who">for 5</div>
+      </div>
+    </div>
+    <div><div class="exp-name">${who}</div></div>
+    <div>
+      <div class="exp-amount">€${amount}</div>
+      <div class="exp-per">€${perPerson}/person</div>
+    </div>
+    <div><span class="exp-status status-pending">Pending</span></div>`;
+  rows.appendChild(row);
+  totalAmount += amount;
+  document.getElementById('total-amount').textContent = '€' + totalAmount;
+  document.getElementById('per-person').textContent = '€' + Math.round(totalAmount / 5);
+  closeModal('modal-expense');
+  document.getElementById('exp-name').value = '';
+  document.getElementById('exp-amount').value = '';
+  document.getElementById('exp-who').value = '';
+  document.getElementById('exp-emoji').value = '';
+}
+
+// --- Post note ---
+function postNote() {
+  const text = document.getElementById('compose-text').value.trim();
+  const name = document.getElementById('compose-name').value.trim() || '匿名';
+  if (!text) return;
+  const list = document.getElementById('notes-list');
+  const now = new Date();
+  const timeStr = (now.getMonth()+1) + '/' + now.getDate() + ' ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+  const colors = ['#FAF0EB,#C8633A','#E8F5EE,#3A7D5C','#EAF3F8,#5B8FC9','#FFF8E8,#D4A843','#F5F0FF,#8B6BA0'];
+  const c = colors[Math.floor(Math.random() * colors.length)].split(',');
+  const card = document.createElement('div');
+  card.className = 'note-card';
+  card.innerHTML = `
+    <div class="note-meta">
+      <div class="note-avatar" style="background:${c[0]};color:${c[1]};">${name[0]}</div>
+      <span class="note-author">${name}</span>
+      <span class="note-time">${timeStr}</span>
+    </div>
+    <div class="note-text">${text}</div>`;
+  list.appendChild(card);
+  document.getElementById('compose-text').value = '';
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+// --- Copy URL ---
+function copyUrl() {
+  const url = window.location.href;
+  document.getElementById('share-url').textContent = url;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy URL', 2000);
+  }).catch(() => {
+    document.getElementById('share-url').select?.();
+  });
+}
+
+// Show actual URL on load
+window.addEventListener('load', () => {
+  document.getElementById('share-url').textContent = window.location.href;
+});
+</script>
+</body>
+</html>
