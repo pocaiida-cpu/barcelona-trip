@@ -251,66 +251,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       <button class="btn btn-primary" onclick="openAddWish()">+ Add</button>
     </div>
     <div class="wish-grid" id="wish-grid">
-      <div class="wish-card">
-        <span class="priority-badge p-high">Popular!</span>
-        <div class="wish-emoji">🏛️</div>
-        <div class="wish-name">Sagrada Família</div>
-        <div class="wish-category">Architecture · Gaudí</div>
-        <div class="vote-area">
-          <button class="vote-btn active" onclick="toggleVote(this,5)">♡ Want to go</button>
-          <span class="vote-count">5 votes</span>
-        </div>
-      </div>
-      <div class="wish-card">
-        <span class="priority-badge p-high">Popular!</span>
-        <div class="wish-emoji">🥘</div>
-        <div class="wish-name">La Boqueria Market</div>
-        <div class="wish-category">Food · Market</div>
-        <div class="vote-area">
-          <button class="vote-btn" onclick="toggleVote(this,4)">♡ Want to go</button>
-          <span class="vote-count">4 votes</span>
-        </div>
-      </div>
-      <div class="wish-card">
-        <div class="wish-emoji">🏖️</div>
-        <div class="wish-name">Barceloneta Beach</div>
-        <div class="wish-category">Beach · Sea</div>
-        <div class="vote-area">
-          <button class="vote-btn" onclick="toggleVote(this,3)">♡ Want to go</button>
-          <span class="vote-count">3 votes</span>
-        </div>
-      </div>
-      <div class="wish-card">
-        <div class="wish-emoji">🎨</div>
-        <div class="wish-name">Picasso Museum</div>
-        <div class="wish-category">Art · Culture</div>
-        <div class="vote-area">
-          <button class="vote-btn" onclick="toggleVote(this,2)">♡ Want to go</button>
-          <span class="vote-count">2 votes</span>
-        </div>
-      </div>
-      <div class="wish-card">
-        <div class="wish-emoji">🌿</div>
-        <div class="wish-name">Montjuïc Hill</div>
-        <div class="wish-category">Nature · Views</div>
-        <div class="vote-area">
-          <button class="vote-btn" onclick="toggleVote(this,3)">♡ Want to go</button>
-          <span class="vote-count">3 votes</span>
-        </div>
-      </div>
-      <div class="wish-card">
-        <div class="wish-emoji">🍷</div>
-        <div class="wish-name">Plaça de Catalunya</div>
-        <div class="wish-category">Sightseeing · Plaza</div>
-        <div class="vote-area">
-          <button class="vote-btn" onclick="toggleVote(this,2)">♡ Want to go</button>
-          <span class="vote-count">2 votes</span>
-        </div>
-      </div>
-      <div class="add-card" onclick="openAddWish()">
-        <div class="add-card-icon">+</div>
-        <div class="add-card-label">Add a place</div>
-      </div>
     </div>
   </div>
 
@@ -428,7 +368,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
 <!-- MODAL: Add/Edit Wish -->
 <div class="modal-overlay hidden" id="modal-wish">
   <div class="modal">
-    <h3 class="modal-title">Add a place</h3>
+    <h3 class="modal-title" id="modal-wish-title">Add a place</h3>
+    <input type="hidden" id="wish-edit-id" value="">
     <div class="form-row">
       <label class="form-label">Place name</label>
       <input class="form-input" id="wish-name" type="text" placeholder="e.g. Picasso Museum">
@@ -450,9 +391,37 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
         <input class="form-input" id="wish-emoji" type="text" placeholder="🏛️" maxlength="2">
       </div>
     </div>
+    <div class="form-row">
+      <label class="form-label">Added by</label>
+      <select class="form-select" id="wish-author">
+        <option value="">— Select —</option>
+        <option value="Sayaka">Sayaka</option>
+        <option value="Kasumi">Kasumi</option>
+        <option value="Mari">Mari</option>
+        <option value="Jennifer">Jennifer</option>
+        <option value="Yuka">Yuka</option>
+        <option value="Mayumi">Mayumi</option>
+      </select>
+    </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('modal-wish')">Cancel</button>
-      <button class="btn btn-primary" onclick="addWish()">Add</button>
+      <button class="btn btn-primary" id="wish-submit-btn" onclick="submitWish()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Edit Note -->
+<div class="modal-overlay hidden" id="modal-note">
+  <div class="modal">
+    <h3 class="modal-title">Edit comment</h3>
+    <input type="hidden" id="note-edit-id" value="">
+    <div class="form-row">
+      <label class="form-label">Comment</label>
+      <textarea class="form-textarea" id="note-edit-text" placeholder="コメントを入力..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-note')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitEditNote()">Save</button>
     </div>
   </div>
 </div>
@@ -521,43 +490,43 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
 // ============================================================
 const MEMBERS = ['Sayaka','Kasumi','Mari','Jennifer','Yuka','Mayumi'];
 const MEMBER_COLORS = {
-  'Sayaka': '#C8633A',
-  'Kasumi': '#3A7D5C',
-  'Mari':   '#5B8FC9',
-  'Jennifer':'#D4A843',
-  'Yuka':   '#8B6BA0',
-  'Mayumi': '#C84040'
+  'Sayaka':   '#C8633A',
+  'Kasumi':   '#3A7D5C',
+  'Mari':     '#5B8FC9',
+  'Jennifer': '#D4A843',
+  'Yuka':     '#8B6BA0',
+  'Mayumi':   '#C84040'
 };
+function memberAvatar(name, size=20) {
+  if (!name) return '';
+  const c = MEMBER_COLORS[name] || '#999';
+  return `<span style="display:inline-flex;align-items:center;justify-content:center;width:${size}px;height:${size}px;border-radius:50%;background:${c};color:white;font-size:${Math.round(size*0.45)}px;font-weight:600;flex-shrink:0;">${name.substring(0,2)}</span>`;
+}
+function memberLine(name) {
+  if (!name) return '';
+  return `<div style="display:flex;align-items:center;gap:4px;margin-top:4px;font-size:10px;color:var(--gray-text);">${memberAvatar(name,18)} ${name}</div>`;
+}
+function memberOptions(selected='') {
+  return `<option value="">— Select —</option>` +
+    MEMBERS.map(m => `<option value="${m}"${m===selected?' selected':''}>${m}</option>`).join('');
+}
 
 // Trip days: Jun 30 2026 to Aug 1 2026
 const TRIP_DAYS = [];
-const start = new Date(2026, 5, 30); // Jun 30
-const end   = new Date(2026, 7, 1);  // Aug 1
+const start = new Date(2026, 5, 30);
+const end   = new Date(2026, 7, 1);
 for (let d = new Date(start); d <= end; d.setDate(d.getDate()+1)) {
   TRIP_DAYS.push(new Date(d));
 }
-
-const DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAY_NAMES   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function formatDay(date)      { return `${DAY_NAMES[date.getDay()]}, ${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`; }
+function formatDayShort(date) { return `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`; }
 
-function formatDay(date) {
-  return `${DAY_NAMES[date.getDay()]}, ${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`;
-}
-function formatDayShort(date) {
-  return `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`;
-}
-
-// schedules: { id, dayIndex (0-based), time, name, detail, color }
-let schedules = [];
-let nextSchedId = 1;
-
-// notes
-let notes = [];
-let nextNoteId = 1;
-
-// expenses
-let expenses = [];
-let nextExpId = 1;
+let schedules = []; let nextSchedId = 1;
+let wishes    = []; let nextWishId  = 1;
+let notes     = []; let nextNoteId  = 1;
+let expenses  = []; let nextExpId   = 1;
 
 // ============================================================
 // TABS
@@ -575,64 +544,43 @@ function switchTab(name, btn) {
 function renderSchedule() {
   const container = document.getElementById('schedule-list');
   container.innerHTML = '';
-
   TRIP_DAYS.forEach((date, dayIndex) => {
-    const dayNum = dayIndex + 1;
-    const dayItems = schedules.filter(s => s.dayIndex === dayIndex);
-    const dayCard = document.createElement('div');
-    dayCard.className = 'day-card';
-
-    const header = `
-      <div class="day-header">
-        <span class="day-label">Day ${dayNum}</span>
-        <span class="day-date">${formatDay(date)}</span>
-      </div>`;
-
-    let rows = '';
-    dayItems.sort((a,b) => (a.time||'').localeCompare(b.time||'')).forEach(item => {
-      const authorHtml = item.author
-        ? `<div class="sched-author-name">
-             <div class="sched-author-avatar" style="background:${MEMBER_COLORS[item.author]||'#999'};">${item.author.substring(0,2)}</div>
-             ${escHtml(item.author)}
-           </div>`
-        : '';
-      rows += `
-        <div class="sched-row" id="sched-row-${item.id}">
+    const dayItems = schedules.filter(s => s.dayIndex === dayIndex)
+      .sort((a,b) => (a.time||'').localeCompare(b.time||''));
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    const SCOLORS = ['#C8633A','#3A7D5C','#5B8FC9','#D4A843','#8B6BA0','#C84040'];
+    let rows = dayItems.length === 0
+      ? `<div style="padding:14px 20px;font-size:13px;color:var(--gray-text);opacity:0.6;">予定なし</div>`
+      : dayItems.map(item => `
+        <div class="sched-row">
           <span class="sched-time">${item.time || '—'}</span>
-          <div class="sched-dot" style="background:${item.color};"></div>
+          <div class="sched-dot" style="background:${SCOLORS[item.id % SCOLORS.length]};"></div>
           <div class="sched-body">
             <div class="sched-name">${escHtml(item.name)}</div>
             ${item.detail ? `<div class="sched-detail">${escHtml(item.detail)}</div>` : ''}
-            ${authorHtml}
+            ${memberLine(item.author)}
           </div>
           <div class="sched-actions">
-            <button class="action-btn edit-btn" onclick="openEditSchedule(${item.id})" title="編集">✏️</button>
-            <button class="action-btn delete-btn" onclick="confirmDelete('sched',${item.id})" title="削除">🗑</button>
+            <button class="action-btn edit-btn" onclick="openEditSchedule(${item.id})">✏️</button>
+            <button class="action-btn delete-btn" onclick="confirmDelete('sched',${item.id})">🗑</button>
           </div>
-        </div>`;
-    });
-
-    if (dayItems.length === 0) {
-      rows = `<div style="padding:14px 20px;font-size:13px;color:var(--gray-text);opacity:0.6;">予定なし</div>`;
-    }
-
-    const addRow = `<div class="add-row" onclick="openAddSchedule(${dayIndex})">+ 予定を追加</div>`;
-
-    dayCard.innerHTML = header + `<div class="schedule-list">${rows}</div>` + addRow;
-    container.appendChild(dayCard);
+        </div>`).join('');
+    card.innerHTML = `
+      <div class="day-header">
+        <span class="day-label">Day ${dayIndex+1}</span>
+        <span class="day-date">${formatDay(date)}</span>
+      </div>
+      <div class="schedule-list">${rows}</div>
+      <div class="add-row" onclick="openAddSchedule(${dayIndex})">+ 予定を追加</div>`;
+    container.appendChild(card);
   });
 }
 
 function buildDayOptions(selected) {
   const sel = document.getElementById('sched-day');
-  sel.innerHTML = '';
-  TRIP_DAYS.forEach((date, i) => {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = `Day ${i+1} (${formatDayShort(date)})`;
-    if (i === selected) opt.selected = true;
-    sel.appendChild(opt);
-  });
+  sel.innerHTML = TRIP_DAYS.map((d,i) =>
+    `<option value="${i}"${i===selected?' selected':''}>${'Day '+(i+1)+' ('+formatDayShort(d)+')'}</option>`).join('');
 }
 
 function openAddSchedule(dayIndex) {
@@ -641,12 +589,11 @@ function openAddSchedule(dayIndex) {
   document.getElementById('sched-name').value = '';
   document.getElementById('sched-time').value = '';
   document.getElementById('sched-memo').value = '';
-  document.getElementById('sched-author').value = '';
+  document.getElementById('sched-author').innerHTML = memberOptions();
   document.getElementById('sched-submit-btn').textContent = 'Add';
   buildDayOptions(dayIndex !== undefined ? dayIndex : 0);
   openModal('modal-schedule');
 }
-
 function openEditSchedule(id) {
   const item = schedules.find(s => s.id === id);
   if (!item) return;
@@ -655,27 +602,24 @@ function openEditSchedule(id) {
   document.getElementById('sched-name').value = item.name;
   document.getElementById('sched-time').value = item.time || '';
   document.getElementById('sched-memo').value = item.detail || '';
-  document.getElementById('sched-author').value = item.author || '';
+  document.getElementById('sched-author').innerHTML = memberOptions(item.author);
   document.getElementById('sched-submit-btn').textContent = 'Save';
   buildDayOptions(item.dayIndex);
   openModal('modal-schedule');
 }
-
 function submitSchedule() {
   const name = document.getElementById('sched-name').value.trim();
   if (!name) { alert('Place / Activity を入力してください'); return; }
   const dayIndex = parseInt(document.getElementById('sched-day').value);
-  const time = document.getElementById('sched-time').value.trim();
-  const detail = document.getElementById('sched-memo').value.trim();
-  const author = document.getElementById('sched-author').value;
-  const editId = document.getElementById('sched-edit-id').value;
-  const colors = ['#C8633A','#3A7D5C','#5B8FC9','#D4A843','#8B6BA0','#C84040'];
-
+  const time     = document.getElementById('sched-time').value.trim();
+  const detail   = document.getElementById('sched-memo').value.trim();
+  const author   = document.getElementById('sched-author').value;
+  const editId   = document.getElementById('sched-edit-id').value;
   if (editId) {
     const item = schedules.find(s => s.id === parseInt(editId));
-    if (item) { item.name = name; item.dayIndex = dayIndex; item.time = time; item.detail = detail; item.author = author; }
+    if (item) Object.assign(item, {name, dayIndex, time, detail, author});
   } else {
-    schedules.push({ id: nextSchedId++, dayIndex, time, name, detail, author, color: colors[schedules.length % colors.length] });
+    schedules.push({id: nextSchedId++, dayIndex, time, name, detail, author});
   }
   closeModal('modal-schedule');
   renderSchedule();
@@ -684,37 +628,80 @@ function submitSchedule() {
 // ============================================================
 // WISHLIST
 // ============================================================
-function toggleVote(btn, count) {
-  const isActive = btn.classList.contains('active');
-  btn.classList.toggle('active');
-  const countEl = btn.parentElement.querySelector('.vote-count');
-  const cur = parseInt(countEl.textContent);
-  countEl.textContent = (isActive ? cur - 1 : cur + 1) + ' votes';
+function renderWishlist() {
+  const grid = document.getElementById('wish-grid');
+  grid.innerHTML = '';
+  wishes.forEach(w => {
+    const card = document.createElement('div');
+    card.className = 'wish-card';
+    card.innerHTML = `
+      <div class="wish-actions">
+        <button class="action-btn edit-btn" onclick="openEditWish(${w.id})">✏️</button>
+        <button class="action-btn delete-btn" onclick="confirmDelete('wish',${w.id})">🗑</button>
+      </div>
+      <div class="wish-emoji">${w.emoji || '📍'}</div>
+      <div class="wish-name">${escHtml(w.name)}</div>
+      <div class="wish-category">${escHtml(w.category)}</div>
+      ${w.author ? `<div style="display:flex;align-items:center;gap:4px;margin-bottom:8px;font-size:10px;color:var(--gray-text);">${memberAvatar(w.author,16)} ${w.author}</div>` : '<div style="margin-bottom:8px;"></div>'}
+      <div class="vote-area">
+        <button class="vote-btn${w.voted?' active':''}" onclick="toggleVote(${w.id},this)">♡ Want to go</button>
+        <span class="vote-count">${w.votes} votes</span>
+      </div>`;
+    grid.appendChild(card);
+  });
+  // add card
+  const addCard = document.createElement('div');
+  addCard.className = 'add-card';
+  addCard.onclick = () => openAddWish();
+  addCard.innerHTML = `<div class="add-card-icon">+</div><div class="add-card-label">Add a place</div>`;
+  grid.appendChild(addCard);
 }
 
-function openAddWish() { openModal('modal-wish'); }
+function toggleVote(id, btn) {
+  const w = wishes.find(x => x.id === id);
+  if (!w) return;
+  w.voted = !w.voted;
+  w.votes += w.voted ? 1 : -1;
+  btn.classList.toggle('active', w.voted);
+  btn.parentElement.querySelector('.vote-count').textContent = w.votes + ' votes';
+}
 
-function addWish() {
-  const name = document.getElementById('wish-name').value.trim();
-  if (!name) { alert('Place name を入力してください'); return; }
-  const cat = document.getElementById('wish-cat').value;
-  const emoji = document.getElementById('wish-emoji').value.trim() || '📍';
-  const grid = document.getElementById('wish-grid');
-  const addCard = grid.querySelector('.add-card');
-  const card = document.createElement('div');
-  card.className = 'wish-card';
-  card.innerHTML = `
-    <div class="wish-emoji">${emoji}</div>
-    <div class="wish-name">${escHtml(name)}</div>
-    <div class="wish-category">${escHtml(cat)}</div>
-    <div class="vote-area">
-      <button class="vote-btn" onclick="toggleVote(this,0)">♡ Want to go</button>
-      <span class="vote-count">0 votes</span>
-    </div>`;
-  grid.insertBefore(card, addCard);
+function openAddWish() {
+  document.getElementById('modal-wish-title').textContent = 'Add a place';
+  document.getElementById('wish-edit-id').value = '';
   document.getElementById('wish-name').value = '';
   document.getElementById('wish-emoji').value = '';
+  document.getElementById('wish-author').innerHTML = memberOptions();
+  document.getElementById('wish-submit-btn').textContent = 'Add';
+  openModal('modal-wish');
+}
+function openEditWish(id) {
+  const w = wishes.find(x => x.id === id);
+  if (!w) return;
+  document.getElementById('modal-wish-title').textContent = 'Edit place';
+  document.getElementById('wish-edit-id').value = id;
+  document.getElementById('wish-name').value = w.name;
+  document.getElementById('wish-cat').value = w.category;
+  document.getElementById('wish-emoji').value = w.emoji || '';
+  document.getElementById('wish-author').innerHTML = memberOptions(w.author);
+  document.getElementById('wish-submit-btn').textContent = 'Save';
+  openModal('modal-wish');
+}
+function submitWish() {
+  const name     = document.getElementById('wish-name').value.trim();
+  if (!name) { alert('Place name を入力してください'); return; }
+  const category = document.getElementById('wish-cat').value;
+  const emoji    = document.getElementById('wish-emoji').value.trim() || '📍';
+  const author   = document.getElementById('wish-author').value;
+  const editId   = document.getElementById('wish-edit-id').value;
+  if (editId) {
+    const w = wishes.find(x => x.id === parseInt(editId));
+    if (w) Object.assign(w, {name, category, emoji, author});
+  } else {
+    wishes.push({id: nextWishId++, name, category, emoji, author, votes: 0, voted: false});
+  }
   closeModal('modal-wish');
+  renderWishlist();
 }
 
 // ============================================================
@@ -729,15 +716,15 @@ function renderNotes() {
   }
   notes.forEach(note => {
     const color = MEMBER_COLORS[note.author] || '#999';
-    const initials = note.author.substring(0,2);
     const div = document.createElement('div');
     div.className = 'note-card';
     div.innerHTML = `
       <div class="note-actions">
-        <button class="action-btn delete-btn" onclick="confirmDelete('note',${note.id})" title="削除">🗑</button>
+        <button class="action-btn edit-btn" onclick="openEditNote(${note.id})">✏️</button>
+        <button class="action-btn delete-btn" onclick="confirmDelete('note',${note.id})">🗑</button>
       </div>
       <div class="note-meta">
-        <div class="note-avatar" style="background:${color}22;color:${color};">${initials}</div>
+        <div class="note-avatar" style="background:${color}22;color:${color};">${note.author.substring(0,2)}</div>
         <span class="note-author">${escHtml(note.author)}</span>
         <span class="note-time">${note.time}</span>
       </div>
@@ -747,14 +734,30 @@ function renderNotes() {
 }
 
 function postNote() {
-  const text = document.getElementById('compose-text').value.trim();
+  const text   = document.getElementById('compose-text').value.trim();
   const author = document.getElementById('compose-name').value;
-  if (!text) { alert('コメントを入力してください'); return; }
+  if (!text)   { alert('コメントを入力してください'); return; }
   if (!author) { alert('名前を選択してください'); return; }
-  const now = new Date();
+  const now  = new Date();
   const time = `${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-  notes.push({ id: nextNoteId++, author, text, time });
+  notes.push({id: nextNoteId++, author, text, time});
   document.getElementById('compose-text').value = '';
+  renderNotes();
+}
+function openEditNote(id) {
+  const note = notes.find(n => n.id === id);
+  if (!note) return;
+  document.getElementById('note-edit-id').value = id;
+  document.getElementById('note-edit-text').value = note.text;
+  openModal('modal-note');
+}
+function submitEditNote() {
+  const id   = parseInt(document.getElementById('note-edit-id').value);
+  const text = document.getElementById('note-edit-text').value.trim();
+  if (!text) { alert('コメントを入力してください'); return; }
+  const note = notes.find(n => n.id === id);
+  if (note) note.text = text;
+  closeModal('modal-note');
   renderNotes();
 }
 
@@ -777,62 +780,63 @@ function renderExpenses() {
           <div class="exp-who">for 6</div>
         </div>
       </div>
-      <div><div class="exp-name">${escHtml(exp.paidBy)}</div></div>
+      <div>
+        <div class="exp-name">${escHtml(exp.paidBy)}</div>
+        ${memberAvatar(exp.paidBy, 18)}
+      </div>
       <div>
         <div class="exp-amount">€${exp.amount}</div>
         <div class="exp-per">€${(exp.amount/6).toFixed(0)}/person</div>
       </div>
       <div><span class="exp-status ${exp.status==='settled'?'status-ok':'status-pending'}">${exp.status==='settled'?'Settled':'Pending'}</span></div>
       <div class="exp-actions">
-        <button class="action-btn edit-btn" onclick="openEditExpense(${exp.id})" title="編集">✏️</button>
-        <button class="action-btn delete-btn" onclick="confirmDelete('exp',${exp.id})" title="削除">🗑</button>
+        <button class="action-btn edit-btn" onclick="openEditExpense(${exp.id})">✏️</button>
+        <button class="action-btn delete-btn" onclick="confirmDelete('exp',${exp.id})">🗑</button>
       </div>`;
     container.appendChild(row);
   });
   document.getElementById('total-amount').textContent = '€' + total;
-  document.getElementById('per-person').textContent = '€' + (total/6).toFixed(0);
+  document.getElementById('per-person').textContent   = '€' + (total/6).toFixed(0);
 }
 
 function openAddExpense() {
   document.getElementById('modal-expense-title').textContent = 'Add expense';
-  document.getElementById('exp-edit-id').value = '';
-  document.getElementById('exp-desc').value = '';
-  document.getElementById('exp-amount').value = '';
-  document.getElementById('exp-emoji').value = '';
-  document.getElementById('exp-status').value = 'pending';
+  document.getElementById('exp-edit-id').value  = '';
+  document.getElementById('exp-desc').value     = '';
+  document.getElementById('exp-amount').value   = '';
+  document.getElementById('exp-emoji').value    = '';
+  document.getElementById('exp-status').value   = 'pending';
+  document.getElementById('exp-paid').innerHTML = memberOptions(MEMBERS[0]);
   document.getElementById('exp-submit-btn').textContent = 'Add';
   openModal('modal-expense');
 }
-
 function openEditExpense(id) {
   const exp = expenses.find(e => e.id === id);
   if (!exp) return;
   document.getElementById('modal-expense-title').textContent = 'Edit expense';
-  document.getElementById('exp-edit-id').value = id;
-  document.getElementById('exp-desc').value = exp.desc;
-  document.getElementById('exp-amount').value = exp.amount;
-  document.getElementById('exp-emoji').value = exp.emoji || '';
-  document.getElementById('exp-paid').value = exp.paidBy;
-  document.getElementById('exp-status').value = exp.status;
+  document.getElementById('exp-edit-id').value  = id;
+  document.getElementById('exp-desc').value     = exp.desc;
+  document.getElementById('exp-amount').value   = exp.amount;
+  document.getElementById('exp-emoji').value    = exp.emoji || '';
+  document.getElementById('exp-paid').innerHTML = memberOptions(exp.paidBy);
+  document.getElementById('exp-status').value   = exp.status;
   document.getElementById('exp-submit-btn').textContent = 'Save';
   openModal('modal-expense');
 }
-
 function submitExpense() {
-  const desc = document.getElementById('exp-desc').value.trim();
+  const desc   = document.getElementById('exp-desc').value.trim();
   const amount = parseFloat(document.getElementById('exp-amount').value);
   if (!desc) { alert('Description を入力してください'); return; }
   if (isNaN(amount) || amount <= 0) { alert('金額を入力してください'); return; }
   const paidBy = document.getElementById('exp-paid').value;
   const status = document.getElementById('exp-status').value;
-  const emoji = document.getElementById('exp-emoji').value.trim() || '💶';
+  const emoji  = document.getElementById('exp-emoji').value.trim() || '💶';
   const editId = document.getElementById('exp-edit-id').value;
-
   if (editId) {
     const exp = expenses.find(e => e.id === parseInt(editId));
-    if (exp) { exp.desc = desc; exp.amount = amount; exp.paidBy = paidBy; exp.status = status; exp.emoji = emoji; }
+    if (exp) Object.assign(exp, {desc, amount, paidBy, status, emoji});
   } else {
-    expenses.push({ id: nextExpId++, desc, amount, paidBy, status, emoji });
+    expenses.push({id: nextExpId++, desc, amount, paidBy, status, emoji});
   }
   closeModal('modal-expense');
   renderExpenses();
@@ -842,29 +846,26 @@ function submitExpense() {
 // DELETE CONFIRM
 // ============================================================
 function confirmDelete(type, id) {
-  const messages = { sched: 'この予定を削除します。よろしいですか？', note: 'このコメントを削除します。よろしいですか？', exp: 'この支出を削除します。よろしいですか？' };
+  const messages = {sched:'この予定を削除します。よろしいですか？', wish:'このスポットを削除します。よろしいですか？', note:'このコメントを削除します。よろしいですか？', exp:'この支出を削除します。よろしいですか？'};
   document.getElementById('confirm-message').textContent = messages[type] || '削除しますか？';
   const btn = document.getElementById('confirm-ok-btn');
   btn.onclick = () => { doDelete(type, id); closeModal('modal-confirm'); };
   openModal('modal-confirm');
 }
-
 function doDelete(type, id) {
-  if (type === 'sched') { schedules = schedules.filter(s => s.id !== id); renderSchedule(); }
-  else if (type === 'note') { notes = notes.filter(n => n.id !== id); renderNotes(); }
-  else if (type === 'exp') { expenses = expenses.filter(e => e.id !== id); renderExpenses(); }
+  if      (type==='sched') { schedules = schedules.filter(s => s.id!==id); renderSchedule(); }
+  else if (type==='wish')  { wishes    = wishes.filter(w => w.id!==id);    renderWishlist(); }
+  else if (type==='note')  { notes     = notes.filter(n => n.id!==id);     renderNotes(); }
+  else if (type==='exp')   { expenses  = expenses.filter(e => e.id!==id);  renderExpenses(); }
 }
 
 // ============================================================
 // MODAL HELPERS
 // ============================================================
-function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+function openModal(id)  { document.getElementById(id).classList.remove('hidden'); }
 function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', function(e) {
-    if (e.target === this) closeModal(this.id);
-  });
+  overlay.addEventListener('click', function(e) { if (e.target===this) closeModal(this.id); });
 });
 
 // ============================================================
@@ -873,7 +874,6 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
 function escHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
 function copyUrl() {
   const url = location.href;
   navigator.clipboard.writeText(url).then(() => {
@@ -888,8 +888,10 @@ function copyUrl() {
 // INIT
 // ============================================================
 renderSchedule();
+renderWishlist();
 renderNotes();
 renderExpenses();
+
 </script>
 </body>
 </html>
