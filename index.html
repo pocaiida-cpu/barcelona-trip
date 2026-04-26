@@ -201,10 +201,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
 
 <nav class="nav-tabs">
   <div class="nav-inner">
-    <button class="tab-btn active" onclick="switchTab('schedule',this)"><span>📅</span> Schedule</button>
-    <button class="tab-btn" onclick="switchTab('wishlist',this)"><span>📍</span> Wish List</button>
-    <button class="tab-btn" onclick="switchTab('notes',this)"><span>💬</span> Notes</button>
-    <button class="tab-btn" onclick="switchTab('payment',this)"><span>💰</span> Payment</button>
+    <button class="tab-btn active" id="tab-btn-schedule"><span>📅</span> Schedule</button>
+    <button class="tab-btn" id="tab-btn-wishlist"><span>📍</span> Wish List</button>
+    <button class="tab-btn" id="tab-btn-notes"><span>💬</span> Notes</button>
+    <button class="tab-btn" id="tab-btn-payment"><span>💰</span> Payment</button>
   </div>
 </nav>
 
@@ -213,7 +213,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
   <div class="tab-content active" id="tab-schedule">
     <div class="section-header">
       <h2 class="section-title">Schedule</h2>
-      <button class="btn btn-primary" onclick="openAddSchedule()">+ Add</button>
+      <button class="btn btn-primary" id="btn-open-add-schedule">+ Add</button>
     </div>
     <div id="schedule-list" style="color:var(--gray-text);text-align:center;padding:32px;">Loading...</div>
   </div>
@@ -221,7 +221,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
   <div class="tab-content" id="tab-wishlist">
     <div class="section-header">
       <h2 class="section-title">Wish List</h2>
-      <button class="btn btn-primary" onclick="openAddWish()">+ Add</button>
+      <button class="btn btn-primary" id="btn-open-add-wish">+ Add</button>
     </div>
     <div class="wish-grid" id="wish-grid"></div>
   </div>
@@ -240,7 +240,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
           <option>Sayaka</option><option>Kasumi</option><option>Mari</option>
           <option>Jennifer</option><option>Yuka</option><option>Mayumi</option>
         </select>
-        <button class="btn btn-primary" onclick="postNote()">Post</button>
+        <button class="btn btn-primary" id="btn-post-note">Post</button>
       </div>
     </div>
   </div>
@@ -248,7 +248,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
   <div class="tab-content" id="tab-payment">
     <div class="section-header">
       <h2 class="section-title">Payment</h2>
-      <button class="btn btn-primary" onclick="openAddExpense()">+ Add</button>
+      <button class="btn btn-primary" id="btn-open-add-expense">+ Add</button>
     </div>
     <div class="expense-table">
       <div class="expense-thead">
@@ -261,7 +261,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
         <div class="expense-th"></div>
       </div>
       <div id="expense-rows"></div>
-      <div class="add-expense-row" onclick="openAddExpense()">+ Add expense</div>
+      <div class="add-expense-row" id="btn-open-add-expense-2">+ Add expense</div>
     </div>
   </div>
 
@@ -270,7 +270,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
 <div class="share-bar">
   <span class="share-label">Share link:</span>
   <div class="share-link-box" id="share-url">Copy this page URL and send it to everyone!</div>
-  <button class="copy-btn" onclick="copyUrl()">Copy URL</button>
+  <button class="copy-btn" id="btn-copy-url">Copy URL</button>
 </div>
 
 <!-- MODAL: Schedule -->
@@ -305,8 +305,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       <textarea class="form-textarea" id="sched-memo" placeholder="Details, tips, reminders..."></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modal-schedule')">Cancel</button>
-      <button class="btn btn-primary" id="sched-submit-btn" onclick="submitSchedule()">Add</button>
+      <button class="btn btn-outline" id="btn-cancel-schedule">Cancel</button>
+      <button class="btn btn-primary" id="btn-submit-schedule">Add</button>
     </div>
   </div>
 </div>
@@ -347,8 +347,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       <textarea class="form-textarea" id="wish-note" placeholder="Tips, links, reasons to go..."></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modal-wish')">Cancel</button>
-      <button class="btn btn-primary" id="wish-submit-btn" onclick="submitWish()">Add</button>
+      <button class="btn btn-outline" id="btn-cancel-wish">Cancel</button>
+      <button class="btn btn-primary" id="btn-submit-wish">Add</button>
     </div>
   </div>
 </div>
@@ -363,8 +363,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       <textarea class="form-textarea" id="note-edit-text"></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modal-note')">Cancel</button>
-      <button class="btn btn-primary" onclick="submitEditNote()">Save</button>
+      <button class="btn btn-outline" id="btn-cancel-note">Cancel</button>
+      <button class="btn btn-primary" id="btn-submit-note">Save</button>
     </div>
   </div>
 </div>
@@ -409,8 +409,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       <div class="split-by-wrap" id="split-by-chips"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modal-expense')">Cancel</button>
-      <button class="btn btn-primary" id="exp-submit-btn" onclick="submitExpense()">Add</button>
+      <button class="btn btn-outline" id="btn-cancel-expense">Cancel</button>
+      <button class="btn btn-primary" id="btn-submit-expense">Add</button>
     </div>
   </div>
 </div>
@@ -421,7 +421,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
     <h3 class="modal-title">Delete?</h3>
     <p style="font-size:14px;color:var(--gray-text);margin-bottom:8px;" id="confirm-message">Are you sure?</p>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn btn-outline" id="btn-cancel-confirm">Cancel</button>
       <button class="btn btn-danger" id="confirm-ok-btn">Delete</button>
     </div>
   </div>
@@ -529,7 +529,7 @@ function openAddSchedule(di) {
   document.getElementById('sched-edit-id').value = '';
   ['sched-name','sched-time','sched-memo'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('sched-author').innerHTML = memberOpts('');
-  document.getElementById('sched-submit-btn').textContent = 'Add';
+  document.getElementById('btn-submit-schedule').textContent = 'Add';
   buildDayOpts(di??0);
   openModal('modal-schedule');
 }
@@ -543,7 +543,7 @@ function openEditSchedule(key) {
   document.getElementById('sched-time').value  = it.time||'';
   document.getElementById('sched-memo').value  = it.detail||'';
   document.getElementById('sched-author').innerHTML = memberOpts(it.author);
-  document.getElementById('sched-submit-btn').textContent = 'Save';
+  document.getElementById('btn-submit-schedule').textContent = 'Save';
   buildDayOpts(it.dayIndex);
   openModal('modal-schedule');
 }
@@ -653,7 +653,7 @@ function openAddWish() {
   document.getElementById('wish-edit-id').value = '';
   ['wish-name','wish-emoji','wish-note'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('wish-author').innerHTML = memberOpts('');
-  document.getElementById('wish-submit-btn').textContent = 'Add';
+  document.getElementById('btn-submit-wish').textContent = 'Add';
   openModal('modal-wish');
 }
 window.openAddWish = openAddWish;
@@ -667,7 +667,7 @@ function openEditWish(key) {
   document.getElementById('wish-emoji').value = w.emoji||'';
   document.getElementById('wish-note').value  = w.note||'';
   document.getElementById('wish-author').innerHTML = memberOpts(w.author);
-  document.getElementById('wish-submit-btn').textContent = 'Save';
+  document.getElementById('btn-submit-wish').textContent = 'Save';
   openModal('modal-wish');
 }
 window.openEditWish = openEditWish;
@@ -802,7 +802,7 @@ function openAddExpense() {
   document.getElementById('exp-status').value  = 'pending';
   buildDateOpts('');
   buildSplitChips(MEMBERS);
-  document.getElementById('exp-submit-btn').textContent = 'Add';
+  document.getElementById('btn-submit-expense').textContent = 'Add';
   openModal('modal-expense');
 }
 window.openAddExpense = openAddExpense;
@@ -817,7 +817,7 @@ function openEditExpense(key) {
   document.getElementById('exp-status').value  = exp.status;
   buildDateOpts(exp.date||'');
   buildSplitChips(exp.splitBy&&exp.splitBy.length ? exp.splitBy : MEMBERS);
-  document.getElementById('exp-submit-btn').textContent = 'Save';
+  document.getElementById('btn-submit-expense').textContent = 'Save';
   openModal('modal-expense');
 }
 window.openEditExpense = openEditExpense;
@@ -870,6 +870,41 @@ function copyUrl() {
   document.getElementById('share-url').textContent = location.href;
 }
 window.copyUrl = copyUrl;
+
+// ── EVENT WIRING (replaces all inline onclick) ───────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Tabs
+  const tabMap = { 'tab-btn-schedule':'schedule', 'tab-btn-wishlist':'wishlist', 'tab-btn-notes':'notes', 'tab-btn-payment':'payment' };
+  Object.entries(tabMap).forEach(([id, name]) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', () => switchTab(name, el));
+  });
+
+  // Section buttons
+  const simpleMap = {
+    'btn-open-add-schedule': () => openAddSchedule(),
+    'btn-open-add-wish':     () => openAddWish(),
+    'btn-post-note':         () => postNote(),
+    'btn-open-add-expense':  () => openAddExpense(),
+    'btn-open-add-expense-2':() => openAddExpense(),
+    'btn-copy-url':          () => copyUrl(),
+    // Modal actions
+    'btn-cancel-schedule':   () => closeModal('modal-schedule'),
+    'btn-submit-schedule':   () => submitSchedule(),
+    'btn-cancel-wish':       () => closeModal('modal-wish'),
+    'btn-submit-wish':       () => submitWish(),
+    'btn-cancel-note':       () => closeModal('modal-note'),
+    'btn-submit-note':       () => submitEditNote(),
+    'btn-cancel-expense':    () => closeModal('modal-expense'),
+    'btn-submit-expense':    () => submitExpense(),
+    'btn-cancel-confirm':    () => closeModal('modal-confirm'),
+  };
+  Object.entries(simpleMap).forEach(([id, fn]) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', fn);
+  });
+});
+
 </script>
 </body>
 </html>
