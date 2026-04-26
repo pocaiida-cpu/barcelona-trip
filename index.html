@@ -147,9 +147,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
 .budget-metric-value { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--navy); }
 .budget-metric-sub { font-size: 11px; color: var(--gray-text); margin-top: 4px; }
 .expense-table { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(26,39,68,0.06); }
-.expense-thead { background: var(--navy); display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; padding: 12px 20px; gap: 12px; }
+.expense-thead { background: var(--navy); display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr auto; padding: 12px 20px; gap: 12px; }
 .expense-th { font-size: 11px; color: var(--sky-light); font-weight: 500; }
-.expense-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; padding: 14px 20px; gap: 12px; border-bottom: 1px solid var(--gray-light); align-items: center; transition: background 0.15s; }
+.expense-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr auto; padding: 14px 20px; gap: 12px; border-bottom: 1px solid var(--gray-light); align-items: center; transition: background 0.15s; }
 .expense-row:last-child { border-bottom: none; }
 .expense-row:hover { background: var(--terracotta-pale); }
 .expense-icon-name { display: flex; align-items: center; gap: 10px; }
@@ -191,11 +191,46 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
 .empty { text-align: center; padding: 48px 20px; color: var(--gray-text); }
 .empty-icon { font-size: 40px; margin-bottom: 12px; }
 
-/* RESPONSIVE */
+/* SPLIT BY multi-select */
+.split-by-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.split-chip {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 10px; border: 1.5px solid var(--gray-mid); border-radius: 20px;
+  cursor: pointer; font-size: 12px; font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s; background: white; color: var(--navy);
+  user-select: none;
+}
+.split-chip:hover { border-color: var(--terracotta); }
+.split-chip.selected { border-color: var(--terracotta); background: var(--terracotta-pale); color: var(--terracotta); }
+.split-chip .chip-av {
+  width: 18px; height: 18px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 8px; font-weight: 700; color: white; flex-shrink: 0;
+}
+.exp-split-cell { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; }
+
+.wish-note { font-size: 12px; color: var(--gray-text); line-height: 1.5; margin: 6px 0 10px; font-style: italic; border-left: 2px solid var(--terracotta-light); padding-left: 8px; }
+
+/* WISH COMMENTS */
+.wish-comments-section { margin-top: 12px; border-top: 1px solid var(--gray-light); padding-top: 10px; }
+.wish-comment-toggle { background: none; border: none; font-size: 12px; color: var(--gray-text); cursor: pointer; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 4px; padding: 0; }
+.wish-comment-toggle:hover { color: var(--terracotta); }
+.wish-comment-list { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
+.wish-comment-item { display: flex; gap: 8px; }
+.wish-comment-bubble { background: var(--gray-light); border-radius: 10px; padding: 8px 10px; flex: 1; }
+.wish-comment-name { font-size: 10px; font-weight: 600; margin-bottom: 3px; }
+.wish-comment-text { font-size: 13px; color: var(--navy); line-height: 1.5; }
+.wish-comment-input-row { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
+.wish-comment-input { flex: 1; padding: 7px 10px; border: 1.5px solid var(--gray-light); border-radius: 8px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; }
+.wish-comment-input:focus { border-color: var(--terracotta); }
+.wish-comment-name-sel { padding: 7px 8px; border: 1.5px solid var(--gray-light); border-radius: 8px; font-size: 12px; font-family: 'DM Sans', sans-serif; outline: none; background: white; }
+.wish-comment-post { background: var(--terracotta); color: white; border: none; border-radius: 8px; padding: 7px 12px; font-size: 12px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
+.wish-comment-post:hover { background: var(--navy); }
+
 @media (max-width: 600px) {
   .budget-top { grid-template-columns: 1fr 1fr; }
   .expense-thead, .expense-row { grid-template-columns: 1fr 1fr auto; }
-  .expense-th:nth-child(3), .expense-th:nth-child(4), .exp-per, .exp-status { display: none; }
+  .expense-th:nth-child(2), .expense-th:nth-child(4), .expense-th:nth-child(5), .expense-th:nth-child(6), .exp-date, .exp-per, .exp-status, .exp-split-cell { display: none; }
   .wish-grid { grid-template-columns: 1fr 1fr; }
   .header-inner { gap: 12px; }
   .logo { font-size: 18px; }
@@ -229,7 +264,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
     <button class="tab-btn active" onclick="switchTab('schedule',this)"><span class="tab-icon">📅</span>Schedule</button>
     <button class="tab-btn" onclick="switchTab('wishlist',this)"><span class="tab-icon">📍</span>Wish List</button>
     <button class="tab-btn" onclick="switchTab('notes',this)"><span class="tab-icon">💬</span>Notes</button>
-    <button class="tab-btn" onclick="switchTab('budget',this)"><span class="tab-icon">💰</span>Budget</button>
+    <button class="tab-btn" onclick="switchTab('budget',this)"><span class="tab-icon">💰</span>Payment</button>
   </div>
 </nav>
 
@@ -281,31 +316,16 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
   <!-- BUDGET TAB -->
   <div class="tab-content" id="tab-budget">
     <div class="section-header">
-      <h2 class="section-title">Budget</h2>
+      <h2 class="section-title">Payment</h2>
       <button class="btn btn-primary" onclick="openAddExpense()">+ Add</button>
-    </div>
-    <div class="budget-top">
-      <div class="budget-metric">
-        <div class="budget-metric-label">Group total</div>
-        <div class="budget-metric-value" id="total-amount">€0</div>
-        <div class="budget-metric-sub">Shared expenses</div>
-      </div>
-      <div class="budget-metric">
-        <div class="budget-metric-label">Per person</div>
-        <div class="budget-metric-value" id="per-person">€0</div>
-        <div class="budget-metric-sub">Split 6 ways</div>
-      </div>
-      <div class="budget-metric">
-        <div class="budget-metric-label">Budget guide</div>
-        <div class="budget-metric-value">€800</div>
-        <div class="budget-metric-sub">Local costs / person</div>
-      </div>
     </div>
     <div class="expense-table">
       <div class="expense-thead">
         <div class="expense-th">Description</div>
+        <div class="expense-th">Date</div>
         <div class="expense-th">Paid by</div>
         <div class="expense-th">Amount</div>
+        <div class="expense-th">Split by</div>
         <div class="expense-th">Status</div>
         <div class="expense-th"></div>
       </div>
@@ -403,6 +423,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
         <option value="Mayumi">Mayumi</option>
       </select>
     </div>
+    <div class="form-row">
+      <label class="form-label">Note</label>
+      <textarea class="form-textarea" id="wish-note" placeholder="Tips, links, reasons to go..."></textarea>
+    </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('modal-wish')">Cancel</button>
       <button class="btn btn-primary" id="wish-submit-btn" onclick="submitWish()">Add</button>
@@ -437,9 +461,14 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
     </div>
     <div class="form-row form-row-2">
       <div>
+        <label class="form-label">Date</label>
+        <select class="form-select" id="exp-date"></select>
+      </div>
+      <div>
         <label class="form-label">Amount (€)</label>
         <input class="form-input" id="exp-amount" type="number" placeholder="0">
       </div>
+    </div>
       <div>
         <label class="form-label">Paid by</label>
         <select class="form-select" id="exp-paid">
@@ -464,6 +493,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
         <label class="form-label">Emoji</label>
         <input class="form-input" id="exp-emoji" type="text" placeholder="🏛️" maxlength="2">
       </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Split by</label>
+      <div class="split-by-wrap" id="split-by-chips"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('modal-expense')">Cancel</button>
@@ -625,6 +658,9 @@ function submitSchedule() {
   renderSchedule();
 }
 
+let wishComments = {}; // { wishId: [{id, author, text, time}] }
+let nextWishCommentId = 1;
+
 // ============================================================
 // WISHLIST
 // ============================================================
@@ -632,8 +668,21 @@ function renderWishlist() {
   const grid = document.getElementById('wish-grid');
   grid.innerHTML = '';
   wishes.forEach(w => {
+    const comments = wishComments[w.id] || [];
+    const commentsHtml = comments.map(c => {
+      const color = MEMBER_COLORS[c.author] || '#999';
+      return `<div class="wish-comment-item">
+        <span style="width:22px;height:22px;border-radius:50%;background:${color};color:white;font-size:9px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">${c.author.substring(0,2)}</span>
+        <div class="wish-comment-bubble">
+          <div class="wish-comment-name" style="color:${color};">${escHtml(c.author)}</div>
+          <div class="wish-comment-text">${escHtml(c.text)}</div>
+        </div>
+      </div>`;
+    }).join('');
+
     const card = document.createElement('div');
     card.className = 'wish-card';
+    card.style.cursor = 'default';
     card.innerHTML = `
       <div class="wish-actions">
         <button class="action-btn edit-btn" onclick="openEditWish(${w.id})">✏️</button>
@@ -642,10 +691,27 @@ function renderWishlist() {
       <div class="wish-emoji">${w.emoji || '📍'}</div>
       <div class="wish-name">${escHtml(w.name)}</div>
       <div class="wish-category">${escHtml(w.category)}</div>
-      ${w.author ? `<div style="display:flex;align-items:center;gap:4px;margin-bottom:8px;font-size:10px;color:var(--gray-text);">${memberAvatar(w.author,16)} ${w.author}</div>` : '<div style="margin-bottom:8px;"></div>'}
+      ${w.author ? `<div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;font-size:10px;color:var(--gray-text);">${memberAvatar(w.author,16)} ${w.author}</div>` : '<div style="margin-bottom:6px;"></div>'}
+      ${w.note ? `<div class="wish-note">${escHtml(w.note)}</div>` : ''}
       <div class="vote-area">
         <button class="vote-btn${w.voted?' active':''}" onclick="toggleVote(${w.id},this)">♡ Want to go</button>
         <span class="vote-count">${w.votes} votes</span>
+      </div>
+      <div class="wish-comments-section">
+        <button class="wish-comment-toggle" onclick="toggleWishComments(${w.id},this)">
+          💬 Comments${comments.length > 0 ? ' ('+comments.length+')' : ''} ▸
+        </button>
+        <div class="wish-comment-list" id="wish-comments-${w.id}" style="display:none;">
+          ${commentsHtml}
+          <div class="wish-comment-input-row">
+            <select class="wish-comment-name-sel" id="wish-cname-${w.id}">
+              <option value="">Name...</option>
+              ${MEMBERS.map(m=>`<option value="${m}">${m}</option>`).join('')}
+            </select>
+            <input class="wish-comment-input" id="wish-cinput-${w.id}" placeholder="Add a comment..." type="text">
+            <button class="wish-comment-post" onclick="postWishComment(${w.id})">Post</button>
+          </div>
+        </div>
       </div>`;
     grid.appendChild(card);
   });
@@ -655,6 +721,30 @@ function renderWishlist() {
   addCard.onclick = () => openAddWish();
   addCard.innerHTML = `<div class="add-card-icon">+</div><div class="add-card-label">Add a place</div>`;
   grid.appendChild(addCard);
+}
+
+function toggleWishComments(id, btn) {
+  const list = document.getElementById('wish-comments-' + id);
+  const open = list.style.display !== 'none';
+  list.style.display = open ? 'none' : 'flex';
+  list.style.flexDirection = 'column';
+  list.style.gap = '8px';
+  btn.textContent = btn.textContent.replace(open ? '▾' : '▸', open ? '▸' : '▾');
+}
+
+function postWishComment(wishId) {
+  const text   = document.getElementById('wish-cinput-' + wishId).value.trim();
+  const author = document.getElementById('wish-cname-' + wishId).value;
+  if (!text)   { alert('コメントを入力してください'); return; }
+  if (!author) { alert('名前を選択してください'); return; }
+  if (!wishComments[wishId]) wishComments[wishId] = [];
+  const now = new Date();
+  const time = `${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  wishComments[wishId].push({id: nextWishCommentId++, author, text, time});
+  renderWishlist();
+  // Re-open the comment section after re-render
+  const list = document.getElementById('wish-comments-' + wishId);
+  if (list) { list.style.display = 'flex'; list.style.flexDirection = 'column'; list.style.gap = '8px'; }
 }
 
 function toggleVote(id, btn) {
@@ -671,6 +761,7 @@ function openAddWish() {
   document.getElementById('wish-edit-id').value = '';
   document.getElementById('wish-name').value = '';
   document.getElementById('wish-emoji').value = '';
+  document.getElementById('wish-note').value = '';
   document.getElementById('wish-author').innerHTML = memberOptions();
   document.getElementById('wish-submit-btn').textContent = 'Add';
   openModal('modal-wish');
@@ -683,6 +774,7 @@ function openEditWish(id) {
   document.getElementById('wish-name').value = w.name;
   document.getElementById('wish-cat').value = w.category;
   document.getElementById('wish-emoji').value = w.emoji || '';
+  document.getElementById('wish-note').value = w.note || '';
   document.getElementById('wish-author').innerHTML = memberOptions(w.author);
   document.getElementById('wish-submit-btn').textContent = 'Save';
   openModal('modal-wish');
@@ -693,12 +785,13 @@ function submitWish() {
   const category = document.getElementById('wish-cat').value;
   const emoji    = document.getElementById('wish-emoji').value.trim() || '📍';
   const author   = document.getElementById('wish-author').value;
+  const note     = document.getElementById('wish-note').value.trim();
   const editId   = document.getElementById('wish-edit-id').value;
   if (editId) {
     const w = wishes.find(x => x.id === parseInt(editId));
-    if (w) Object.assign(w, {name, category, emoji, author});
+    if (w) Object.assign(w, {name, category, emoji, author, note});
   } else {
-    wishes.push({id: nextWishId++, name, category, emoji, author, votes: 0, voted: false});
+    wishes.push({id: nextWishId++, name, category, emoji, author, note, votes: 0, voted: false});
   }
   closeModal('modal-wish');
   renderWishlist();
@@ -762,32 +855,40 @@ function submitEditNote() {
 }
 
 // ============================================================
-// BUDGET
+// BUDGET / PAYMENT
 // ============================================================
 function renderExpenses() {
   const container = document.getElementById('expense-rows');
   container.innerHTML = '';
   let total = 0;
+  let totalPerPerson = 0;
   expenses.forEach(exp => {
     total += exp.amount;
+    const splitMembers = (exp.splitBy && exp.splitBy.length > 0) ? exp.splitBy : MEMBERS;
+    const splitCount = splitMembers.length;
+    const perPerson = exp.amount / splitCount;
+    totalPerPerson += perPerson;
     const row = document.createElement('div');
     row.className = 'expense-row';
+    const splitAvatars = splitMembers.map(m => memberAvatar(m, 18)).join('');
     row.innerHTML = `
       <div class="expense-icon-name">
         <span class="exp-icon">${exp.emoji || '💶'}</span>
         <div>
           <div class="exp-name">${escHtml(exp.desc)}</div>
-          <div class="exp-who">for 6</div>
+          <div class="exp-who">for ${splitCount}</div>
         </div>
       </div>
+      <div class="exp-date" style="font-size:12px;color:var(--gray-text);">${exp.date || '—'}</div>
       <div>
         <div class="exp-name">${escHtml(exp.paidBy)}</div>
         ${memberAvatar(exp.paidBy, 18)}
       </div>
       <div>
         <div class="exp-amount">€${exp.amount}</div>
-        <div class="exp-per">€${(exp.amount/6).toFixed(0)}/person</div>
+        <div class="exp-per">€${perPerson.toFixed(0)}/person</div>
       </div>
+      <div class="exp-split-cell">${splitAvatars}</div>
       <div><span class="exp-status ${exp.status==='settled'?'status-ok':'status-pending'}">${exp.status==='settled'?'Settled':'Pending'}</span></div>
       <div class="exp-actions">
         <button class="action-btn edit-btn" onclick="openEditExpense(${exp.id})">✏️</button>
@@ -795,8 +896,34 @@ function renderExpenses() {
       </div>`;
     container.appendChild(row);
   });
-  document.getElementById('total-amount').textContent = '€' + total;
-  document.getElementById('per-person').textContent   = '€' + (total/6).toFixed(0);
+}
+
+function buildDateOptions(selected) {
+  const sel = document.getElementById('exp-date');
+  sel.innerHTML = `<option value="">— Select date —</option>` +
+    TRIP_DAYS.map((d, i) => {
+      const label = `Day ${i+1} (${formatDayShort(d)})`;
+      return `<option value="${label}"${label===selected?' selected':''}>${label}</option>`;
+    }).join('');
+}
+
+function buildSplitChips(selected) {
+  const wrap = document.getElementById('split-by-chips');
+  wrap.innerHTML = '';
+  MEMBERS.forEach(m => {
+    const chip = document.createElement('div');
+    chip.className = 'split-chip' + (selected.includes(m) ? ' selected' : '');
+    chip.innerHTML = `<span class="chip-av" style="background:${MEMBER_COLORS[m]}">${m.substring(0,2)}</span>${m}`;
+    chip.onclick = () => chip.classList.toggle('selected');
+    wrap.appendChild(chip);
+  });
+}
+
+function getSelectedSplitMembers() {
+  return [...document.querySelectorAll('#split-by-chips .split-chip.selected')].map(c => {
+    const text = c.textContent.trim();
+    return MEMBERS.find(m => text.startsWith(m)) || text;
+  });
 }
 
 function openAddExpense() {
@@ -807,6 +934,8 @@ function openAddExpense() {
   document.getElementById('exp-emoji').value    = '';
   document.getElementById('exp-status').value   = 'pending';
   document.getElementById('exp-paid').innerHTML = memberOptions(MEMBERS[0]);
+  buildDateOptions('');
+  buildSplitChips(MEMBERS);
   document.getElementById('exp-submit-btn').textContent = 'Add';
   openModal('modal-expense');
 }
@@ -820,6 +949,8 @@ function openEditExpense(id) {
   document.getElementById('exp-emoji').value    = exp.emoji || '';
   document.getElementById('exp-paid').innerHTML = memberOptions(exp.paidBy);
   document.getElementById('exp-status').value   = exp.status;
+  buildDateOptions(exp.date || '');
+  buildSplitChips(exp.splitBy && exp.splitBy.length ? exp.splitBy : MEMBERS);
   document.getElementById('exp-submit-btn').textContent = 'Save';
   openModal('modal-expense');
 }
@@ -828,15 +959,18 @@ function submitExpense() {
   const amount = parseFloat(document.getElementById('exp-amount').value);
   if (!desc) { alert('Description を入力してください'); return; }
   if (isNaN(amount) || amount <= 0) { alert('金額を入力してください'); return; }
-  const paidBy = document.getElementById('exp-paid').value;
-  const status = document.getElementById('exp-status').value;
-  const emoji  = document.getElementById('exp-emoji').value.trim() || '💶';
+  const paidBy  = document.getElementById('exp-paid').value;
+  const status  = document.getElementById('exp-status').value;
+  const emoji   = document.getElementById('exp-emoji').value.trim() || '💶';
+  const date    = document.getElementById('exp-date').value;
+  const splitBy = getSelectedSplitMembers();
+  if (splitBy.length === 0) { alert('Split by で最低1人選択してください'); return; }
   const editId = document.getElementById('exp-edit-id').value;
   if (editId) {
     const exp = expenses.find(e => e.id === parseInt(editId));
-    if (exp) Object.assign(exp, {desc, amount, paidBy, status, emoji});
+    if (exp) Object.assign(exp, {desc, amount, paidBy, status, emoji, date, splitBy});
   } else {
-    expenses.push({id: nextExpId++, desc, amount, paidBy, status, emoji});
+    expenses.push({id: nextExpId++, desc, amount, paidBy, status, emoji, date, splitBy});
   }
   closeModal('modal-expense');
   renderExpenses();
