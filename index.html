@@ -1,89 +1,874 @@
-<!doctype html>
-<html lang="ja">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Barcelona Trip 2025</title>
-  <style>
-    :root{--bg:#fff8f3;--card:#fff;--ink:#2f2a27;--muted:#8c7f76;--line:#eadfd8;--accent:#ef7d62;--accent2:#f5b66f;--green:#6aae83;--shadow:0 12px 30px rgba(70,45,30,.10)}
-    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#fff1e9,var(--bg));font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
-    .loading{position:fixed;inset:0;background:rgba(255,248,243,.92);display:none;align-items:center;justify-content:center;z-index:99;font-weight:700}.loading.show{display:flex}
-    .wrap{max-width:980px;margin:0 auto;padding:22px 14px 90px}.hero{background:linear-gradient(135deg,#ff9d78,#f4c56f);color:white;border-radius:28px;padding:24px;box-shadow:var(--shadow)}
-    h1{margin:0 0 8px;font-size:32px}.subtitle{opacity:.92;margin:4px 0}.members{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.member-badge{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.45);border-radius:999px;padding:6px 10px;cursor:pointer}.member-badge.active{background:white;color:var(--accent);font-weight:800}.avatar{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#ef7d62;font-weight:800}.sync-status{margin-top:12px;font-size:13px}.realtime-dot{display:inline-block;width:8px;height:8px;background:#7be495;border-radius:50%;margin-right:6px}
-    .tabs{position:sticky;top:0;background:rgba(255,248,243,.9);backdrop-filter:blur(10px);z-index:5;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 0}.tab{border:0;background:white;border-radius:16px;padding:11px 8px;box-shadow:var(--shadow);font-weight:800;color:var(--muted);cursor:pointer}.tab.active{background:var(--ink);color:white}.page{display:none}.page.active{display:block}.section-title{display:flex;justify-content:space-between;align-items:center;margin:16px 0 10px;font-size:22px;font-weight:900}.btn-add,.btn-post,.btn-submit{border:0;background:var(--accent);color:white;border-radius:999px;padding:10px 14px;font-weight:800;cursor:pointer}.btn-cancel{border:0;background:#eee2da;color:var(--ink);border-radius:999px;padding:10px 14px;font-weight:800;cursor:pointer}.card,.note-card,.expense-card,.wish-card{background:white;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
-    .day-card{margin-bottom:12px;overflow:hidden}.day-header{display:flex;justify-content:space-between;align-items:center;background:#fff2eb;padding:13px 16px}.day-num{font-weight:900}.schedule-item{display:grid;grid-template-columns:68px 1fr auto;gap:10px;padding:14px 14px;border-top:1px solid var(--line);align-items:start}.time-col{font-size:13px;color:var(--muted);font-weight:800}.item-title{font-weight:900}.item-sub,.meta{font-size:12px;color:var(--muted);margin-top:4px}.actions{display:flex;gap:6px}.icon-btn{border:1px solid var(--line);background:white;border-radius:10px;padding:6px 8px;cursor:pointer}.tag{display:inline-block;margin-top:7px;padding:4px 8px;border-radius:999px;background:#fff0d2;color:#a55f00;font-size:11px;font-weight:800}.add-to-day{width:100%;border:0;background:#fffaf7;padding:12px;color:var(--accent);font-weight:900;cursor:pointer}
-    .wish-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.wish-card{padding:16px;position:relative}.wish-emoji{font-size:30px}.wish-name{font-weight:900;margin-top:8px}.wish-cat,.wish-note{font-size:13px;color:var(--muted);margin-top:5px;white-space:pre-wrap}.wish-note{background:#fff8f3;border-radius:12px;padding:8px}.wish-vote-row{display:flex;align-items:center;gap:8px;margin-top:10px}.vote-btn{border:0;background:#ffe7e0;border-radius:999px;width:34px;height:34px;cursor:pointer}.add-wish-card{border:2px dashed var(--line);border-radius:22px;display:grid;place-items:center;min-height:160px;color:var(--accent);font-weight:900;cursor:pointer;background:#fffaf7}.add-wish-card span{font-size:34px}.add-wish-card p{margin:0 0 18px}
-    .note-card{padding:14px;margin-bottom:10px;position:relative}.note-header{display:flex;gap:8px;align-items:center}.note-name{font-weight:900}.note-time{font-size:12px;color:var(--muted)}.note-text{margin-top:10px;white-space:pre-wrap}.note-compose{padding:14px;margin-top:14px}.note-compose textarea, input, select, textarea{width:100%;border:1px solid var(--line);border-radius:14px;padding:11px;background:white;font:inherit}.note-compose-row{display:flex;gap:8px;margin-top:10px}.name-select{max-width:180px}
-    .expense-card{display:grid;grid-template-columns:44px 1fr auto auto;gap:10px;align-items:center;padding:14px;margin-bottom:10px}.expense-emoji{font-size:26px}.expense-title{font-weight:900}.expense-sub{font-size:12px;color:var(--muted);margin-top:4px}.expense-amount{font-weight:900;font-size:18px;text-align:right}.status-badge{display:inline-block;margin-top:7px;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800}.status-pending{background:#fff0d2;color:#a55f00}.status-settled{background:#e9f7ee;color:#277346}.empty-state{text-align:center;color:var(--muted);padding:28px;background:white;border-radius:22px;border:1px solid var(--line)}
-    .share{margin-top:18px;background:white;border-radius:18px;padding:12px;border:1px solid var(--line);display:flex;gap:8px;align-items:center}.share input{font-size:12px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:white;padding:10px 16px;border-radius:999px;transition:.2s;z-index:100}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;justify-content:center;z-index:50}.modal-bg.open{display:flex}.modal{background:white;width:min(620px,100%);max-height:90vh;overflow:auto;border-radius:26px 26px 0 0;padding:20px}.modal h3{margin-top:0}.modal label{display:block;font-size:12px;font-weight:900;color:var(--muted);margin:12px 0 6px}.modal-row{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
-    @media(max-width:640px){.schedule-item{grid-template-columns:56px 1fr}.actions{grid-column:2}.expense-card{grid-template-columns:36px 1fr auto}.expense-card .actions{grid-column:2/4}.hero{border-radius:22px}h1{font-size:26px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barcelona Trip 2026 🌞</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sand: #F5F0E8;
+  --terracotta: #C8633A;
+  --terracotta-light: #E8956D;
+  --terracotta-pale: #FAF0EB;
+  --navy: #1A2744;
+  --sky-light: #A8C8E8;
+  --gold: #D4A843;
+  --white: #FFFFFF;
+  --gray-light: #F0EDE8;
+  --gray-mid: #C8C4BC;
+  --gray-text: #6B6560;
+  --green: #3A7D5C;
+  --green-light: #E8F5EE;
+  --red: #C84040;
+  --red-light: #FFF0F0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--navy); min-height: 100vh; }
+
+.app-header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(26,39,68,0.3); }
+.header-inner { max-width: 960px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--white); }
+.logo span { color: var(--terracotta-light); }
+.trip-info { font-size: 12px; color: var(--sky-light); text-align: right; }
+.members-strip { display: flex; gap: 6px; align-items: center; margin-top: 6px; justify-content: flex-end; }
+
+.nav-tabs { background: var(--white); border-bottom: 2px solid var(--gray-light); position: sticky; top: 65px; z-index: 99; }
+.nav-inner { max-width: 960px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.tab-btn { padding: 14px 24px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--gray-text); background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+.tab-btn:hover { color: var(--terracotta); background: var(--terracotta-pale); }
+.tab-btn.active { color: var(--terracotta); border-bottom-color: var(--terracotta); font-weight: 500; }
+
+.main { max-width: 960px; margin: 0 auto; padding: 24px 20px 80px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.section-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--navy); }
+.btn { padding: 8px 18px; border-radius: 8px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: all 0.15s; }
+.btn-primary { background: var(--terracotta); color: white; }
+.btn-primary:hover { background: var(--navy); }
+.btn-outline { background: white; color: var(--navy); border: 1.5px solid var(--navy); }
+.btn-outline:hover { background: var(--navy); color: white; }
+.btn-danger { background: var(--red-light); color: var(--red); border: 1.5px solid var(--red); }
+.btn-danger:hover { background: var(--red); color: white; }
+
+/* SCHEDULE */
+.day-card { background: white; border-radius: 16px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(26,39,68,0.06); }
+.day-header { background: var(--navy); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+.day-label { font-family: 'Playfair Display', serif; font-size: 16px; color: white; }
+.day-date { font-size: 12px; color: var(--sky-light); }
+.sched-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--gray-light); transition: background 0.15s; }
+.sched-row:last-child { border-bottom: none; }
+.sched-row:hover { background: var(--terracotta-pale); }
+.sched-row:hover .sched-actions { opacity: 1; }
+.sched-time { font-size: 12px; color: var(--gray-text); min-width: 44px; padding-top: 3px; }
+.sched-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.sched-body { flex: 1; }
+.sched-name { font-size: 14px; font-weight: 500; }
+.sched-detail { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
+.sched-actions { display: flex; gap: 4px; opacity: 0; transition: opacity 0.15s; flex-shrink: 0; }
+.action-btn { width: 26px; height: 26px; border-radius: 6px; border: none; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.edit-btn { background: var(--gray-light); }
+.edit-btn:hover { background: var(--sky-light); }
+.delete-btn { background: var(--red-light); color: var(--red); }
+.delete-btn:hover { background: var(--red); color: white; }
+.add-row { padding: 10px 20px; font-size: 13px; color: var(--gray-text); cursor: pointer; display: flex; align-items: center; gap: 6px; border-top: 1px dashed var(--gray-mid); }
+.add-row:hover { color: var(--terracotta); }
+.author-line { display: flex; align-items: center; gap: 4px; margin-top: 5px; font-size: 10px; color: var(--gray-text); }
+
+/* WISH LIST */
+.wish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+.wish-card { background: white; border-radius: 14px; padding: 18px; box-shadow: 0 2px 10px rgba(26,39,68,0.06); transition: transform 0.15s, box-shadow 0.15s; position: relative; }
+.wish-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,39,68,0.12); }
+.wish-card:hover .wish-actions { opacity: 1; }
+.wish-actions { position: absolute; top: 10px; left: 10px; display: flex; gap: 4px; opacity: 0; transition: opacity 0.15s; }
+.wish-emoji { font-size: 28px; margin-bottom: 10px; }
+.wish-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.wish-category { font-size: 11px; color: var(--gray-text); margin-bottom: 6px; }
+.wish-note { font-size: 12px; color: var(--gray-text); line-height: 1.5; margin: 6px 0 10px; font-style: italic; border-left: 2px solid var(--terracotta-light); padding-left: 8px; }
+.vote-area { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.vote-btn { font-size: 11px; padding: 4px 12px; border-radius: 20px; border: 1.5px solid var(--terracotta); background: transparent; color: var(--terracotta); cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+.vote-btn.active, .vote-btn:hover { background: var(--terracotta); color: white; }
+.vote-count { font-size: 12px; color: var(--gray-text); }
+.add-card { background: transparent; border: 2px dashed var(--gray-mid); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 160px; cursor: pointer; transition: border-color 0.15s; gap: 8px; }
+.add-card:hover { border-color: var(--terracotta); }
+.add-card-icon { font-size: 24px; color: var(--gray-mid); }
+.add-card-label { font-size: 13px; color: var(--gray-text); }
+
+/* WISH COMMENTS */
+.wish-comments-section { margin-top: 12px; border-top: 1px solid var(--gray-light); padding-top: 10px; }
+.wish-comment-toggle { background: none; border: none; font-size: 12px; color: var(--gray-text); cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 0; }
+.wish-comment-toggle:hover { color: var(--terracotta); }
+.wish-comment-list { margin-top: 8px; display: none; flex-direction: column; gap: 8px; }
+.wish-comment-item { display: flex; gap: 8px; }
+.wish-comment-bubble { background: var(--gray-light); border-radius: 10px; padding: 8px 10px; flex: 1; }
+.wish-comment-name { font-size: 10px; font-weight: 600; margin-bottom: 3px; }
+.wish-comment-text { font-size: 13px; line-height: 1.5; }
+.wish-comment-input-row { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
+.wish-comment-input { flex: 1; padding: 7px 10px; border: 1.5px solid var(--gray-light); border-radius: 8px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; }
+.wish-comment-input:focus { border-color: var(--terracotta); }
+.wish-comment-name-sel { padding: 7px 8px; border: 1.5px solid var(--gray-light); border-radius: 8px; font-size: 12px; font-family: 'DM Sans', sans-serif; outline: none; background: white; }
+.wish-comment-post { background: var(--terracotta); color: white; border: none; border-radius: 8px; padding: 7px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.wish-comment-post:hover { background: var(--navy); }
+
+/* NOTES */
+.note-card { background: white; border-radius: 14px; padding: 16px; box-shadow: 0 2px 10px rgba(26,39,68,0.06); position: relative; margin-bottom: 12px; }
+.note-card:hover .note-actions { opacity: 1; }
+.note-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 4px; opacity: 0; transition: opacity 0.15s; }
+.note-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.note-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; }
+.note-author { font-size: 13px; font-weight: 500; }
+.note-time { font-size: 11px; color: var(--gray-text); margin-left: auto; margin-right: 56px; }
+.note-text { font-size: 14px; color: #3A3530; line-height: 1.7; }
+.note-compose { background: white; border-radius: 14px; padding: 16px; box-shadow: 0 2px 10px rgba(26,39,68,0.06); margin-top: 16px; }
+.compose-label { font-size: 12px; color: var(--gray-text); margin-bottom: 8px; }
+.compose-input { width: 100%; border: 1.5px solid var(--gray-light); border-radius: 10px; padding: 12px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; resize: none; color: var(--navy); outline: none; }
+.compose-input:focus { border-color: var(--terracotta); }
+.compose-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; gap: 10px; }
+.your-name-select { font-size: 13px; border: 1px solid var(--gray-light); border-radius: 6px; padding: 6px 10px; font-family: 'DM Sans', sans-serif; color: var(--navy); outline: none; background: white; }
+
+/* PAYMENT */
+.expense-table { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(26,39,68,0.06); }
+.expense-thead { background: var(--navy); display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 1.2fr 1fr auto; padding: 12px 20px; gap: 10px; align-items: center; }
+.expense-th { font-size: 11px; color: var(--sky-light); font-weight: 500; }
+.expense-row { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 1.2fr 1fr auto; padding: 14px 20px; gap: 10px; border-bottom: 1px solid var(--gray-light); align-items: center; transition: background 0.15s; }
+.expense-row:last-child { border-bottom: none; }
+.expense-row:hover { background: var(--terracotta-pale); }
+.expense-row:hover .exp-actions { opacity: 1; }
+.exp-name { font-size: 13px; font-weight: 500; }
+.exp-sub { font-size: 11px; color: var(--gray-text); margin-top: 2px; }
+.exp-amount { font-size: 14px; font-weight: 500; }
+.exp-status { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; display: inline-block; }
+.status-ok { background: var(--green-light); color: var(--green); }
+.status-pending { background: #FFF8E8; color: var(--gold); }
+.exp-actions { display: flex; gap: 4px; opacity: 0; transition: opacity 0.15s; }
+.exp-split-cell { display: flex; flex-wrap: wrap; gap: 3px; }
+.add-expense-row { padding: 14px 20px; text-align: center; font-size: 13px; color: var(--gray-text); cursor: pointer; border-top: 1px dashed var(--gray-mid); }
+.add-expense-row:hover { color: var(--terracotta); background: var(--terracotta-pale); }
+
+/* SPLIT CHIPS */
+.split-by-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.split-chip { display: flex; align-items: center; gap: 5px; padding: 5px 10px; border: 1.5px solid var(--gray-mid); border-radius: 20px; cursor: pointer; font-size: 12px; font-family: 'DM Sans', sans-serif; transition: all 0.15s; background: white; user-select: none; }
+.split-chip:hover { border-color: var(--terracotta); }
+.split-chip.selected { border-color: var(--terracotta); background: var(--terracotta-pale); color: var(--terracotta); }
+.chip-av { width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: white; flex-shrink: 0; }
+
+/* SHARE BAR */
+.share-bar { background: var(--navy); padding: 12px 20px; display: flex; align-items: center; gap: 12px; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; }
+.share-label { font-size: 12px; color: var(--sky-light); white-space: nowrap; }
+.share-link-box { flex: 1; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 7px 12px; font-size: 12px; color: var(--sky-light); font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.copy-btn { background: var(--terracotta); color: white; border: none; border-radius: 8px; padding: 7px 16px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.copy-btn:hover { background: var(--terracotta-light); }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(26,39,68,0.5); z-index: 300; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.hidden { display: none; }
+.modal { background: white; border-radius: 20px; padding: 28px; width: 100%; max-width: 460px; box-shadow: 0 20px 60px rgba(26,39,68,0.3); max-height: 90vh; overflow-y: auto; }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--navy); margin-bottom: 20px; }
+.form-row { margin-bottom: 14px; }
+.form-label { font-size: 12px; color: var(--gray-text); margin-bottom: 6px; display: block; }
+.form-input, .form-select, .form-textarea { width: 100%; border: 1.5px solid var(--gray-light); border-radius: 10px; padding: 10px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--navy); outline: none; transition: border-color 0.15s; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--terracotta); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+.empty { text-align: center; padding: 48px 20px; color: var(--gray-text); }
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+@media (max-width: 640px) {
+  .expense-thead, .expense-row { grid-template-columns: 2fr 1fr auto; }
+  .expense-th:nth-child(2),.expense-th:nth-child(3),.expense-th:nth-child(5),.expense-th:nth-child(6) { display: none; }
+  .wish-grid { grid-template-columns: 1fr 1fr; }
+  .logo { font-size: 18px; }
+}
+</style>
 </head>
 <body>
-<div id="loading" class="loading show">データを読み込み中…</div><div id="toast" class="toast"></div>
-<div class="wrap">
-  <div class="hero">
-    <h1>Barcelona Trip 2025</h1>
-    <div class="subtitle">Jun 30 – Aug 1 · 33 days</div><div class="subtitle">Carrer de Girona 108, Barcelona 08009</div>
-    <div id="members" class="members"></div><div class="sync-status"><span class="realtime-dot"></span>リアルタイム同期中</div>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="logo">Barce<span>lona</span> 🌞</div>
+    <div class="trip-info">
+      <div>Jun 30 – Aug 1, 2026 · 33 days</div>
+      <div style="font-size:11px;margin-top:2px;">📍 Carrer de Girona 108, Barcelona 08009</div>
+      <div class="members-strip" id="members-strip"></div>
+    </div>
   </div>
-  <div class="share"><span style="font-size:12px;font-weight:900;color:var(--muted)">Share link:</span><input id="shareUrl" readonly><button class="btn-cancel" onclick="copyUrl()">Copy</button></div>
-  <div class="tabs"><button class="tab active" onclick="switchTab('schedule',this)">Schedule</button><button class="tab" onclick="switchTab('wishlist',this)">Wish List</button><button class="tab" onclick="switchTab('notes',this)">Notes</button><button class="tab" onclick="switchTab('payments',this)">Payment</button></div>
-  <section class="page active" id="page-schedule"><div class="section-title">Schedule <button class="btn-add" onclick="openScheduleModal()">＋ Add</button></div><div id="scheduleList"></div></section>
-  <section class="page" id="page-wishlist"><div class="section-title">Wish List <button class="btn-add" onclick="openWishModal()">＋ Add</button></div><div class="wish-grid" id="wishGrid"></div></section>
-  <section class="page" id="page-notes"><div class="section-title">Notes</div><div id="notesList"></div><div class="note-compose card"><textarea id="noteInput" placeholder="コメントを入力…" rows="3"></textarea><div class="note-compose-row"><select class="name-select" id="noteAuthor"></select><button class="btn-post" onclick="postNote()">Post</button></div></div></section>
-  <section class="page" id="page-payments"><div class="section-title">Payment <button class="btn-add" onclick="openPaymentModal()">＋ Add</button></div><div id="paymentList"></div></section>
+</header>
+
+<nav class="nav-tabs">
+  <div class="nav-inner">
+    <button class="tab-btn active" onclick="switchTab('schedule',this)"><span>📅</span> Schedule</button>
+    <button class="tab-btn" onclick="switchTab('wishlist',this)"><span>📍</span> Wish List</button>
+    <button class="tab-btn" onclick="switchTab('notes',this)"><span>💬</span> Notes</button>
+    <button class="tab-btn" onclick="switchTab('payment',this)"><span>💰</span> Payment</button>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="tab-content active" id="tab-schedule">
+    <div class="section-header">
+      <h2 class="section-title">Schedule</h2>
+      <button class="btn btn-primary" onclick="openAddSchedule()">+ Add</button>
+    </div>
+    <div id="schedule-list" style="color:var(--gray-text);text-align:center;padding:32px;">Loading...</div>
+  </div>
+
+  <div class="tab-content" id="tab-wishlist">
+    <div class="section-header">
+      <h2 class="section-title">Wish List</h2>
+      <button class="btn btn-primary" onclick="openAddWish()">+ Add</button>
+    </div>
+    <div class="wish-grid" id="wish-grid"></div>
+  </div>
+
+  <div class="tab-content" id="tab-notes">
+    <div class="section-header">
+      <h2 class="section-title">Notes &amp; Comments</h2>
+    </div>
+    <div id="notes-list"></div>
+    <div class="note-compose">
+      <div class="compose-label">💬 Add a comment</div>
+      <textarea class="compose-input" id="compose-text" rows="3" placeholder="Notes, suggestions, questions for the group..."></textarea>
+      <div class="compose-footer">
+        <select class="your-name-select" id="compose-name">
+          <option value="">Select your name</option>
+          <option>Sayaka</option><option>Kasumi</option><option>Mari</option>
+          <option>Jennifer</option><option>Yuka</option><option>Mayumi</option>
+        </select>
+        <button class="btn btn-primary" onclick="postNote()">Post</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-payment">
+    <div class="section-header">
+      <h2 class="section-title">Payment</h2>
+      <button class="btn btn-primary" onclick="openAddExpense()">+ Add</button>
+    </div>
+    <div class="expense-table">
+      <div class="expense-thead">
+        <div class="expense-th">Description</div>
+        <div class="expense-th">Date</div>
+        <div class="expense-th">Paid by</div>
+        <div class="expense-th">Amount</div>
+        <div class="expense-th">Split by</div>
+        <div class="expense-th">Status</div>
+        <div class="expense-th"></div>
+      </div>
+      <div id="expense-rows"></div>
+      <div class="add-expense-row" onclick="openAddExpense()">+ Add expense</div>
+    </div>
+  </div>
+
+</main>
+
+<div class="share-bar">
+  <span class="share-label">Share link:</span>
+  <div class="share-link-box" id="share-url">Copy this page URL and send it to everyone!</div>
+  <button class="copy-btn" onclick="copyUrl()">Copy URL</button>
 </div>
 
-<div class="modal-bg" id="modal-schedule"><div class="modal"><h3 id="scheduleModalTitle">スケジュールに追加</h3><input type="hidden" id="s-key"><label>場所・アクティビティ</label><input id="s-title"><label>日程</label><select id="s-day"></select><label>時間（任意）</label><input id="s-time" placeholder="例: 10:00 / AM / PM"><label>メモ（任意）</label><textarea id="s-note" rows="3"></textarea><label>タグ</label><select id="s-tag"><option value="">なし</option><option value="must">Must-see!</option><option value="arch">Architecture</option><option value="food">Food</option><option value="gaudi">Gaudí</option></select><div class="modal-row"><button class="btn-cancel" onclick="closeModal('schedule')">キャンセル</button><button class="btn-submit" onclick="saveSchedule()">保存</button></div></div></div>
-<div class="modal-bg" id="modal-wish"><div class="modal"><h3 id="wishModalTitle">Wish List に追加</h3><input type="hidden" id="w-key"><label>場所名</label><input id="w-name"><label>カテゴリ</label><select id="w-cat"><option>Architecture</option><option>Food & Dining</option><option>Art & Culture</option><option>Beach & Nature</option><option>Shopping</option><option>Other</option></select><label>Note</label><textarea id="w-note" rows="3" placeholder="メモ、予約URL、候補理由など"></textarea><label>絵文字</label><input id="w-emoji" maxlength="2" placeholder="✨"><div class="modal-row"><button class="btn-cancel" onclick="closeModal('wish')">キャンセル</button><button class="btn-submit" onclick="saveWish()">保存</button></div></div></div>
-<div class="modal-bg" id="modal-note"><div class="modal"><h3>Noteを編集</h3><input type="hidden" id="n-key"><label>Note</label><textarea id="n-text" rows="5"></textarea><label>入力者</label><select id="n-author"></select><div class="modal-row"><button class="btn-cancel" onclick="closeModal('note')">キャンセル</button><button class="btn-submit" onclick="saveNoteEdit()">保存</button></div></div></div>
-<div class="modal-bg" id="modal-payment"><div class="modal"><h3 id="paymentModalTitle">Payment に追加</h3><input type="hidden" id="p-key"><label>内容</label><input id="p-desc"><label>金額 (€)</label><input type="number" id="p-amount" step="0.01"><label>支払者</label><select id="p-paidby"></select><label>絵文字</label><input id="p-emoji" maxlength="2" placeholder="💳"><label>ステータス</label><select id="p-status"><option value="pending">Pending</option><option value="settled">Settled</option></select><div class="modal-row"><button class="btn-cancel" onclick="closeModal('payment')">キャンセル</button><button class="btn-submit" onclick="savePayment()">保存</button></div></div></div>
+<!-- MODAL: Schedule -->
+<div class="modal-overlay hidden" id="modal-schedule">
+  <div class="modal">
+    <h3 class="modal-title" id="modal-schedule-title">Add to schedule</h3>
+    <input type="hidden" id="sched-edit-id">
+    <div class="form-row">
+      <label class="form-label">Place / Activity</label>
+      <input class="form-input" id="sched-name" type="text" placeholder="e.g. Sagrada Família">
+    </div>
+    <div class="form-row form-row-2">
+      <div>
+        <label class="form-label">Day</label>
+        <select class="form-select" id="sched-day"></select>
+      </div>
+      <div>
+        <label class="form-label">Time</label>
+        <input class="form-input" id="sched-time" type="text" placeholder="e.g. 10:00">
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Added by</label>
+      <select class="form-select" id="sched-author">
+        <option value="">— Select —</option>
+        <option>Sayaka</option><option>Kasumi</option><option>Mari</option>
+        <option>Jennifer</option><option>Yuka</option><option>Mayumi</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Notes</label>
+      <textarea class="form-textarea" id="sched-memo" placeholder="Details, tips, reminders..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-schedule')">Cancel</button>
+      <button class="btn btn-primary" id="sched-submit-btn" onclick="submitSchedule()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Wish -->
+<div class="modal-overlay hidden" id="modal-wish">
+  <div class="modal">
+    <h3 class="modal-title" id="modal-wish-title">Add a place</h3>
+    <input type="hidden" id="wish-edit-id">
+    <div class="form-row">
+      <label class="form-label">Place name</label>
+      <input class="form-input" id="wish-name" type="text" placeholder="e.g. Picasso Museum">
+    </div>
+    <div class="form-row form-row-2">
+      <div>
+        <label class="form-label">Category</label>
+        <select class="form-select" id="wish-cat">
+          <option>Architecture</option><option>Food &amp; Dining</option>
+          <option>Art &amp; Culture</option><option>Beach &amp; Nature</option>
+          <option>Shopping</option><option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Emoji</label>
+        <input class="form-input" id="wish-emoji" type="text" placeholder="🏛️" maxlength="2">
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Added by</label>
+      <select class="form-select" id="wish-author">
+        <option value="">— Select —</option>
+        <option>Sayaka</option><option>Kasumi</option><option>Mari</option>
+        <option>Jennifer</option><option>Yuka</option><option>Mayumi</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Note</label>
+      <textarea class="form-textarea" id="wish-note" placeholder="Tips, links, reasons to go..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-wish')">Cancel</button>
+      <button class="btn btn-primary" id="wish-submit-btn" onclick="submitWish()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Edit Note -->
+<div class="modal-overlay hidden" id="modal-note">
+  <div class="modal">
+    <h3 class="modal-title">Edit comment</h3>
+    <input type="hidden" id="note-edit-id">
+    <div class="form-row">
+      <label class="form-label">Comment</label>
+      <textarea class="form-textarea" id="note-edit-text"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-note')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitEditNote()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Expense -->
+<div class="modal-overlay hidden" id="modal-expense">
+  <div class="modal">
+    <h3 class="modal-title" id="modal-expense-title">Add expense</h3>
+    <input type="hidden" id="exp-edit-id">
+    <div class="form-row">
+      <label class="form-label">Description</label>
+      <input class="form-input" id="exp-desc" type="text" placeholder="e.g. Museum tickets">
+    </div>
+    <div class="form-row form-row-2">
+      <div>
+        <label class="form-label">Date</label>
+        <select class="form-select" id="exp-date"></select>
+      </div>
+      <div>
+        <label class="form-label">Amount (€)</label>
+        <input class="form-input" id="exp-amount" type="number" placeholder="0" min="0">
+      </div>
+    </div>
+    <div class="form-row form-row-2">
+      <div>
+        <label class="form-label">Paid by</label>
+        <select class="form-select" id="exp-paid">
+          <option>Sayaka</option><option>Kasumi</option><option>Mari</option>
+          <option>Jennifer</option><option>Yuka</option><option>Mayumi</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Status</label>
+        <select class="form-select" id="exp-status">
+          <option value="pending">Pending</option>
+          <option value="settled">Settled</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Split by</label>
+      <div class="split-by-wrap" id="split-by-chips"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-expense')">Cancel</button>
+      <button class="btn btn-primary" id="exp-submit-btn" onclick="submitExpense()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Confirm Delete -->
+<div class="modal-overlay hidden" id="modal-confirm">
+  <div class="modal" style="max-width:360px;">
+    <h3 class="modal-title">Delete?</h3>
+    <p style="font-size:14px;color:var(--gray-text);margin-bottom:8px;" id="confirm-message">Are you sure?</p>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn btn-danger" id="confirm-ok-btn">Delete</button>
+    </div>
+  </div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, push, remove, update, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, push, remove, update, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const firebaseConfig = { apiKey:"AIzaSyDgsbX6cW9xjQah8MTbZrzVrabNjSksUGU", authDomain:"barcelona-trip-cba1e.firebaseapp.com", databaseURL:"https://barcelona-trip-cba1e-default-rtdb.firebaseio.com", projectId:"barcelona-trip-cba1e", storageBucket:"barcelona-trip-cba1e.firebasestorage.app", messagingSenderId:"1088189335983", appId:"1:1088189335983:web:4c7a14a4b8fd079318075a", measurementId:"G-43Z9Y7K5B2" };
-const app = initializeApp(firebaseConfig); const db = getDatabase(app);
-const MEMBERS = ['Sayaka','Kasumi','Mari','Jennfer','Yuka','Mayumi'];
-const dayNames = {1:'Day 1 Tue, Jun 30',2:'Day 2 Wed, Jul 1',3:'Day 3 Thu, Jul 2',4:'Day 4 Fri, Jul 3',5:'Day 5 Sat, Jul 4',6:'Day 6+',33:'Day 33 Sat, Aug 1'};
-const dayOrder = [1,2,3,4,5,6,33]; const tagLabel={must:'Must-see!',arch:'Architecture',food:'Food',gaudi:'Gaudí'};
-window._currentUser = 'Sayaka'; let scheduleData={}, wishData={}, notesData={}, paymentData={};
-const $=id=>document.getElementById(id); const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); } window.showToast=toast;
-function memberOptions(){return MEMBERS.map(m=>`<option>${m}</option>`).join('')}
-function meta(item){ const by=item.addedBy||item.author||item.paidBy||'Unknown'; return `Added by ${esc(by)}` + (item.updatedBy?` · Updated by ${esc(item.updatedBy)}`:''); }
-function initUI(){ $('members').innerHTML=MEMBERS.map((m,i)=>`<div class="member-badge ${i===0?'active':''}" onclick="selectMember(this,'${m}')"><div class="avatar">${m[0]}</div>${m}</div>`).join(''); ['noteAuthor','n-author','p-paidby'].forEach(id=>$(id).innerHTML=memberOptions()); $('shareUrl').value=location.href; $('s-day').innerHTML=dayOrder.map(d=>`<option value="${d}">${dayNames[d]}</option>`).join(''); }
-window.selectMember=(el,name)=>{document.querySelectorAll('.member-badge').forEach(b=>b.classList.remove('active')); el.classList.add('active'); window._currentUser=name; $('noteAuthor').value=name;};
-window.switchTab=(tab,el)=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); $('page-'+tab).classList.add('active'); el.classList.add('active');};
-window.openModal=type=> $('modal-'+type).classList.add('open'); window.closeModal=type=> $('modal-'+type).classList.remove('open'); document.querySelectorAll('.modal-bg').forEach(bg=>bg.onclick=e=>{if(e.target===bg)bg.classList.remove('open')}); window.copyUrl=()=>navigator.clipboard.writeText(location.href).then(()=>toast('URLをコピーしました！'));
+const app = initializeApp({
+  apiKey: "AIzaSyDgsbX6cW9xjQah8MTbZrzVrabNjSksUGU",
+  authDomain: "barcelona-trip-cba1e.firebaseapp.com",
+  databaseURL: "https://barcelona-trip-cba1e-default-rtdb.firebaseio.com",
+  projectId: "barcelona-trip-cba1e",
+  storageBucket: "barcelona-trip-cba1e.firebasestorage.app",
+  messagingSenderId: "1088189335983",
+  appId: "1:1088189335983:web:4c7a14a4b8fd079318075a"
+});
+const db = getDatabase(app);
+const r  = path => ref(db, path);
 
-function renderSchedule(data){ scheduleData=data||{}; const grouped={}; dayOrder.forEach(d=>grouped[d]=[]); Object.entries(scheduleData).forEach(([key,item])=>{const d=item.day||6;(grouped[d]||(grouped[d]=[])).push({key,...item})}); $('scheduleList').innerHTML=dayOrder.map(day=>{const items=(grouped[day]||[]).sort((a,b)=>(a.time||'').localeCompare(b.time||'')); return `<div class="card day-card"><div class="day-header"><div><div class="day-num">${day===6?'Day 6+':dayNames[day].split(' ').slice(0,2).join(' ')}</div><div class="meta">${day===6?'Jul 5–31':dayNames[day].split(' ').slice(2).join(' ')}</div></div></div><div>${items.length?items.map(item=>`<div class="schedule-item"><div class="time-col">${esc(item.time||'')}</div><div><div class="item-title">${esc(item.title)}</div>${item.note?`<div class="item-sub">${esc(item.note)}</div>`:''}${item.tag?`<span class="tag">${esc(tagLabel[item.tag]||item.tag)}</span>`:''}<div class="meta">${meta(item)}</div></div><div class="actions"><button class="icon-btn" onclick="editSchedule('${item.key}')">Edit</button><button class="icon-btn" onclick="deleteSchedule('${item.key}')">✕</button></div></div>`).join(''):`<div class="empty-state">TBD — Let's plan together!</div>`}</div><button class="add-to-day" onclick="openScheduleModal(${day})">＋ Add to schedule</button></div>`}).join(''); }
-window.openScheduleModal=(day)=>{ $('scheduleModalTitle').textContent='スケジュールに追加'; ['s-key','s-title','s-time','s-note'].forEach(id=>$(id).value=''); $('s-tag').value=''; $('s-day').value=day||1; openModal('schedule'); };
-window.editSchedule=key=>{const i=scheduleData[key]; if(!i)return; $('scheduleModalTitle').textContent='スケジュールを編集'; $('s-key').value=key; $('s-title').value=i.title||''; $('s-day').value=i.day||6; $('s-time').value=i.time||''; $('s-note').value=i.note||''; $('s-tag').value=i.tag||''; openModal('schedule');};
-window.saveSchedule=()=>{const title=$('s-title').value.trim(); if(!title)return toast('場所名を入力してください'); const key=$('s-key').value; const item={title,day:+$('s-day').value,time:$('s-time').value.trim(),note:$('s-note').value.trim(),tag:$('s-tag').value,updatedBy:window._currentUser,updatedAt:Date.now()}; key?update(ref(db,'schedule/'+key),item):push(ref(db,'schedule'),{...item,addedBy:window._currentUser,createdAt:Date.now()}); closeModal('schedule'); toast('保存しました');};
-window.deleteSchedule=key=>{if(confirm('削除しますか？')) remove(ref(db,'schedule/'+key));}; onValue(ref(db,'schedule'),s=>renderSchedule(s.val()));
+// ── CONSTANTS ──────────────────────────────────────────────
+const MEMBERS = ['Sayaka','Kasumi','Mari','Jennifer','Yuka','Mayumi'];
+const MC = { Sayaka:'#C8633A', Kasumi:'#3A7D5C', Mari:'#5B8FC9', Jennifer:'#D4A843', Yuka:'#8B6BA0', Mayumi:'#C84040' };
+const DAYS = [], MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+for (let d = new Date(2026,5,30), e = new Date(2026,7,1); d <= e; d.setDate(d.getDate()+1)) DAYS.push(new Date(d));
+const fmtDay   = d => `${WD[d.getDay()]}, ${MON[d.getMonth()]} ${d.getDate()}`;
+const fmtShort = d => `${MON[d.getMonth()]} ${d.getDate()}`;
 
-function renderWish(data){ wishData=data||{}; const items=Object.entries(wishData).sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0)); $('wishGrid').innerHTML=items.map(([key,item])=>`<div class="wish-card"><div class="wish-emoji">${esc(item.emoji||'✨')}</div><div class="wish-name">${esc(item.name)}</div><div class="wish-cat">${esc(item.cat||'')}</div>${item.note?`<div class="wish-note">${esc(item.note)}</div>`:''}<div class="wish-vote-row"><button class="vote-btn" onclick="voteWish('${key}',${item.votes||0})">♡</button><span>${item.votes||0} votes</span></div><div class="meta">${meta(item)}</div><div class="actions" style="margin-top:10px"><button class="icon-btn" onclick="editWish('${key}')">Edit</button><button class="icon-btn" onclick="deleteWish('${key}')">✕</button></div></div>`).join('')+`<div class="add-wish-card" onclick="openWishModal()"><span>＋</span><p>Add a place</p></div>`; }
-window.openWishModal=()=>{ $('wishModalTitle').textContent='Wish List に追加'; ['w-key','w-name','w-note','w-emoji'].forEach(id=>$(id).value=''); $('w-cat').value='Architecture'; openModal('wish');};
-window.editWish=key=>{const i=wishData[key]; if(!i)return; $('wishModalTitle').textContent='Wish Listを編集'; $('w-key').value=key; $('w-name').value=i.name||''; $('w-cat').value=i.cat||'Other'; $('w-note').value=i.note||''; $('w-emoji').value=i.emoji||''; openModal('wish');};
-window.saveWish=()=>{const name=$('w-name').value.trim(); if(!name)return toast('場所名を入力してください'); const key=$('w-key').value; const item={name,cat:$('w-cat').value,note:$('w-note').value.trim(),emoji:$('w-emoji').value.trim()||'✨',updatedBy:window._currentUser,updatedAt:Date.now()}; key?update(ref(db,'wishlist/'+key),item):push(ref(db,'wishlist'),{...item,votes:0,addedBy:window._currentUser,createdAt:Date.now()}); closeModal('wish'); toast('保存しました');};
-window.voteWish=(key,current)=>update(ref(db,'wishlist/'+key),{votes:(current||0)+1}); window.deleteWish=key=>{if(confirm('削除しますか？'))remove(ref(db,'wishlist/'+key));}; onValue(ref(db,'wishlist'),s=>renderWish(s.val()));
+// ── LOCAL CACHE ─────────────────────────────────────────────
+let schedules = [], wishes = [], notes = [], expenses = [], wishComments = {};
 
-function renderNotes(data){ notesData=data||{}; const items=Object.entries(notesData).sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0)); $('notesList').innerHTML=items.length?items.map(([key,item])=>`<div class="note-card"><div class="note-header"><div class="avatar" style="width:28px;height:28px;font-size:12px">${esc((item.author||'?')[0])}</div><div class="note-name">${esc(item.author||'')}</div><div class="note-time">${item.createdAt?new Date(item.createdAt).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):''}</div></div><div class="note-text">${esc(item.text)}</div><div class="meta">${meta(item)}</div><div class="actions" style="margin-top:10px"><button class="icon-btn" onclick="editNote('${key}')">Edit</button><button class="icon-btn" onclick="deleteNote('${key}')">✕</button></div></div>`).join(''):'<div class="empty-state">まだコメントがありません</div>'; }
-window.postNote=()=>{const text=$('noteInput').value.trim(); if(!text)return toast('コメントを入力してください'); push(ref(db,'notes'),{text,author:$('noteAuthor').value,addedBy:$('noteAuthor').value,createdAt:Date.now()}); $('noteInput').value='';};
-window.editNote=key=>{const i=notesData[key]; if(!i)return; $('n-key').value=key; $('n-text').value=i.text||''; $('n-author').value=i.author||window._currentUser; openModal('note');}; window.saveNoteEdit=()=>{const key=$('n-key').value; update(ref(db,'notes/'+key),{text:$('n-text').value.trim(),author:$('n-author').value,updatedBy:window._currentUser,updatedAt:Date.now()}); closeModal('note');}; window.deleteNote=key=>{if(confirm('削除しますか？'))remove(ref(db,'notes/'+key));}; onValue(ref(db,'notes'),s=>renderNotes(s.val()));
+// ── UTILS ───────────────────────────────────────────────────
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const av  = (name, sz=20) => {
+  if (!name) return '';
+  return `<span title="${esc(name)}" style="display:inline-flex;align-items:center;justify-content:center;width:${sz}px;height:${sz}px;border-radius:50%;background:${MC[name]||'#999'};color:white;font-size:${Math.round(sz*0.45)}px;font-weight:600;flex-shrink:0;">${name.substring(0,2)}</span>`;
+};
+const memberOpts = sel => `<option value="">— Select —</option>` + MEMBERS.map(m=>`<option${m===sel?' selected':''}>${m}</option>`).join('');
 
-function renderPayments(data){ paymentData=data||{}; const items=Object.entries(paymentData).sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0)); $('paymentList').innerHTML=items.length?items.map(([key,item])=>`<div class="expense-card"><div class="expense-emoji">${esc(item.emoji||'💳')}</div><div><div class="expense-title">${esc(item.desc)}</div><div class="expense-sub">Paid by ${esc(item.paidBy||'')}</div><span class="status-badge ${item.status==='settled'?'status-settled':'status-pending'}">${item.status==='settled'?'Settled':'Pending'}</span><div class="meta">${meta(item)}</div></div><div class="expense-amount">€${Number(item.amount||0).toFixed(2)}</div><div class="actions"><button class="icon-btn" onclick="editPayment('${key}')">Edit</button><button class="icon-btn" onclick="deletePayment('${key}')">✕</button></div></div>`).join(''):'<div class="empty-state">Paymentはまだありません</div>'; }
-window.openPaymentModal=()=>{ $('paymentModalTitle').textContent='Payment に追加'; ['p-key','p-desc','p-amount','p-emoji'].forEach(id=>$(id).value=''); $('p-paidby').value=window._currentUser; $('p-status').value='pending'; openModal('payment');};
-window.editPayment=key=>{const i=paymentData[key]; if(!i)return; $('paymentModalTitle').textContent='Paymentを編集'; $('p-key').value=key; $('p-desc').value=i.desc||''; $('p-amount').value=i.amount||''; $('p-paidby').value=i.paidBy||window._currentUser; $('p-emoji').value=i.emoji||''; $('p-status').value=i.status||'pending'; openModal('payment');};
-window.savePayment=()=>{const desc=$('p-desc').value.trim(), amount=parseFloat($('p-amount').value); if(!desc||isNaN(amount))return toast('内容と金額を入力してください'); const key=$('p-key').value; const item={desc,amount,paidBy:$('p-paidby').value,emoji:$('p-emoji').value.trim()||'💳',status:$('p-status').value,updatedBy:window._currentUser,updatedAt:Date.now()}; key?update(ref(db,'payments/'+key),item):push(ref(db,'payments'),{...item,addedBy:window._currentUser,createdAt:Date.now()}); closeModal('payment');};
-window.deletePayment=key=>{if(confirm('削除しますか？'))remove(ref(db,'payments/'+key));}; onValue(ref(db,'payments'),s=>renderPayments(s.val()));
+// Header member avatars
+document.getElementById('members-strip').innerHTML =
+  MEMBERS.map(m=>`<div title="${m}" style="width:28px;height:28px;border-radius:50%;background:${MC[m]};border:2px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:600;">${m.substring(0,2)}</div>`).join('');
 
-async function cleanupSamplesOnce(){ const done=await get(ref(db,'_cleanup_v2')); if(done.val())return; const wl=await get(ref(db,'wishlist')); if(wl.val()) Object.entries(wl.val()).forEach(([k,v])=>{ if(v.addedBy==='System') remove(ref(db,'wishlist/'+k)); }); const bd=await get(ref(db,'budget')); if(bd.val()) Object.entries(bd.val()).forEach(([k,v])=>{ if(v.addedBy==='System') remove(ref(db,'budget/'+k)); }); const nt=await get(ref(db,'notes')); if(nt.val()) Object.entries(nt.val()).forEach(([k,v])=>{ const sample=(v.text||'').includes('Sagrada Família ASAP')||(v.text||'').includes('Where should we stay')||(v.text||'').includes('pack heat gear')||(v.text||'').includes('tapas spots'); if(v.addedBy==='System'||sample) remove(ref(db,'notes/'+k)); }); await set(ref(db,'_cleanup_v2'),true); }
-initUI(); cleanupSamplesOnce().finally(()=>setTimeout(()=>$('loading').classList.remove('show'),600));
+// ── TABS ────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+window.switchTab = switchTab;
+
+// ── FIREBASE LISTENERS ──────────────────────────────────────
+onValue(r('schedules'), snap => { schedules=[]; snap.forEach(c=>schedules.push({_key:c.key,...c.val()})); renderSchedule(); });
+onValue(r('wishes'),    snap => { wishes=[];    snap.forEach(c=>wishes.push({_key:c.key,...c.val()}));    renderWishlist(); });
+onValue(r('notes'),     snap => { notes=[];     snap.forEach(c=>notes.push({_key:c.key,...c.val()}));     renderNotes(); });
+onValue(r('expenses'),  snap => { expenses=[];  snap.forEach(c=>expenses.push({_key:c.key,...c.val()}));  renderExpenses(); });
+onValue(r('wishComments'), snap => {
+  wishComments={};
+  if(snap.exists()) snap.forEach(ws=>{ wishComments[ws.key]=[]; ws.forEach(c=>wishComments[ws.key].push({_key:c.key,...c.val()})); });
+  if(wishes.length) renderWishlist();
+});
+
+// ── SCHEDULE ────────────────────────────────────────────────
+function renderSchedule() {
+  const el = document.getElementById('schedule-list');
+  el.innerHTML = '';
+  DAYS.forEach((date, di) => {
+    const items = schedules.filter(s=>s.dayIndex===di).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+    const card  = document.createElement('div');
+    card.className = 'day-card';
+    const rows = items.length === 0
+      ? `<div style="padding:14px 20px;font-size:13px;color:var(--gray-text);opacity:0.6;">No plans yet</div>`
+      : items.map(it=>`
+          <div class="sched-row">
+            <span class="sched-time">${esc(it.time||'—')}</span>
+            <div class="sched-dot" style="background:${MC[it.author]||'#C8C4BC'};"></div>
+            <div class="sched-body">
+              <div class="sched-name">${esc(it.name)}</div>
+              ${it.detail?`<div class="sched-detail">${esc(it.detail)}</div>`:''}
+              ${it.author?`<div class="author-line">${av(it.author,16)}<span>Added by ${esc(it.author)}</span></div>`:''}
+            </div>
+            <div class="sched-actions">
+              <button class="action-btn edit-btn" onclick="openEditSchedule('${it._key}')">✏️</button>
+              <button class="action-btn delete-btn" onclick="confirmDelete('sched','${it._key}')">🗑</button>
+            </div>
+          </div>`).join('');
+    card.innerHTML = `
+      <div class="day-header"><span class="day-label">Day ${di+1}</span><span class="day-date">${fmtDay(date)}</span></div>
+      ${rows}
+      <div class="add-row" onclick="openAddSchedule(${di})">+ Add to this day</div>`;
+    el.appendChild(card);
+  });
+}
+window.renderSchedule = renderSchedule;
+
+function buildDayOpts(sel) {
+  document.getElementById('sched-day').innerHTML = DAYS.map((d,i)=>
+    `<option value="${i}"${i===sel?' selected':''}>Day ${i+1} (${fmtShort(d)})</option>`).join('');
+}
+
+function openAddSchedule(di) {
+  document.getElementById('modal-schedule-title').textContent = 'Add to schedule';
+  document.getElementById('sched-edit-id').value = '';
+  ['sched-name','sched-time','sched-memo'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('sched-author').innerHTML = memberOpts('');
+  document.getElementById('sched-submit-btn').textContent = 'Add';
+  buildDayOpts(di??0);
+  openModal('modal-schedule');
+}
+window.openAddSchedule = openAddSchedule;
+
+function openEditSchedule(key) {
+  const it = schedules.find(s=>s._key===key); if(!it) return;
+  document.getElementById('modal-schedule-title').textContent = 'Edit schedule';
+  document.getElementById('sched-edit-id').value = key;
+  document.getElementById('sched-name').value  = it.name;
+  document.getElementById('sched-time').value  = it.time||'';
+  document.getElementById('sched-memo').value  = it.detail||'';
+  document.getElementById('sched-author').innerHTML = memberOpts(it.author);
+  document.getElementById('sched-submit-btn').textContent = 'Save';
+  buildDayOpts(it.dayIndex);
+  openModal('modal-schedule');
+}
+window.openEditSchedule = openEditSchedule;
+
+function submitSchedule() {
+  const name = document.getElementById('sched-name').value.trim();
+  if (!name) { alert('Please enter a place or activity.'); return; }
+  const data = {
+    dayIndex: parseInt(document.getElementById('sched-day').value),
+    time:     document.getElementById('sched-time').value.trim()||'',
+    name,
+    detail:   document.getElementById('sched-memo').value.trim()||'',
+    author:   document.getElementById('sched-author').value||''
+  };
+  const key = document.getElementById('sched-edit-id').value;
+  key ? update(r('schedules/'+key), data) : push(r('schedules'), data);
+  closeModal('modal-schedule');
+}
+window.submitSchedule = submitSchedule;
+
+// ── WISH LIST ────────────────────────────────────────────────
+function renderWishlist() {
+  const grid = document.getElementById('wish-grid');
+  grid.innerHTML = '';
+  wishes.forEach(w => {
+    const comments = wishComments[w._key]||[];
+    const cHtml = comments.map(c=>`
+      <div class="wish-comment-item">
+        ${av(c.author,22)}
+        <div class="wish-comment-bubble">
+          <div class="wish-comment-name" style="color:${MC[c.author]||'#999'};">${esc(c.author)}</div>
+          <div class="wish-comment-text">${esc(c.text)}</div>
+        </div>
+      </div>`).join('');
+    const card = document.createElement('div');
+    card.className = 'wish-card';
+    card.style.cursor = 'default';
+    card.innerHTML = `
+      <div class="wish-actions">
+        <button class="action-btn edit-btn" onclick="openEditWish('${w._key}')">✏️</button>
+        <button class="action-btn delete-btn" onclick="confirmDelete('wish','${w._key}')">🗑</button>
+      </div>
+      <div class="wish-emoji">${esc(w.emoji||'📍')}</div>
+      <div class="wish-name">${esc(w.name)}</div>
+      <div class="wish-category">${esc(w.category)}</div>
+      ${w.author?`<div class="author-line" style="margin-bottom:6px;">${av(w.author,16)}<span>Added by ${esc(w.author)}</span></div>`:''}
+      ${w.note?`<div class="wish-note">${esc(w.note)}</div>`:''}
+      <div class="vote-area">
+        <button class="vote-btn${w.voted?' active':''}" onclick="toggleVote('${w._key}')">♡ Want to go</button>
+        <span class="vote-count">${w.votes||0} votes</span>
+      </div>
+      <div class="wish-comments-section">
+        <button class="wish-comment-toggle" onclick="toggleWishComments('${w._key}',this)">
+          💬 Comments${comments.length?' ('+comments.length+')':''} ▸
+        </button>
+        <div class="wish-comment-list" id="wc-${w._key}">
+          ${cHtml}
+          <div class="wish-comment-input-row">
+            <select class="wish-comment-name-sel" id="wcn-${w._key}">
+              <option value="">Name...</option>
+              ${MEMBERS.map(m=>`<option>${m}</option>`).join('')}
+            </select>
+            <input class="wish-comment-input" id="wci-${w._key}" placeholder="Add a comment..." type="text">
+            <button class="wish-comment-post" onclick="postWishComment('${w._key}')">Post</button>
+          </div>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+  const add = document.createElement('div');
+  add.className = 'add-card'; add.onclick = openAddWish;
+  add.innerHTML = `<div class="add-card-icon">+</div><div class="add-card-label">Add a place</div>`;
+  grid.appendChild(add);
+}
+window.renderWishlist = renderWishlist;
+
+function toggleWishComments(key, btn) {
+  const list = document.getElementById('wc-'+key);
+  const open = list.style.display === 'flex';
+  list.style.display = open ? 'none' : 'flex';
+  list.style.flexDirection = 'column';
+  list.style.gap = '8px';
+  btn.textContent = btn.textContent.replace(open?'▾':'▸', open?'▸':'▾');
+}
+window.toggleWishComments = toggleWishComments;
+
+function postWishComment(key) {
+  const text   = document.getElementById('wci-'+key).value.trim();
+  const author = document.getElementById('wcn-'+key).value;
+  if (!text)   { alert('Please enter a comment.'); return; }
+  if (!author) { alert('Please select your name.'); return; }
+  const now = new Date();
+  push(r('wishComments/'+key), { author, text, time:`${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}` });
+}
+window.postWishComment = postWishComment;
+
+function toggleVote(key) {
+  const w = wishes.find(x=>x._key===key); if(!w) return;
+  const voted = !w.voted, votes = (w.votes||0)+(voted?1:-1);
+  update(r('wishes/'+key), { voted, votes });
+}
+window.toggleVote = toggleVote;
+
+function openAddWish() {
+  document.getElementById('modal-wish-title').textContent = 'Add a place';
+  document.getElementById('wish-edit-id').value = '';
+  ['wish-name','wish-emoji','wish-note'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('wish-author').innerHTML = memberOpts('');
+  document.getElementById('wish-submit-btn').textContent = 'Add';
+  openModal('modal-wish');
+}
+window.openAddWish = openAddWish;
+
+function openEditWish(key) {
+  const w = wishes.find(x=>x._key===key); if(!w) return;
+  document.getElementById('modal-wish-title').textContent = 'Edit place';
+  document.getElementById('wish-edit-id').value = key;
+  document.getElementById('wish-name').value  = w.name;
+  document.getElementById('wish-cat').value   = w.category;
+  document.getElementById('wish-emoji').value = w.emoji||'';
+  document.getElementById('wish-note').value  = w.note||'';
+  document.getElementById('wish-author').innerHTML = memberOpts(w.author);
+  document.getElementById('wish-submit-btn').textContent = 'Save';
+  openModal('modal-wish');
+}
+window.openEditWish = openEditWish;
+
+function submitWish() {
+  const name = document.getElementById('wish-name').value.trim();
+  if (!name) { alert('Please enter a place name.'); return; }
+  const data = {
+    name, category: document.getElementById('wish-cat').value,
+    emoji:  document.getElementById('wish-emoji').value.trim()||'📍',
+    author: document.getElementById('wish-author').value||'',
+    note:   document.getElementById('wish-note').value.trim()||''
+  };
+  const key = document.getElementById('wish-edit-id').value;
+  if (key) { update(r('wishes/'+key), data); }
+  else     { push(r('wishes'), { ...data, votes:0, voted:false }); }
+  closeModal('modal-wish');
+}
+window.submitWish = submitWish;
+
+// ── NOTES ────────────────────────────────────────────────────
+function renderNotes() {
+  const el = document.getElementById('notes-list');
+  el.innerHTML = '';
+  if (!notes.length) { el.innerHTML=`<div class="empty"><div class="empty-icon">💬</div><div>No comments yet</div></div>`; return; }
+  notes.forEach(n => {
+    const color = MC[n.author]||'#999';
+    const div = document.createElement('div');
+    div.className = 'note-card';
+    div.innerHTML = `
+      <div class="note-actions">
+        <button class="action-btn edit-btn" onclick="openEditNote('${n._key}')">✏️</button>
+        <button class="action-btn delete-btn" onclick="confirmDelete('note','${n._key}')">🗑</button>
+      </div>
+      <div class="note-meta">
+        <div class="note-avatar" style="background:${color}22;color:${color};">${n.author.substring(0,2)}</div>
+        <span class="note-author">${esc(n.author)}</span>
+        <span class="note-time">${esc(n.time||'')}</span>
+      </div>
+      <div class="note-text">${esc(n.text)}</div>`;
+    el.appendChild(div);
+  });
+}
+window.renderNotes = renderNotes;
+
+function postNote() {
+  const text   = document.getElementById('compose-text').value.trim();
+  const author = document.getElementById('compose-name').value;
+  if (!text)   { alert('Please enter a comment.'); return; }
+  if (!author) { alert('Please select your name.'); return; }
+  const now = new Date();
+  push(r('notes'), { author, text, time:`${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}` });
+  document.getElementById('compose-text').value = '';
+}
+window.postNote = postNote;
+
+function openEditNote(key) {
+  const n = notes.find(x=>x._key===key); if(!n) return;
+  document.getElementById('note-edit-id').value   = key;
+  document.getElementById('note-edit-text').value = n.text;
+  openModal('modal-note');
+}
+window.openEditNote = openEditNote;
+
+function submitEditNote() {
+  const key  = document.getElementById('note-edit-id').value;
+  const text = document.getElementById('note-edit-text').value.trim();
+  if (!text) { alert('Please enter a comment.'); return; }
+  update(r('notes/'+key), { text });
+  closeModal('modal-note');
+}
+window.submitEditNote = submitEditNote;
+
+// ── PAYMENT ──────────────────────────────────────────────────
+function renderExpenses() {
+  const el = document.getElementById('expense-rows');
+  el.innerHTML = '';
+  if (!expenses.length) { el.innerHTML=`<div class="empty"><div class="empty-icon">💶</div><div>No expenses yet</div></div>`; return; }
+  expenses.forEach(exp => {
+    const split  = (exp.splitBy&&exp.splitBy.length) ? exp.splitBy : MEMBERS;
+    const per    = (exp.amount/split.length).toFixed(0);
+    const row    = document.createElement('div');
+    row.className = 'expense-row';
+    row.innerHTML = `
+      <div>
+        <div class="exp-name">${esc(exp.desc)}</div>
+        <div class="exp-sub">€${per}/person · ${split.length} people</div>
+      </div>
+      <div style="font-size:12px;color:var(--gray-text);">${esc(exp.date||'—')}</div>
+      <div style="display:flex;align-items:center;gap:4px;">${av(exp.paidBy,20)}<span style="font-size:12px;">${esc(exp.paidBy)}</span></div>
+      <div class="exp-amount">€${exp.amount}</div>
+      <div class="exp-split-cell">${split.map(m=>av(m,18)).join('')}</div>
+      <div><span class="exp-status ${exp.status==='settled'?'status-ok':'status-pending'}">${exp.status==='settled'?'Settled':'Pending'}</span></div>
+      <div class="exp-actions">
+        <button class="action-btn edit-btn" onclick="openEditExpense('${exp._key}')">✏️</button>
+        <button class="action-btn delete-btn" onclick="confirmDelete('exp','${exp._key}')">🗑</button>
+      </div>`;
+    el.appendChild(row);
+  });
+}
+window.renderExpenses = renderExpenses;
+
+function buildDateOpts(sel) {
+  document.getElementById('exp-date').innerHTML =
+    `<option value="">— Select date —</option>` +
+    DAYS.map((d,i)=>{ const l=`Day ${i+1} (${fmtShort(d)})`; return `<option${l===sel?' selected':''}>${l}</option>`; }).join('');
+}
+
+function buildSplitChips(sel) {
+  const wrap = document.getElementById('split-by-chips');
+  wrap.innerHTML = '';
+  MEMBERS.forEach(m => {
+    const chip = document.createElement('div');
+    chip.className = 'split-chip'+(sel.includes(m)?' selected':'');
+    chip.innerHTML = `<span class="chip-av" style="background:${MC[m]}">${m.substring(0,2)}</span>${m}`;
+    chip.onclick = () => chip.classList.toggle('selected');
+    wrap.appendChild(chip);
+  });
+}
+
+function getSplitSelected() {
+  return [...document.querySelectorAll('#split-by-chips .split-chip.selected')]
+    .map(c=>MEMBERS.find(m=>c.textContent.trim().startsWith(m))||'').filter(Boolean);
+}
+
+function openAddExpense() {
+  document.getElementById('modal-expense-title').textContent = 'Add expense';
+  document.getElementById('exp-edit-id').value = '';
+  document.getElementById('exp-desc').value    = '';
+  document.getElementById('exp-amount').value  = '';
+  document.getElementById('exp-status').value  = 'pending';
+  buildDateOpts('');
+  buildSplitChips(MEMBERS);
+  document.getElementById('exp-submit-btn').textContent = 'Add';
+  openModal('modal-expense');
+}
+window.openAddExpense = openAddExpense;
+
+function openEditExpense(key) {
+  const exp = expenses.find(e=>e._key===key); if(!exp) return;
+  document.getElementById('modal-expense-title').textContent = 'Edit expense';
+  document.getElementById('exp-edit-id').value = key;
+  document.getElementById('exp-desc').value    = exp.desc;
+  document.getElementById('exp-amount').value  = exp.amount;
+  document.getElementById('exp-paid').value    = exp.paidBy;
+  document.getElementById('exp-status').value  = exp.status;
+  buildDateOpts(exp.date||'');
+  buildSplitChips(exp.splitBy&&exp.splitBy.length ? exp.splitBy : MEMBERS);
+  document.getElementById('exp-submit-btn').textContent = 'Save';
+  openModal('modal-expense');
+}
+window.openEditExpense = openEditExpense;
+
+function submitExpense() {
+  const desc   = document.getElementById('exp-desc').value.trim();
+  const amount = parseFloat(document.getElementById('exp-amount').value);
+  if (!desc)               { alert('Please enter a description.'); return; }
+  if (isNaN(amount)||amount<=0) { alert('Please enter a valid amount.'); return; }
+  const splitBy = getSplitSelected();
+  if (!splitBy.length) { alert('Please select at least one person to split with.'); return; }
+  const data = {
+    desc, amount,
+    paidBy:  document.getElementById('exp-paid').value,
+    status:  document.getElementById('exp-status').value,
+    date:    document.getElementById('exp-date').value||'',
+    splitBy
+  };
+  const key = document.getElementById('exp-edit-id').value;
+  key ? update(r('expenses/'+key), data) : push(r('expenses'), data);
+  closeModal('modal-expense');
+}
+window.submitExpense = submitExpense;
+
+// ── DELETE ───────────────────────────────────────────────────
+function confirmDelete(type, key) {
+  const msgs = { sched:'Delete this schedule item?', wish:'Delete this place?', note:'Delete this comment?', exp:'Delete this expense?' };
+  document.getElementById('confirm-message').textContent = msgs[type]||'Are you sure?';
+  document.getElementById('confirm-ok-btn').onclick = () => {
+    remove(r({sched:'schedules',wish:'wishes',note:'notes',exp:'expenses'}[type]+'/'+key));
+    closeModal('modal-confirm');
+  };
+  openModal('modal-confirm');
+}
+window.confirmDelete = confirmDelete;
+
+// ── MODALS ───────────────────────────────────────────────────
+function openModal(id)  { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+window.openModal  = openModal;
+window.closeModal = closeModal;
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)closeModal(this.id);}));
+
+// ── SHARE ────────────────────────────────────────────────────
+function copyUrl() {
+  navigator.clipboard.writeText(location.href).then(()=>{
+    const b=document.querySelector('.copy-btn'); b.textContent='Copied!';
+    setTimeout(()=>b.textContent='Copy URL',2000);
+  });
+  document.getElementById('share-url').textContent = location.href;
+}
+window.copyUrl = copyUrl;
 </script>
 </body>
 </html>
