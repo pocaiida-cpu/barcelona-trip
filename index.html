@@ -201,19 +201,18 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
 
 <nav class="nav-tabs">
   <div class="nav-inner">
-    <button class="tab-btn active" id="tab-btn-schedule"><span>📅</span> Schedule</button>
-    <button class="tab-btn" id="tab-btn-wishlist"><span>📍</span> Wish List</button>
-    <button class="tab-btn" id="tab-btn-notes"><span>💬</span> Notes</button>
-    <button class="tab-btn" id="tab-btn-payment"><span>💰</span> Payment</button>
+    <button class="tab-btn active" onclick="switchTab('schedule',this)"><span>📅</span> Schedule</button>
+    <button class="tab-btn" onclick="switchTab('wishlist',this)"><span>📍</span> Wish List</button>
+    <button class="tab-btn" onclick="switchTab('notes',this)"><span>💬</span> Notes</button>
+    <button class="tab-btn" onclick="switchTab('payment',this)"><span>💰</span> Payment</button>
   </div>
 </nav>
 
 <main class="main">
-
   <div class="tab-content active" id="tab-schedule">
     <div class="section-header">
       <h2 class="section-title">Schedule</h2>
-      <button class="btn btn-primary" id="btn-open-add-schedule">+ Add</button>
+      <button class="btn btn-primary" onclick="openAddSchedule()">+ Add</button>
     </div>
     <div id="schedule-list" style="color:var(--gray-text);text-align:center;padding:32px;">Loading...</div>
   </div>
@@ -221,7 +220,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
   <div class="tab-content" id="tab-wishlist">
     <div class="section-header">
       <h2 class="section-title">Wish List</h2>
-      <button class="btn btn-primary" id="btn-open-add-wish">+ Add</button>
+      <button class="btn btn-primary" onclick="openAddWish()">+ Add</button>
     </div>
     <div class="wish-grid" id="wish-grid"></div>
   </div>
@@ -240,7 +239,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
           <option>Sayaka</option><option>Kasumi</option><option>Mari</option>
           <option>Jennifer</option><option>Yuka</option><option>Mayumi</option>
         </select>
-        <button class="btn btn-primary" id="btn-post-note">Post</button>
+        <button class="btn btn-primary" onclick="postNote()">Post</button>
       </div>
     </div>
   </div>
@@ -248,7 +247,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
   <div class="tab-content" id="tab-payment">
     <div class="section-header">
       <h2 class="section-title">Payment</h2>
-      <button class="btn btn-primary" id="btn-open-add-expense">+ Add</button>
+      <button class="btn btn-primary" onclick="openAddExpense()">+ Add</button>
     </div>
     <div class="expense-table">
       <div class="expense-thead">
@@ -261,16 +260,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
         <div class="expense-th"></div>
       </div>
       <div id="expense-rows"></div>
-      <div class="add-expense-row" id="btn-open-add-expense-2">+ Add expense</div>
+      <div class="add-expense-row" onclick="openAddExpense()">+ Add expense</div>
     </div>
   </div>
-
 </main>
 
 <div class="share-bar">
   <span class="share-label">Share link:</span>
   <div class="share-link-box" id="share-url">Copy this page URL and send it to everyone!</div>
-  <button class="copy-btn" id="btn-copy-url">Copy URL</button>
+  <button class="copy-btn" onclick="copyUrl()">Copy URL</button>
 </div>
 
 <!-- MODAL: Schedule -->
@@ -305,8 +303,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       <textarea class="form-textarea" id="sched-memo" placeholder="Details, tips, reminders..."></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" id="btn-cancel-schedule">Cancel</button>
-      <button class="btn btn-primary" id="btn-submit-schedule">Add</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-schedule')">Cancel</button>
+      <button class="btn btn-primary" id="sched-submit-btn" onclick="submitSchedule()">Add</button>
     </div>
   </div>
 </div>
@@ -347,8 +345,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       <textarea class="form-textarea" id="wish-note" placeholder="Tips, links, reasons to go..."></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" id="btn-cancel-wish">Cancel</button>
-      <button class="btn btn-primary" id="btn-submit-wish">Add</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-wish')">Cancel</button>
+      <button class="btn btn-primary" id="wish-submit-btn" onclick="submitWish()">Add</button>
     </div>
   </div>
 </div>
@@ -363,8 +361,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       <textarea class="form-textarea" id="note-edit-text"></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" id="btn-cancel-note">Cancel</button>
-      <button class="btn btn-primary" id="btn-submit-note">Save</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-note')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitEditNote()">Save</button>
     </div>
   </div>
 </div>
@@ -409,8 +407,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
       <div class="split-by-wrap" id="split-by-chips"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" id="btn-cancel-expense">Cancel</button>
-      <button class="btn btn-primary" id="btn-submit-expense">Add</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-expense')">Cancel</button>
+      <button class="btn btn-primary" id="exp-submit-btn" onclick="submitExpense()">Add</button>
     </div>
   </div>
 </div>
@@ -421,17 +419,18 @@ body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(-
     <h3 class="modal-title">Delete?</h3>
     <p style="font-size:14px;color:var(--gray-text);margin-bottom:8px;" id="confirm-message">Are you sure?</p>
     <div class="modal-footer">
-      <button class="btn btn-outline" id="btn-cancel-confirm">Cancel</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-confirm')">Cancel</button>
       <button class="btn btn-danger" id="confirm-ok-btn">Delete</button>
     </div>
   </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, remove, update, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const app = initializeApp({
+<!-- Firebase compat (no ES modules needed) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+// ── FIREBASE ─────────────────────────────────────────────────
+firebase.initializeApp({
   apiKey: "AIzaSyDgsbX6cW9xjQah8MTbZrzVrabNjSksUGU",
   authDomain: "barcelona-trip-cba1e.firebaseapp.com",
   databaseURL: "https://barcelona-trip-cba1e-default-rtdb.firebaseio.com",
@@ -440,467 +439,426 @@ const app = initializeApp({
   messagingSenderId: "1088189335983",
   appId: "1:1088189335983:web:4c7a14a4b8fd079318075a"
 });
-const db = getDatabase(app);
-const r  = path => ref(db, path);
+var db = firebase.database();
 
-// ── CONSTANTS ──────────────────────────────────────────────
-const MEMBERS = ['Sayaka','Kasumi','Mari','Jennifer','Yuka','Mayumi'];
-const MC = { Sayaka:'#C8633A', Kasumi:'#3A7D5C', Mari:'#5B8FC9', Jennifer:'#D4A843', Yuka:'#8B6BA0', Mayumi:'#C84040' };
-const DAYS = [], MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-for (let d = new Date(2026,5,30), e = new Date(2026,7,1); d <= e; d.setDate(d.getDate()+1)) DAYS.push(new Date(d));
-const fmtDay   = d => `${WD[d.getDay()]}, ${MON[d.getMonth()]} ${d.getDate()}`;
-const fmtShort = d => `${MON[d.getMonth()]} ${d.getDate()}`;
+// ── CONSTANTS ────────────────────────────────────────────────
+var MEMBERS = ['Sayaka','Kasumi','Mari','Jennifer','Yuka','Mayumi'];
+var MC = { Sayaka:'#C8633A', Kasumi:'#3A7D5C', Mari:'#5B8FC9', Jennifer:'#D4A843', Yuka:'#8B6BA0', Mayumi:'#C84040' };
+var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var WD  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var DAYS = [];
+for (var d = new Date(2026,5,30), e = new Date(2026,7,1); d <= e; d.setDate(d.getDate()+1))
+  DAYS.push(new Date(d));
+function fmtDay(d)   { return WD[d.getDay()]+', '+MON[d.getMonth()]+' '+d.getDate(); }
+function fmtShort(d) { return MON[d.getMonth()]+' '+d.getDate(); }
 
-// ── LOCAL CACHE ─────────────────────────────────────────────
-let schedules = [], wishes = [], notes = [], expenses = [], wishComments = {};
+// ── LOCAL CACHE ──────────────────────────────────────────────
+var schedules=[], wishes=[], notes=[], expenses=[], wishComments={};
 
-// ── UTILS ───────────────────────────────────────────────────
-const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const av  = (name, sz=20) => {
+// ── UTILS ────────────────────────────────────────────────────
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function av(name, sz) {
+  sz = sz||20;
   if (!name) return '';
-  return `<span title="${esc(name)}" style="display:inline-flex;align-items:center;justify-content:center;width:${sz}px;height:${sz}px;border-radius:50%;background:${MC[name]||'#999'};color:white;font-size:${Math.round(sz*0.45)}px;font-weight:600;flex-shrink:0;">${name.substring(0,2)}</span>`;
-};
-const memberOpts = sel => `<option value="">— Select —</option>` + MEMBERS.map(m=>`<option${m===sel?' selected':''}>${m}</option>`).join('');
+  return '<span title="'+esc(name)+'" style="display:inline-flex;align-items:center;justify-content:center;width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:'+(MC[name]||'#999')+';color:white;font-size:'+Math.round(sz*0.45)+'px;font-weight:600;flex-shrink:0;">'+name.substring(0,2)+'</span>';
+}
+function memberOpts(sel) {
+  var s = '<option value="">— Select —</option>';
+  MEMBERS.forEach(function(m){ s += '<option'+(m===sel?' selected':'')+'>'+m+'</option>'; });
+  return s;
+}
 
-// Header member avatars
-document.getElementById('members-strip').innerHTML =
-  MEMBERS.map(m=>`<div title="${m}" style="width:28px;height:28px;border-radius:50%;background:${MC[m]};border:2px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:600;">${m.substring(0,2)}</div>`).join('');
+// Header avatars
+(function(){
+  var strip = document.getElementById('members-strip');
+  MEMBERS.forEach(function(m){
+    strip.innerHTML += '<div title="'+m+'" style="width:28px;height:28px;border-radius:50%;background:'+MC[m]+';border:2px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:600;">'+m.substring(0,2)+'</div>';
+  });
+})();
 
-// ── TABS ────────────────────────────────────────────────────
+// ── TABS ─────────────────────────────────────────────────────
 function switchTab(name, btn) {
-  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el){ el.classList.remove('active'); });
   document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
 }
-window.switchTab = switchTab;
 
-// ── FIREBASE LISTENERS ──────────────────────────────────────
-onValue(r('schedules'), snap => { schedules=[]; snap.forEach(c=>schedules.push({_key:c.key,...c.val()})); renderSchedule(); });
-onValue(r('wishes'),    snap => { wishes=[];    snap.forEach(c=>wishes.push({_key:c.key,...c.val()}));    renderWishlist(); });
-onValue(r('notes'),     snap => { notes=[];     snap.forEach(c=>notes.push({_key:c.key,...c.val()}));     renderNotes(); });
-onValue(r('expenses'),  snap => { expenses=[];  snap.forEach(c=>expenses.push({_key:c.key,...c.val()}));  renderExpenses(); });
-onValue(r('wishComments'), snap => {
+// ── FIREBASE LISTENERS ───────────────────────────────────────
+db.ref('schedules').on('value', function(snap){
+  schedules=[];
+  snap.forEach(function(c){ schedules.push(Object.assign({_key:c.key}, c.val())); });
+  renderSchedule();
+});
+db.ref('wishes').on('value', function(snap){
+  wishes=[];
+  snap.forEach(function(c){ wishes.push(Object.assign({_key:c.key}, c.val())); });
+  renderWishlist();
+});
+db.ref('notes').on('value', function(snap){
+  notes=[];
+  snap.forEach(function(c){ notes.push(Object.assign({_key:c.key}, c.val())); });
+  renderNotes();
+});
+db.ref('expenses').on('value', function(snap){
+  expenses=[];
+  snap.forEach(function(c){ expenses.push(Object.assign({_key:c.key}, c.val())); });
+  renderExpenses();
+});
+db.ref('wishComments').on('value', function(snap){
   wishComments={};
-  if(snap.exists()) snap.forEach(ws=>{ wishComments[ws.key]=[]; ws.forEach(c=>wishComments[ws.key].push({_key:c.key,...c.val()})); });
-  if(wishes.length) renderWishlist();
+  if(snap.exists()) snap.forEach(function(ws){
+    wishComments[ws.key]=[];
+    ws.forEach(function(c){ wishComments[ws.key].push(Object.assign({_key:c.key}, c.val())); });
+  });
+  renderWishlist();
 });
 
-// ── SCHEDULE ────────────────────────────────────────────────
+// ── MODAL ────────────────────────────────────────────────────
+function openModal(id)  { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+document.querySelectorAll('.modal-overlay').forEach(function(o){
+  o.addEventListener('click', function(e){ if(e.target===o) closeModal(o.id); });
+});
+
+// ── SCHEDULE ─────────────────────────────────────────────────
 function renderSchedule() {
-  const el = document.getElementById('schedule-list');
+  var el = document.getElementById('schedule-list');
   el.innerHTML = '';
-  DAYS.forEach((date, di) => {
-    const items = schedules.filter(s=>s.dayIndex===di).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
-    const card  = document.createElement('div');
+  DAYS.forEach(function(date, di) {
+    var items = schedules.filter(function(s){ return s.dayIndex===di; })
+      .sort(function(a,b){ return (a.time||'').localeCompare(b.time||''); });
+    var card = document.createElement('div');
     card.className = 'day-card';
-    const rows = items.length === 0
-      ? `<div style="padding:14px 20px;font-size:13px;color:var(--gray-text);opacity:0.6;">No plans yet</div>`
-      : items.map(it=>`
-          <div class="sched-row">
-            <span class="sched-time">${esc(it.time||'—')}</span>
-            <div class="sched-dot" style="background:${MC[it.author]||'#C8C4BC'};"></div>
-            <div class="sched-body">
-              <div class="sched-name">${esc(it.name)}</div>
-              ${it.detail?`<div class="sched-detail">${esc(it.detail)}</div>`:''}
-              ${it.author?`<div class="author-line">${av(it.author,16)}<span>Added by ${esc(it.author)}</span></div>`:''}
-            </div>
-            <div class="sched-actions">
-              <button class="action-btn edit-btn" onclick="openEditSchedule('${it._key}')">✏️</button>
-              <button class="action-btn delete-btn" onclick="confirmDelete('sched','${it._key}')">🗑</button>
-            </div>
-          </div>`).join('');
-    card.innerHTML = `
-      <div class="day-header"><span class="day-label">Day ${di+1}</span><span class="day-date">${fmtDay(date)}</span></div>
-      ${rows}
-      <div class="add-row" onclick="openAddSchedule(${di})">+ Add to this day</div>`;
+    var rows = '';
+    if (items.length === 0) {
+      rows = '<div style="padding:14px 20px;font-size:13px;color:var(--gray-text);opacity:0.6;">No plans yet</div>';
+    } else {
+      items.forEach(function(it){
+        rows += '<div class="sched-row">'
+          +'<span class="sched-time">'+esc(it.time||'—')+'</span>'
+          +'<div class="sched-dot" style="background:'+(MC[it.author]||'#C8C4BC')+'"></div>'
+          +'<div class="sched-body">'
+            +'<div class="sched-name">'+esc(it.name)+'</div>'
+            +(it.detail?'<div class="sched-detail">'+esc(it.detail)+'</div>':'')
+            +(it.author?'<div class="author-line">'+av(it.author,16)+'<span>Added by '+esc(it.author)+'</span></div>':'')
+          +'</div>'
+          +'<div class="sched-actions">'
+            +'<button class="action-btn edit-btn" onclick="openEditSchedule(\''+it._key+'\')">✏️</button>'
+            +'<button class="action-btn delete-btn" onclick="confirmDelete(\'sched\',\''+it._key+'\')">🗑</button>'
+          +'</div>'
+        +'</div>';
+      });
+    }
+    card.innerHTML = '<div class="day-header"><span class="day-label">Day '+(di+1)+'</span><span class="day-date">'+fmtDay(date)+'</span></div>'
+      +rows
+      +'<div class="add-row" onclick="openAddSchedule('+di+')">+ Add to this day</div>';
     el.appendChild(card);
   });
 }
-window.renderSchedule = renderSchedule;
 
 function buildDayOpts(sel) {
-  document.getElementById('sched-day').innerHTML = DAYS.map((d,i)=>
-    `<option value="${i}"${i===sel?' selected':''}>Day ${i+1} (${fmtShort(d)})</option>`).join('');
+  var s='';
+  DAYS.forEach(function(d,i){ s+='<option value="'+i+'"'+(i===sel?' selected':'')+'>Day '+(i+1)+' ('+fmtShort(d)+')</option>'; });
+  document.getElementById('sched-day').innerHTML = s;
 }
 
 function openAddSchedule(di) {
   document.getElementById('modal-schedule-title').textContent = 'Add to schedule';
   document.getElementById('sched-edit-id').value = '';
-  ['sched-name','sched-time','sched-memo'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('sched-name').value  = '';
+  document.getElementById('sched-time').value  = '';
+  document.getElementById('sched-memo').value  = '';
   document.getElementById('sched-author').innerHTML = memberOpts('');
-  document.getElementById('btn-submit-schedule').textContent = 'Add';
-  buildDayOpts(di??0);
+  document.getElementById('sched-submit-btn').textContent = 'Add';
+  buildDayOpts(di!==undefined?di:0);
   openModal('modal-schedule');
 }
-window.openAddSchedule = openAddSchedule;
 
 function openEditSchedule(key) {
-  const it = schedules.find(s=>s._key===key); if(!it) return;
+  var it = schedules.find(function(s){ return s._key===key; });
+  if(!it) return;
   document.getElementById('modal-schedule-title').textContent = 'Edit schedule';
   document.getElementById('sched-edit-id').value = key;
   document.getElementById('sched-name').value  = it.name;
   document.getElementById('sched-time').value  = it.time||'';
   document.getElementById('sched-memo').value  = it.detail||'';
   document.getElementById('sched-author').innerHTML = memberOpts(it.author);
-  document.getElementById('btn-submit-schedule').textContent = 'Save';
+  document.getElementById('sched-submit-btn').textContent = 'Save';
   buildDayOpts(it.dayIndex);
   openModal('modal-schedule');
 }
-window.openEditSchedule = openEditSchedule;
 
 function submitSchedule() {
-  const name = document.getElementById('sched-name').value.trim();
+  var name = document.getElementById('sched-name').value.trim();
   if (!name) { alert('Please enter a place or activity.'); return; }
-  const data = {
+  var data = {
     dayIndex: parseInt(document.getElementById('sched-day').value),
     time:     document.getElementById('sched-time').value.trim()||'',
-    name,
+    name:     name,
     detail:   document.getElementById('sched-memo').value.trim()||'',
     author:   document.getElementById('sched-author').value||''
   };
-  const key = document.getElementById('sched-edit-id').value;
-  key ? update(r('schedules/'+key), data) : push(r('schedules'), data);
+  var key = document.getElementById('sched-edit-id').value;
+  if (key) { db.ref('schedules/'+key).update(data); }
+  else     { db.ref('schedules').push(data); }
   closeModal('modal-schedule');
 }
-window.submitSchedule = submitSchedule;
 
 // ── WISH LIST ────────────────────────────────────────────────
 function renderWishlist() {
-  const grid = document.getElementById('wish-grid');
+  var grid = document.getElementById('wish-grid');
   grid.innerHTML = '';
-  wishes.forEach(w => {
-    const comments = wishComments[w._key]||[];
-    const cHtml = comments.map(c=>`
-      <div class="wish-comment-item">
-        ${av(c.author,22)}
-        <div class="wish-comment-bubble">
-          <div class="wish-comment-name" style="color:${MC[c.author]||'#999'};">${esc(c.author)}</div>
-          <div class="wish-comment-text">${esc(c.text)}</div>
-        </div>
-      </div>`).join('');
-    const card = document.createElement('div');
+  wishes.forEach(function(w) {
+    var comments = wishComments[w._key]||[];
+    var cHtml = '';
+    comments.forEach(function(c){
+      cHtml += '<div class="wish-comment-item">'
+        +av(c.author,22)
+        +'<div class="wish-comment-bubble">'
+          +'<div class="wish-comment-name" style="color:'+(MC[c.author]||'#999')+'">'+esc(c.author)+'</div>'
+          +'<div class="wish-comment-text">'+esc(c.text)+'</div>'
+        +'</div></div>';
+    });
+    var card = document.createElement('div');
     card.className = 'wish-card';
     card.style.cursor = 'default';
-    card.innerHTML = `
-      <div class="wish-actions">
-        <button class="action-btn edit-btn" onclick="openEditWish('${w._key}')">✏️</button>
-        <button class="action-btn delete-btn" onclick="confirmDelete('wish','${w._key}')">🗑</button>
-      </div>
-      <div class="wish-emoji">${esc(w.emoji||'📍')}</div>
-      <div class="wish-name">${esc(w.name)}</div>
-      <div class="wish-category">${esc(w.category)}</div>
-      ${w.author?`<div class="author-line" style="margin-bottom:6px;">${av(w.author,16)}<span>Added by ${esc(w.author)}</span></div>`:''}
-      ${w.note?`<div class="wish-note">${esc(w.note)}</div>`:''}
-      <div class="vote-area">
-        <button class="vote-btn${w.voted?' active':''}" onclick="toggleVote('${w._key}')">♡ Want to go</button>
-        <span class="vote-count">${w.votes||0} votes</span>
-      </div>
-      <div class="wish-comments-section">
-        <button class="wish-comment-toggle" onclick="toggleWishComments('${w._key}',this)">
-          💬 Comments${comments.length?' ('+comments.length+')':''} ▸
-        </button>
-        <div class="wish-comment-list" id="wc-${w._key}">
-          ${cHtml}
-          <div class="wish-comment-input-row">
-            <select class="wish-comment-name-sel" id="wcn-${w._key}">
-              <option value="">Name...</option>
-              ${MEMBERS.map(m=>`<option>${m}</option>`).join('')}
-            </select>
-            <input class="wish-comment-input" id="wci-${w._key}" placeholder="Add a comment..." type="text">
-            <button class="wish-comment-post" onclick="postWishComment('${w._key}')">Post</button>
-          </div>
-        </div>
-      </div>`;
+    card.innerHTML =
+      '<div class="wish-actions">'
+        +'<button class="action-btn edit-btn" onclick="openEditWish(\''+w._key+'\')">✏️</button>'
+        +'<button class="action-btn delete-btn" onclick="confirmDelete(\'wish\',\''+w._key+'\')">🗑</button>'
+      +'</div>'
+      +'<div class="wish-emoji">'+esc(w.emoji||'📍')+'</div>'
+      +'<div class="wish-name">'+esc(w.name)+'</div>'
+      +'<div class="wish-category">'+esc(w.category)+'</div>'
+      +(w.author?'<div class="author-line" style="margin-bottom:6px;">'+av(w.author,16)+'<span>Added by '+esc(w.author)+'</span></div>':'')
+      +(w.note?'<div class="wish-note">'+esc(w.note)+'</div>':'')
+      +'<div class="vote-area">'
+        +'<button class="vote-btn'+(w.voted?' active':'')+'" onclick="toggleVote(\''+w._key+'\')">♡ Want to go</button>'
+        +'<span class="vote-count">'+(w.votes||0)+' votes</span>'
+      +'</div>'
+      +'<div class="wish-comments-section">'
+        +'<button class="wish-comment-toggle" onclick="toggleWishComments(\''+w._key+'\',this)">'
+          +'💬 Comments'+(comments.length?' ('+comments.length+')':'')+' ▸'
+        +'</button>'
+        +'<div class="wish-comment-list" id="wc-'+w._key+'" style="display:none;flex-direction:column;gap:8px;">'
+          +cHtml
+          +'<div class="wish-comment-input-row">'
+            +'<select class="wish-comment-name-sel" id="wcn-'+w._key+'"><option value="">Name...</option>'
+              +MEMBERS.map(function(m){ return '<option>'+m+'</option>'; }).join('')
+            +'</select>'
+            +'<input class="wish-comment-input" id="wci-'+w._key+'" placeholder="Add a comment..." type="text">'
+            +'<button class="wish-comment-post" onclick="postWishComment(\''+w._key+'\')">Post</button>'
+          +'</div>'
+        +'</div>'
+      +'</div>';
     grid.appendChild(card);
   });
-  const add = document.createElement('div');
-  add.className = 'add-card'; add.onclick = openAddWish;
-  add.innerHTML = `<div class="add-card-icon">+</div><div class="add-card-label">Add a place</div>`;
+  var add = document.createElement('div');
+  add.className='add-card'; add.onclick=openAddWish;
+  add.innerHTML='<div class="add-card-icon">+</div><div class="add-card-label">Add a place</div>';
   grid.appendChild(add);
 }
-window.renderWishlist = renderWishlist;
 
 function toggleWishComments(key, btn) {
-  const list = document.getElementById('wc-'+key);
-  const open = list.style.display === 'flex';
-  list.style.display = open ? 'none' : 'flex';
-  list.style.flexDirection = 'column';
-  list.style.gap = '8px';
+  var list = document.getElementById('wc-'+key);
+  var open = list.style.display==='flex';
+  list.style.display = open?'none':'flex';
   btn.textContent = btn.textContent.replace(open?'▾':'▸', open?'▸':'▾');
 }
-window.toggleWishComments = toggleWishComments;
 
 function postWishComment(key) {
-  const text   = document.getElementById('wci-'+key).value.trim();
-  const author = document.getElementById('wcn-'+key).value;
-  if (!text)   { alert('Please enter a comment.'); return; }
-  if (!author) { alert('Please select your name.'); return; }
-  const now = new Date();
-  push(r('wishComments/'+key), { author, text, time:`${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}` });
+  var text   = document.getElementById('wci-'+key).value.trim();
+  var author = document.getElementById('wcn-'+key).value;
+  if(!text)   { alert('Please enter a comment.'); return; }
+  if(!author) { alert('Please select your name.'); return; }
+  var now=new Date();
+  db.ref('wishComments/'+key).push({author:author,text:text,time:(now.getMonth()+1)+'/'+now.getDate()+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')});
 }
-window.postWishComment = postWishComment;
 
 function toggleVote(key) {
-  const w = wishes.find(x=>x._key===key); if(!w) return;
-  const voted = !w.voted, votes = (w.votes||0)+(voted?1:-1);
-  update(r('wishes/'+key), { voted, votes });
+  var w=wishes.find(function(x){ return x._key===key; }); if(!w) return;
+  var voted=!w.voted, votes=(w.votes||0)+(voted?1:-1);
+  db.ref('wishes/'+key).update({voted:voted,votes:votes});
 }
-window.toggleVote = toggleVote;
 
 function openAddWish() {
-  document.getElementById('modal-wish-title').textContent = 'Add a place';
-  document.getElementById('wish-edit-id').value = '';
-  ['wish-name','wish-emoji','wish-note'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('wish-author').innerHTML = memberOpts('');
-  document.getElementById('btn-submit-wish').textContent = 'Add';
+  document.getElementById('modal-wish-title').textContent='Add a place';
+  document.getElementById('wish-edit-id').value='';
+  document.getElementById('wish-name').value='';
+  document.getElementById('wish-emoji').value='';
+  document.getElementById('wish-note').value='';
+  document.getElementById('wish-author').innerHTML=memberOpts('');
+  document.getElementById('wish-submit-btn').textContent='Add';
   openModal('modal-wish');
 }
-window.openAddWish = openAddWish;
 
 function openEditWish(key) {
-  const w = wishes.find(x=>x._key===key); if(!w) return;
-  document.getElementById('modal-wish-title').textContent = 'Edit place';
-  document.getElementById('wish-edit-id').value = key;
-  document.getElementById('wish-name').value  = w.name;
-  document.getElementById('wish-cat').value   = w.category;
-  document.getElementById('wish-emoji').value = w.emoji||'';
-  document.getElementById('wish-note').value  = w.note||'';
-  document.getElementById('wish-author').innerHTML = memberOpts(w.author);
-  document.getElementById('btn-submit-wish').textContent = 'Save';
+  var w=wishes.find(function(x){ return x._key===key; }); if(!w) return;
+  document.getElementById('modal-wish-title').textContent='Edit place';
+  document.getElementById('wish-edit-id').value=key;
+  document.getElementById('wish-name').value=w.name;
+  document.getElementById('wish-cat').value=w.category;
+  document.getElementById('wish-emoji').value=w.emoji||'';
+  document.getElementById('wish-note').value=w.note||'';
+  document.getElementById('wish-author').innerHTML=memberOpts(w.author);
+  document.getElementById('wish-submit-btn').textContent='Save';
   openModal('modal-wish');
 }
-window.openEditWish = openEditWish;
 
 function submitWish() {
-  const name = document.getElementById('wish-name').value.trim();
-  if (!name) { alert('Please enter a place name.'); return; }
-  const data = {
-    name, category: document.getElementById('wish-cat').value,
-    emoji:  document.getElementById('wish-emoji').value.trim()||'📍',
-    author: document.getElementById('wish-author').value||'',
-    note:   document.getElementById('wish-note').value.trim()||''
-  };
-  const key = document.getElementById('wish-edit-id').value;
-  if (key) { update(r('wishes/'+key), data); }
-  else     { push(r('wishes'), { ...data, votes:0, voted:false }); }
+  var name=document.getElementById('wish-name').value.trim();
+  if(!name){ alert('Please enter a place name.'); return; }
+  var data={name:name,category:document.getElementById('wish-cat').value,emoji:document.getElementById('wish-emoji').value.trim()||'📍',author:document.getElementById('wish-author').value||'',note:document.getElementById('wish-note').value.trim()||''};
+  var key=document.getElementById('wish-edit-id').value;
+  if(key){ db.ref('wishes/'+key).update(data); }
+  else   { db.ref('wishes').push(Object.assign({},data,{votes:0,voted:false})); }
   closeModal('modal-wish');
 }
-window.submitWish = submitWish;
 
 // ── NOTES ────────────────────────────────────────────────────
 function renderNotes() {
-  const el = document.getElementById('notes-list');
-  el.innerHTML = '';
-  if (!notes.length) { el.innerHTML=`<div class="empty"><div class="empty-icon">💬</div><div>No comments yet</div></div>`; return; }
-  notes.forEach(n => {
-    const color = MC[n.author]||'#999';
-    const div = document.createElement('div');
-    div.className = 'note-card';
-    div.innerHTML = `
-      <div class="note-actions">
-        <button class="action-btn edit-btn" onclick="openEditNote('${n._key}')">✏️</button>
-        <button class="action-btn delete-btn" onclick="confirmDelete('note','${n._key}')">🗑</button>
-      </div>
-      <div class="note-meta">
-        <div class="note-avatar" style="background:${color}22;color:${color};">${n.author.substring(0,2)}</div>
-        <span class="note-author">${esc(n.author)}</span>
-        <span class="note-time">${esc(n.time||'')}</span>
-      </div>
-      <div class="note-text">${esc(n.text)}</div>`;
+  var el=document.getElementById('notes-list');
+  el.innerHTML='';
+  if(!notes.length){ el.innerHTML='<div class="empty"><div class="empty-icon">💬</div><div>No comments yet</div></div>'; return; }
+  notes.forEach(function(n){
+    var color=MC[n.author]||'#999';
+    var div=document.createElement('div'); div.className='note-card';
+    div.innerHTML='<div class="note-actions"><button class="action-btn edit-btn" onclick="openEditNote(\''+n._key+'\')">✏️</button><button class="action-btn delete-btn" onclick="confirmDelete(\'note\',\''+n._key+'\')">🗑</button></div>'
+      +'<div class="note-meta"><div class="note-avatar" style="background:'+color+'22;color:'+color+'">'+n.author.substring(0,2)+'</div><span class="note-author">'+esc(n.author)+'</span><span class="note-time">'+esc(n.time||'')+'</span></div>'
+      +'<div class="note-text">'+esc(n.text)+'</div>';
     el.appendChild(div);
   });
 }
-window.renderNotes = renderNotes;
 
 function postNote() {
-  const text   = document.getElementById('compose-text').value.trim();
-  const author = document.getElementById('compose-name').value;
-  if (!text)   { alert('Please enter a comment.'); return; }
-  if (!author) { alert('Please select your name.'); return; }
-  const now = new Date();
-  push(r('notes'), { author, text, time:`${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}` });
-  document.getElementById('compose-text').value = '';
+  var text=document.getElementById('compose-text').value.trim();
+  var author=document.getElementById('compose-name').value;
+  if(!text)  { alert('Please enter a comment.'); return; }
+  if(!author){ alert('Please select your name.'); return; }
+  var now=new Date();
+  db.ref('notes').push({author:author,text:text,time:(now.getMonth()+1)+'/'+now.getDate()+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')});
+  document.getElementById('compose-text').value='';
 }
-window.postNote = postNote;
 
 function openEditNote(key) {
-  const n = notes.find(x=>x._key===key); if(!n) return;
-  document.getElementById('note-edit-id').value   = key;
-  document.getElementById('note-edit-text').value = n.text;
+  var n=notes.find(function(x){ return x._key===key; }); if(!n) return;
+  document.getElementById('note-edit-id').value=key;
+  document.getElementById('note-edit-text').value=n.text;
   openModal('modal-note');
 }
-window.openEditNote = openEditNote;
 
 function submitEditNote() {
-  const key  = document.getElementById('note-edit-id').value;
-  const text = document.getElementById('note-edit-text').value.trim();
-  if (!text) { alert('Please enter a comment.'); return; }
-  update(r('notes/'+key), { text });
+  var key=document.getElementById('note-edit-id').value;
+  var text=document.getElementById('note-edit-text').value.trim();
+  if(!text){ alert('Please enter a comment.'); return; }
+  db.ref('notes/'+key).update({text:text});
   closeModal('modal-note');
 }
-window.submitEditNote = submitEditNote;
 
 // ── PAYMENT ──────────────────────────────────────────────────
 function renderExpenses() {
-  const el = document.getElementById('expense-rows');
-  el.innerHTML = '';
-  if (!expenses.length) { el.innerHTML=`<div class="empty"><div class="empty-icon">💶</div><div>No expenses yet</div></div>`; return; }
-  expenses.forEach(exp => {
-    const split  = (exp.splitBy&&exp.splitBy.length) ? exp.splitBy : MEMBERS;
-    const per    = (exp.amount/split.length).toFixed(0);
-    const row    = document.createElement('div');
-    row.className = 'expense-row';
-    row.innerHTML = `
-      <div>
-        <div class="exp-name">${esc(exp.desc)}</div>
-        <div class="exp-sub">€${per}/person · ${split.length} people</div>
-      </div>
-      <div style="font-size:12px;color:var(--gray-text);">${esc(exp.date||'—')}</div>
-      <div style="display:flex;align-items:center;gap:4px;">${av(exp.paidBy,20)}<span style="font-size:12px;">${esc(exp.paidBy)}</span></div>
-      <div class="exp-amount">€${exp.amount}</div>
-      <div class="exp-split-cell">${split.map(m=>av(m,18)).join('')}</div>
-      <div><span class="exp-status ${exp.status==='settled'?'status-ok':'status-pending'}">${exp.status==='settled'?'Settled':'Pending'}</span></div>
-      <div class="exp-actions">
-        <button class="action-btn edit-btn" onclick="openEditExpense('${exp._key}')">✏️</button>
-        <button class="action-btn delete-btn" onclick="confirmDelete('exp','${exp._key}')">🗑</button>
-      </div>`;
+  var el=document.getElementById('expense-rows');
+  el.innerHTML='';
+  if(!expenses.length){ el.innerHTML='<div class="empty"><div class="empty-icon">💶</div><div>No expenses yet</div></div>'; return; }
+  expenses.forEach(function(exp){
+    var split=(exp.splitBy&&exp.splitBy.length)?exp.splitBy:MEMBERS;
+    var per=(exp.amount/split.length).toFixed(0);
+    var splitAv=''; split.forEach(function(m){ splitAv+=av(m,18); });
+    var row=document.createElement('div'); row.className='expense-row';
+    row.innerHTML='<div><div class="exp-name">'+esc(exp.desc)+'</div><div class="exp-sub">€'+per+'/person · '+split.length+' people</div></div>'
+      +'<div style="font-size:12px;color:var(--gray-text);">'+esc(exp.date||'—')+'</div>'
+      +'<div style="display:flex;align-items:center;gap:4px;">'+av(exp.paidBy,20)+'<span style="font-size:12px;">'+esc(exp.paidBy)+'</span></div>'
+      +'<div class="exp-amount">€'+exp.amount+'</div>'
+      +'<div class="exp-split-cell">'+splitAv+'</div>'
+      +'<div><span class="exp-status '+(exp.status==='settled'?'status-ok':'status-pending')+'">'+(exp.status==='settled'?'Settled':'Pending')+'</span></div>'
+      +'<div class="exp-actions"><button class="action-btn edit-btn" onclick="openEditExpense(\''+exp._key+'\')">✏️</button><button class="action-btn delete-btn" onclick="confirmDelete(\'exp\',\''+exp._key+'\')">🗑</button></div>';
     el.appendChild(row);
   });
 }
-window.renderExpenses = renderExpenses;
 
 function buildDateOpts(sel) {
-  document.getElementById('exp-date').innerHTML =
-    `<option value="">— Select date —</option>` +
-    DAYS.map((d,i)=>{ const l=`Day ${i+1} (${fmtShort(d)})`; return `<option${l===sel?' selected':''}>${l}</option>`; }).join('');
+  var s='<option value="">— Select date —</option>';
+  DAYS.forEach(function(d,i){ var l='Day '+(i+1)+' ('+fmtShort(d)+')'; s+='<option'+(l===sel?' selected':'')+'>'+l+'</option>'; });
+  document.getElementById('exp-date').innerHTML=s;
 }
 
 function buildSplitChips(sel) {
-  const wrap = document.getElementById('split-by-chips');
-  wrap.innerHTML = '';
-  MEMBERS.forEach(m => {
-    const chip = document.createElement('div');
-    chip.className = 'split-chip'+(sel.includes(m)?' selected':'');
-    chip.dataset.member = m;
-    chip.innerHTML = `<span class="chip-av" style="background:${MC[m]}">${m.substring(0,2)}</span>${m}`;
-    chip.addEventListener('click', () => chip.classList.toggle('selected'));
+  var wrap=document.getElementById('split-by-chips');
+  wrap.innerHTML='';
+  MEMBERS.forEach(function(m){
+    var chip=document.createElement('div');
+    chip.className='split-chip'+(sel.indexOf(m)>=0?' selected':'');
+    chip.setAttribute('data-member',m);
+    chip.innerHTML='<span class="chip-av" style="background:'+MC[m]+'">'+m.substring(0,2)+'</span>'+m;
+    chip.addEventListener('click',function(){ chip.classList.toggle('selected'); });
     wrap.appendChild(chip);
   });
 }
 
 function getSplitSelected() {
-  return [...document.querySelectorAll('#split-by-chips .split-chip.selected')]
-    .map(c => c.dataset.member).filter(Boolean);
+  var result=[];
+  document.querySelectorAll('#split-by-chips .split-chip.selected').forEach(function(c){ result.push(c.getAttribute('data-member')); });
+  return result;
 }
 
 function openAddExpense() {
-  document.getElementById('modal-expense-title').textContent = 'Add expense';
-  document.getElementById('exp-edit-id').value = '';
-  document.getElementById('exp-desc').value    = '';
-  document.getElementById('exp-amount').value  = '';
-  document.getElementById('exp-status').value  = 'pending';
+  document.getElementById('modal-expense-title').textContent='Add expense';
+  document.getElementById('exp-edit-id').value='';
+  document.getElementById('exp-desc').value='';
+  document.getElementById('exp-amount').value='';
+  document.getElementById('exp-status').value='pending';
   buildDateOpts('');
   buildSplitChips(MEMBERS);
-  document.getElementById('btn-submit-expense').textContent = 'Add';
+  document.getElementById('exp-submit-btn').textContent='Add';
   openModal('modal-expense');
 }
-window.openAddExpense = openAddExpense;
 
 function openEditExpense(key) {
-  const exp = expenses.find(e=>e._key===key); if(!exp) return;
-  document.getElementById('modal-expense-title').textContent = 'Edit expense';
-  document.getElementById('exp-edit-id').value = key;
-  document.getElementById('exp-desc').value    = exp.desc;
-  document.getElementById('exp-amount').value  = exp.amount;
-  document.getElementById('exp-paid').value    = exp.paidBy;
-  document.getElementById('exp-status').value  = exp.status;
+  var exp=expenses.find(function(e){ return e._key===key; }); if(!exp) return;
+  document.getElementById('modal-expense-title').textContent='Edit expense';
+  document.getElementById('exp-edit-id').value=key;
+  document.getElementById('exp-desc').value=exp.desc;
+  document.getElementById('exp-amount').value=exp.amount;
+  document.getElementById('exp-paid').value=exp.paidBy;
+  document.getElementById('exp-status').value=exp.status;
   buildDateOpts(exp.date||'');
-  buildSplitChips(exp.splitBy&&exp.splitBy.length ? exp.splitBy : MEMBERS);
-  document.getElementById('btn-submit-expense').textContent = 'Save';
+  buildSplitChips(exp.splitBy&&exp.splitBy.length?exp.splitBy:MEMBERS);
+  document.getElementById('exp-submit-btn').textContent='Save';
   openModal('modal-expense');
 }
-window.openEditExpense = openEditExpense;
 
 function submitExpense() {
-  const desc   = document.getElementById('exp-desc').value.trim();
-  const amount = parseFloat(document.getElementById('exp-amount').value);
-  if (!desc)               { alert('Please enter a description.'); return; }
-  if (isNaN(amount)||amount<=0) { alert('Please enter a valid amount.'); return; }
-  const splitBy = getSplitSelected();
-  if (!splitBy.length) { alert('Please select at least one person to split with.'); return; }
-  const data = {
-    desc, amount,
-    paidBy:  document.getElementById('exp-paid').value,
-    status:  document.getElementById('exp-status').value,
-    date:    document.getElementById('exp-date').value||'',
-    splitBy
-  };
-  const key = document.getElementById('exp-edit-id').value;
-  key ? update(r('expenses/'+key), data) : push(r('expenses'), data);
+  var desc=document.getElementById('exp-desc').value.trim();
+  var amount=parseFloat(document.getElementById('exp-amount').value);
+  if(!desc)             { alert('Please enter a description.'); return; }
+  if(isNaN(amount)||amount<=0){ alert('Please enter a valid amount.'); return; }
+  var splitBy=getSplitSelected();
+  if(!splitBy.length){ alert('Please select at least one person to split with.'); return; }
+  var data={desc:desc,amount:amount,paidBy:document.getElementById('exp-paid').value,status:document.getElementById('exp-status').value,date:document.getElementById('exp-date').value||'',splitBy:splitBy};
+  var key=document.getElementById('exp-edit-id').value;
+  if(key){ db.ref('expenses/'+key).update(data); }
+  else   { db.ref('expenses').push(data); }
   closeModal('modal-expense');
 }
-window.submitExpense = submitExpense;
 
 // ── DELETE ───────────────────────────────────────────────────
 function confirmDelete(type, key) {
-  const msgs = { sched:'Delete this schedule item?', wish:'Delete this place?', note:'Delete this comment?', exp:'Delete this expense?' };
-  document.getElementById('confirm-message').textContent = msgs[type]||'Are you sure?';
-  document.getElementById('confirm-ok-btn').onclick = () => {
-    remove(r({sched:'schedules',wish:'wishes',note:'notes',exp:'expenses'}[type]+'/'+key));
-    closeModal('modal-confirm');
-  };
+  var msgs={sched:'Delete this schedule item?',wish:'Delete this place?',note:'Delete this comment?',exp:'Delete this expense?'};
+  document.getElementById('confirm-message').textContent=msgs[type]||'Are you sure?';
+  var paths={sched:'schedules',wish:'wishes',note:'notes',exp:'expenses'};
+  document.getElementById('confirm-ok-btn').onclick=function(){ db.ref(paths[type]+'/'+key).remove(); closeModal('modal-confirm'); };
   openModal('modal-confirm');
 }
-window.confirmDelete = confirmDelete;
-
-// ── MODALS ───────────────────────────────────────────────────
-function openModal(id)  { document.getElementById(id).classList.remove('hidden'); }
-function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-window.openModal  = openModal;
-window.closeModal = closeModal;
-document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)closeModal(this.id);}));
 
 // ── SHARE ────────────────────────────────────────────────────
 function copyUrl() {
-  navigator.clipboard.writeText(location.href).then(()=>{
-    const b=document.querySelector('.copy-btn'); b.textContent='Copied!';
-    setTimeout(()=>b.textContent='Copy URL',2000);
+  navigator.clipboard.writeText(location.href).then(function(){
+    var b=document.querySelector('.copy-btn'); b.textContent='Copied!';
+    setTimeout(function(){ b.textContent='Copy URL'; },2000);
   });
-  document.getElementById('share-url').textContent = location.href;
+  document.getElementById('share-url').textContent=location.href;
 }
-window.copyUrl = copyUrl;
-
-// ── EVENT WIRING ─────────────────────────────────────────────
-// type="module" is deferred, so DOM is ready when this runs — bind directly
-const tabMap = { 'tab-btn-schedule':'schedule', 'tab-btn-wishlist':'wishlist', 'tab-btn-notes':'notes', 'tab-btn-payment':'payment' };
-Object.entries(tabMap).forEach(([id, name]) => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener('click', () => switchTab(name, el));
-});
-
-const btnMap = {
-  'btn-open-add-schedule': () => openAddSchedule(),
-  'btn-open-add-wish':     () => openAddWish(),
-  'btn-post-note':         () => postNote(),
-  'btn-open-add-expense':  () => openAddExpense(),
-  'btn-open-add-expense-2':() => openAddExpense(),
-  'btn-copy-url':          () => copyUrl(),
-  'btn-cancel-schedule':   () => closeModal('modal-schedule'),
-  'btn-submit-schedule':   () => submitSchedule(),
-  'btn-cancel-wish':       () => closeModal('modal-wish'),
-  'btn-submit-wish':       () => submitWish(),
-  'btn-cancel-note':       () => closeModal('modal-note'),
-  'btn-submit-note':       () => submitEditNote(),
-  'btn-cancel-expense':    () => closeModal('modal-expense'),
-  'btn-submit-expense':    () => submitExpense(),
-  'btn-cancel-confirm':    () => closeModal('modal-confirm'),
-};
-Object.entries(btnMap).forEach(([id, fn]) => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener('click', fn);
-});
-
 </script>
 </body>
 </html>
